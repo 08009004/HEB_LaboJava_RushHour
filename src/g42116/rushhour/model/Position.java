@@ -8,26 +8,40 @@ import static g42116.rushhour.model.Direction.*;
  */
 public class Position {
     
-    // Class attributes
+    // Class attributes:
     private int row;
     private int column;
     
-    // Constructor
+    /**
+     * Full constructor.
+     * @param row the position's row on the board.
+     * @param column the position's column on the board.
+     */
     public Position(int row, int column) {
         this.row = row;
         this.column = column;
     }
 
-    // Getters
+    /**
+     * Row attribute accessor.
+     * @return the position's row on the board.
+     */
     public int getRow() {
         return row;
     }
-
+    
+    /**
+     * Column attribute accessor.
+     * @return the position's column on the board.
+     */
     public int getColumn() {
         return column;
     }
     
-    // Class methods
+    /**
+     * Class implementation of method toString.
+     * @return A string formated as (row,column)
+     */
     @Override
     public String toString() {
         return "(" + row + "," + column + ')';
@@ -57,7 +71,5 @@ public class Position {
         }
         return newPosition;
     }
-    
-    
-    
+  
 }

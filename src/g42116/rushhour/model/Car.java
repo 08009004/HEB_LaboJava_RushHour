@@ -6,6 +6,7 @@ package g42116.rushhour.model;
  */
 public class Car {
     
+    // Class attributes:
     protected char id;
     protected int size;
     protected Orientation orientation;
@@ -43,16 +44,35 @@ public class Car {
                 + ", currentPosition:" + currentPosition + ')';
     }
     
-    /*
-déplace (modifie la positioncourante de) la voiture d’une case dans la direction 
-reçue en paramètre. Cette
-méthode lancera une IllegalArgumentException avec un message adéquat si la
-direction n’est pas compatible avec l’orientation de la voiture. Par exemple, si la
-voiture est placée horizontalement et que la direction est UP la méthode lance une
-exception.
-    */
+    /**
+     * Modifies current car position by moving it one box in the direction 
+     * recieved as a parameter.
+     * @param direction 
+     * @throws IllegalArgumentException if the requested move direction is not 
+     * compatible with the car's orientation.
+     */
     public void move(Direction direction) {
+        if (isWrongOrientation(direction)) {
+            throw new IllegalArgumentException("Incompatible move arguments "
+                    + "(car orientation: " + this.orientation
+                    + " ; car direction: " + direction + ").");
+        }
         
+        currentPosition = currentPosition.getPosition(direction);
+    }
+    
+    /**
+     * Checks the validity of a given move direction against the car's 
+     * orientation.
+     * @param direction
+     * @return False if the direction is compatible with the car's orientation, 
+     * else true.
+     */
+    private boolean isWrongOrientation(Direction direction) {
+        return (this.orientation == Orientation.HORIZONTAL
+                    && (direction == Direction.DOWN || direction == Direction.UP))
+            || (this.orientation == Orientation.VERTICAL
+                    && (direction == Direction.LEFT || direction == Direction.RIGHT));
     }
     
 }

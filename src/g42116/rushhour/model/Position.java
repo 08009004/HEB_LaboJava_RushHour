@@ -40,20 +40,24 @@ public class Position {
      * @return The position after translation.
      */
     public Position getPosition(Direction direction) {
-        if (direction == LEFT) {
-            
-        } else if (direction == RIGHT) {
-            
-        } else if (direction == UP) {
-            
-        } else if (direction == DOWN) {
-            
+        Position newPosition = null;
+        switch (direction) {
+            case LEFT:
+                newPosition = new Position(this.row, this.column - 1);
+                break;
+            case RIGHT:
+                newPosition = new Position(this.row, this.column + 1);
+                break;
+            case UP:
+                newPosition = new Position(this.row - 1, this.column);
+                break;
+            case DOWN:
+                newPosition = new Position(this.row + 1, this.column);
+                break;
         }
+        return newPosition;
     }
     
     
     
-}
-            
-   
 }

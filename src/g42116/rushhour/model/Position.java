@@ -3,7 +3,8 @@ package g42116.rushhour.model;
 import static g42116.rushhour.model.Direction.*;
 
 /**
- * This object class defines the Position object type.
+ * This class defines the Position object type, which represents the possible 
+ * positions on the game board.
  * @author g42116
  */
 public class Position {
@@ -14,8 +15,8 @@ public class Position {
     
     /**
      * Full constructor.
-     * @param row the position's row on the board.
-     * @param column the position's column on the board.
+     * @param row the position's row number
+     * @param column the position's column number
      */
     public Position(int row, int column) {
         this.row = row;
@@ -24,7 +25,7 @@ public class Position {
 
     /**
      * Row attribute accessor.
-     * @return the position's row on the board.
+     * @return the position's row number
      */
     public int getRow() {
         return row;
@@ -32,14 +33,14 @@ public class Position {
     
     /**
      * Column attribute accessor.
-     * @return the position's column on the board.
+     * @return the position's column number
      */
     public int getColumn() {
         return column;
     }
     
     /**
-     * Class implementation of method toString.
+     * Returns a text representation of the position.
      * @return A string formated as (row,column)
      */
     @Override
@@ -48,10 +49,10 @@ public class Position {
     }
     
     /**
-     * Returns a new position representing the neighboring position to current 
+     * Returns a new position representing the adjacent position to current 
      * position, according to passed direction parameter.
-     * @param direction The direction of position translation.
-     * @return The position after translation.
+     * @param direction The direction of position translation
+     * @return The position after translation
      */
     public Position getPosition(Direction direction) {
         Position newPosition = null;

@@ -1,7 +1,7 @@
 package g42116.rushhour.model;
 
 /**
- * This object class defines the Car object type.
+ * This class defines the Car object type.
  * @author g42116
  */
 public class Car {
@@ -12,7 +12,16 @@ public class Car {
     protected Orientation orientation;
     protected Position currentPosition;
 
-    // Constructor
+    /**
+     * Full constructor.
+     * @param id the car's identifier
+     * @param size the number of boxes occupied by the car
+     * @param orientation the car's orientation on the board
+     * @param initialPosition the car's position on the board (leftmost occupied
+     * board box for horizontal cars, topmost occupied box for vertical ones)
+     * @throws IllegalArgumentException if the car sized passed is not equal
+     * to 1 or more.
+     */
     public Car(char id, int size, Orientation orientation, Position initialPosition) {
         if (size <= 0) {
             throw new IllegalArgumentException(
@@ -24,31 +33,46 @@ public class Car {
         this.currentPosition = initialPosition;
     }
     
-    // Getters
+    /**
+     * Id attribute accessor.
+     * @return the car's id
+     */
     public char getId() {
         return id;
     }
 
+    /**
+     * Orientation attribute accessor.
+     * @return the car's orientation
+     */
     public Orientation getOrientation() {
         return orientation;
     }
 
+    /**
+     * Current Position attribute accessor.
+     * @return the car's current position.
+     */
     public Position getCurrentPosition() {
         return currentPosition;
     }
     
-    // Class Methods
+    /**
+     * Returns a text representation of the car.
+     * @return A string formated as follow: Car id (size: size, orientation:
+     * orientation, position: currentPosition)
+     */
     @Override
     public String toString() {
         return "Car" + id + " (size: " + size + ", orientation:" + orientation 
-                + ", currentPosition:" + currentPosition + ')';
+                + ", position:" + currentPosition + ')';
     }
     
     /**
      * Modifies current car position by moving it one box in the direction 
      * recieved as a parameter.
-     * @param direction 
-     * @throws IllegalArgumentException if the requested move direction is not 
+     * @param direction the desired car move direction
+     * @throws IllegalArgumentException if the requested move direction is not
      * compatible with the car's orientation.
      */
     public void move(Direction direction) {
@@ -62,10 +86,10 @@ public class Car {
     }
     
     /**
-     * Checks the validity of a given move direction against the car's 
+     * Checks the validity of a given move direction against the car's
      * orientation.
-     * @param direction
-     * @return False if the direction is compatible with the car's orientation, 
+     * @param direction the desired car move direction
+     * @return False if the direction is compatible with the car's orientation,
      * else true.
      */
     private boolean isWrongOrientation(Direction direction) {

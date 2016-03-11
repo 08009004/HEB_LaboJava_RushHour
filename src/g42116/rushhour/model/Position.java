@@ -40,7 +40,7 @@ public class Position {
     }
     
     /**
-     * Returns a text representation of the position.
+     * Returns a textual representation of the position object.
      * @return A string formated as (row,column)
      */
     @Override

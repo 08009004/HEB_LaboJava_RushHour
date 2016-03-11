@@ -58,7 +58,7 @@ public class Car {
     }
     
     /**
-     * Returns a text representation of the car.
+     * Returns a textual representation of the car object.
      * @return A string formated as follow: Car id (size: size, orientation:
      * orientation, position: currentPosition)
      */

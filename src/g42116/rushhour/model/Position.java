@@ -1,10 +1,9 @@
 package g42116.rushhour.model;
 
-import static g42116.rushhour.model.Direction.*;
-
 /**
  * This class defines the Position object type, which represents the possible 
  * positions on the game board.
+ * 
  * @author g42116
  */
 public class Position {
@@ -15,8 +14,9 @@ public class Position {
     
     /**
      * Full constructor.
-     * @param row the position's row number
-     * @param column the position's column number
+     * 
+     * @param   row     the row number for the new position
+     * @param   column  the column number for the new position
      */
     public Position(int row, int column) {
         this.row = row;
@@ -24,16 +24,18 @@ public class Position {
     }
 
     /**
-     * Row attribute accessor.
-     * @return the position's row number
+     * Returns the row of the position.
+     * 
+     * @return  the row number of the position
      */
     public int getRow() {
         return row;
     }
     
     /**
-     * Column attribute accessor.
-     * @return the position's column number
+     * Returns the column of the position.
+     * 
+     * @return  the column number of the position
      */
     public int getColumn() {
         return column;
@@ -41,7 +43,8 @@ public class Position {
     
     /**
      * Returns a textual representation of the position object.
-     * @return A string formated as (row,column)
+     * 
+     * @return  a string formated as (row,column)
      */
     @Override
     public String toString() {
@@ -51,11 +54,14 @@ public class Position {
     /**
      * Returns a new position representing the adjacent position to current 
      * position, according to passed direction parameter.
-     * @param direction The direction of position translation
-     * @return The position after translation
+     * 
+     * @param   direction   The direction of position translation
+     * @return              The position after translation
+     * @throws              NullPointerException if the direction passed is not
+     *                      LEFT, RIGHT, UP or DOWN
      */
     public Position getPosition(Direction direction) {
-        Position newPosition = null;
+        Position newPosition;
         switch (direction) {
             case LEFT:
                 newPosition = new Position(this.row, this.column - 1);
@@ -69,6 +75,8 @@ public class Position {
             case DOWN:
                 newPosition = new Position(this.row + 1, this.column);
                 break;
+            default:
+                throw new NullPointerException("Direction cannot be null");      
         }
         return newPosition;
     }

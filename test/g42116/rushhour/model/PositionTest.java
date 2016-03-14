@@ -4,13 +4,15 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * 
  * @author g42116
  */
 public class PositionTest {
-
-    // Tests for Position.getRow:
-        
+    
+    // tester le reste, sauf toString
+ 
+// Tests for Position.getRow:
+    
     @Test
     public void testGetRow1() {
         Position tested = new Position(0,12);
@@ -32,7 +34,8 @@ public class PositionTest {
         assertEquals(expected, tested.getRow());
     }
 
-    // Tests for Position.getColumn:
+// Tests for Position.getColumn:
+    
     @Test
     public void testGetColumn1() {
         Position tested = new Position(9,0);
@@ -54,7 +57,7 @@ public class PositionTest {
         assertEquals(expected, tested.getColumn());
     }
 
-    // Tests for Position.getPosition()
+// Tests for Position.getPosition()
     
     @Test
     public void testGetPositionLeft() {
@@ -71,7 +74,6 @@ public class PositionTest {
         Position result = tested.getPosition(Direction.RIGHT);
         assertEquals(expected, result);
     }
-    
         
     @Test
     public void testGetPositionUp() {
@@ -80,8 +82,7 @@ public class PositionTest {
         Position result = tested.getPosition(Direction.UP);
         assertEquals(expected, result);
     }
-    
-        
+       
     @Test
     public void testGetPositionDown() {
         Position tested = new Position(1,1);
@@ -89,30 +90,12 @@ public class PositionTest {
         Position result = tested.getPosition(Direction.DOWN);
         assertEquals(expected, result);
     }
-    
-        
+       
     @Test(expected = NullPointerException.class)
     public void testGetPositionNull() {
         Position tested = new Position(9,4);
         Direction nullDirection = null;
         tested.getPosition(nullDirection);
     }
-    
-/*        @Test
-    public void testToString() {
-    }
-
-    @Test
-    public void testEquals() {
-    }
-
-    @Test
-    public void testHashCode() {
-    }
-
-    @Test
-    public void testGetPosition() {
-    }
-*/    
     
 }

@@ -9,8 +9,8 @@ package g42116.rushhour.model;
 public class Position {
     
     // Class attributes:
-    private int row;
-    private int column;
+    private final int row;
+    private final int column;
     
     /**
      * Full constructor.

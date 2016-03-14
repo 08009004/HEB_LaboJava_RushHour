@@ -52,6 +52,30 @@ public class Position {
     }
     
     /**
+     * Checks if the current position has the same attributes values as the 
+     * parameter position.
+     * 
+     * @param   other   the position against which the current position must be
+     *                  checked
+     * @return          true if current position attributes equal parameter
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        final Position otherPosition = (Position) other;
+        return this.row == otherPosition.row && this.column == otherPosition.column;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + this.row;
+        hash = 47 * hash + this.column;
+        return hash;
+    }
+    
+    /**
      * Returns a new position representing the adjacent position to current 
      * position, according to passed direction parameter.
      * 

@@ -19,7 +19,7 @@ public class Car {
      * @param orientation the car's orientation on the board
      * @param initialPosition the car's position on the board (leftmost occupied
      * board box for horizontal cars, topmost occupied box for vertical ones)
-     * @throws IllegalArgumentException if the car sized passed is not equal
+     * @throws IllegalArgumentException if the car size passed is not equal
      * to 1 or more.
      */
     public Car(char id, int size, Orientation orientation, Position initialPosition) {

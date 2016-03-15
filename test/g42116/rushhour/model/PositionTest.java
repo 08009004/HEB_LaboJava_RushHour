@@ -107,7 +107,7 @@ public class PositionTest {
         assertEquals(expected, result);
     }
        
-    @Test(expected = NullPointerException.class)
+    @Test (expected = NullPointerException.class)
     public void testGetPositionNull() {
         Position tested = new Position(9,4);
         Direction nullDirection = null;

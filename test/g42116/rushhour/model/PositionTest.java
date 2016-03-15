@@ -8,9 +8,25 @@ import static org.junit.Assert.*;
  * @author g42116
  */
 public class PositionTest {
+     
+// Tests for Position.equals(other) an Position.hashCode():
     
-    // tester le reste, sauf toString
- 
+    @Test
+    public void testEqualsAndHashCode1() {
+        Position x = new Position(3,11);
+        Position y = new Position(3,11);
+        assertTrue(x.equals(y) && y.equals(x));
+        assertTrue(x.hashCode() == y.hashCode());
+    }
+    
+    @Test
+    public void testEqualsAndHashCode2() {
+        Position x = new Position(11,9);
+        Position y = new Position(3,11);
+        assertFalse(x.equals(y) && y.equals(x));
+        assertFalse(x.hashCode() == y.hashCode());
+    }
+    
 // Tests for Position.getRow:
     
     @Test
@@ -97,5 +113,5 @@ public class PositionTest {
         Direction nullDirection = null;
         tested.getPosition(nullDirection);
     }
-    
+
 }

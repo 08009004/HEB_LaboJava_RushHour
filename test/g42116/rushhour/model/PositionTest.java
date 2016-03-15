@@ -27,7 +27,7 @@ public class PositionTest {
         assertFalse(x.hashCode() == y.hashCode());
     }
     
-// Tests for Position.getRow:
+// Tests for Position.getRow():
     
     @Test
     public void testGetRow1() {
@@ -50,7 +50,7 @@ public class PositionTest {
         assertEquals(expected, tested.getRow());
     }
 
-// Tests for Position.getColumn:
+// Tests for Position.getColumn():
     
     @Test
     public void testGetColumn1() {
@@ -73,7 +73,7 @@ public class PositionTest {
         assertEquals(expected, tested.getColumn());
     }
 
-// Tests for Position.getPosition()
+// Tests for Position.getPosition():
     
     @Test
     public void testGetPositionLeft() {

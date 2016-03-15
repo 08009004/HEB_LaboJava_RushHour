@@ -8,29 +8,30 @@ package g42116.rushhour.model;
 public class Car {
     
     // Class attributes:
-    private char id;
-    private int size;
-    private Orientation orientation;
+    private final char id;
+    private final int size;
+    private final Orientation orientation;
     private Position currentPosition;
 
     /**
      * Full constructor.
      * 
      * @param   id              the car's identifier
-     * @param   size            the number of boxes occupied by the car
+     * @param   size            the number (between 1 and 4, included) of boxes 
+     *                          occupied by the car
      * @param   orientation     the car's orientation on the board
      * @param   initialPosition the car's position on the board (leftmost 
      *                          occupied board box for horizontal cars, topmost 
      *                          occupied box for vertical ones)
      * @throws                  IllegalArgumentException if the car size passed 
-     *                          is not equal to 1 or more
+     *                          is not between 1 and 4 included
      */
     public Car(char id, int size, 
                 Orientation orientation, Position initialPosition) {
         
-        if (size <= 0) {
+        if (size <= 0 || size > 4) {
             throw new IllegalArgumentException(
-                    "Car size was: " + size + ". It must be 1 or more.");
+                    "Car size was: " + size + ". It must be between 1 and 4.");
         }
         this.id = id;
         this.size = size;
@@ -50,7 +51,7 @@ public class Car {
     /**
      * Returns the orientation of the car.
      * 
-     * @return  the car's orientation
+     * @return  the orientation of the car
      */
     public Orientation getOrientation() {
         return orientation;
@@ -59,7 +60,7 @@ public class Car {
     /**
      * Returns the current position of the car.
      * 
-     * @return  the car's current position.
+     * @return  the current position of the car
      */
     public Position getCurrentPosition() {
         return currentPosition;

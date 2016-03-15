@@ -26,7 +26,7 @@ public class Car {
      *                          is not equal to 1 or more
      */
     public Car(char id, int size, 
-               Orientation orientation, Position initialPosition) {
+                Orientation orientation, Position initialPosition) {
         
         if (size <= 0) {
             throw new IllegalArgumentException(

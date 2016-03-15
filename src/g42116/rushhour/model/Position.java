@@ -1,8 +1,8 @@
 package g42116.rushhour.model;
 
 /**
- * This class defines the Position object type, which represents the possible 
- * positions on the game board.
+ * This class defines the Position object type, which represents the positions 
+ * on the game board.
  * 
  * @author g42116
  */
@@ -67,6 +67,11 @@ public class Position {
         return this.row == otherPosition.row && this.column == otherPosition.column;
     }
 
+    /**
+     * Returns a hash code value for the position.
+     * 
+     * @return  a hash code value for this position
+     */
     @Override
     public int hashCode() {
         int hash = 7;

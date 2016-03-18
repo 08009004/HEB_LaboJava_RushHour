@@ -1,5 +1,8 @@
 package g42116.rushhour.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class defines the Car object type.
  * 
@@ -114,4 +117,21 @@ public class Car {
                         || direction == Direction.RIGHT));
     }
     
+    public List<Position> getPositions() {
+        List<Position> occupied = new ArrayList<>();
+        occupied.add(currentPosition);
+        
+        for (int i = 1; i < this.size; i++) {
+            if (this.orientation == Orientation.HORIZONTAL) {
+                occupied.add(occupied.get(i-1).getPosition(Direction.RIGHT));
+            } else if (this.orientation == Orientation.VERTICAL) {
+                occupied.add(occupied.get(i-1).getPosition(Direction.DOWN));
+            } else {
+                throw new NullPointerException("orientation must be VERTICAL or "
+                    + "HORIZONTAL.");
+            }
+        }
+        
+        return occupied;
+    }
 }

@@ -1,5 +1,9 @@
 package g42116.rushhour.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -134,4 +138,21 @@ public class CarTest {
         tested.move(Direction.UP);
     }
     
+    /**
+     * getPositions() normal case, with Orientation.HORIZONTAL
+     */
+    @Test
+    public void testGetPositions1() {
+        Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(1,2));
+        List<Position> expected = Arrays.asList(
+            new Position(1,2),
+            new Position(1,3));
+        List<Position> result = tested.getPositions();
+        assertEquals(expected, result);
+    }
+    
+    /**
+     * — Si la voiture est verticale de position (1,2) et de taille 3 la méthode retournera
+une liste contenant les positions (1,2), (2,2) et (3,2).
+     */
 }

@@ -24,7 +24,6 @@ public class PositionTest {
         Position x = new Position(11,9);
         Position y = new Position(3,11);
         assertFalse(x.equals(y) && y.equals(x));
-        assertFalse(x.hashCode() == y.hashCode());
     }
     
 //----------------------- Tests for Position.getRow() --------------------------
@@ -35,20 +34,6 @@ public class PositionTest {
         int expected = 0;
         assertEquals(expected, tested.getRow());
     }
-    
-    @Test
-    public void testGetRow2() {
-        Position tested = new Position(75,-9);
-        int expected = 75;
-        assertEquals(expected, tested.getRow());
-    }
-    
-    @Test
-    public void testGetRow3() {
-        Position tested = new Position(-8,0);
-        int expected = -8;
-        assertEquals(expected, tested.getRow());
-    }
 
 //---------------------- Tests for Position.getColumn() ------------------------
     
@@ -56,20 +41,6 @@ public class PositionTest {
     public void testGetColumn1() {
         Position tested = new Position(9,0);
         int expected = 0;
-        assertEquals(expected, tested.getColumn());
-    }
-
-    @Test
-    public void testGetColumn2() {
-        Position tested = new Position(-5,58);
-        int expected = 58;
-        assertEquals(expected, tested.getColumn());
-    }
-
-    @Test
-    public void testGetColumn3() {
-        Position tested = new Position(0,-3);
-        int expected = -3;
         assertEquals(expected, tested.getColumn());
     }
 

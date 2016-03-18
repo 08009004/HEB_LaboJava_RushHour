@@ -64,7 +64,8 @@ public class Position {
         if (this == other) return true;
         if (other == null || getClass() != other.getClass()) return false;
         final Position otherPosition = (Position) other;
-        return this.row == otherPosition.row && this.column == otherPosition.column;
+        return this.row == otherPosition.row 
+            && this.column == otherPosition.column;
     }
 
     /**

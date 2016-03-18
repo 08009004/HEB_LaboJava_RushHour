@@ -24,12 +24,12 @@ public class Car {
      *                          occupied board box for horizontal cars, topmost 
      *                          occupied box for vertical ones)
      * @throws                  IllegalArgumentException if the car size passed 
-     *                          is not between 1 and 4 included
+     *                          is not 1 or more
      */
     public Car(char id, int size, 
                 Orientation orientation, Position initialPosition) {
         
-        if (size <= 0 || size > 4) {
+        if (size <= 0) {
             throw new IllegalArgumentException(
                     "Car size was: " + size + ". It must be between 1 and 4.");
         }
@@ -114,4 +114,4 @@ public class Car {
                         || direction == Direction.RIGHT));
     }
     
-};
+}

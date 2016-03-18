@@ -8,22 +8,18 @@ import static org.junit.Assert.*;
  * @author g42116
  */
 public class CarTest {
-    
-/* Ajoutez des tests unitaires dans une classe CarTest permettant de vérifier 
-adéquatement la méthode move, en ce compris le déclenchement de l’exception 
-
-ainsi que la gestion correcte de la taille dans le constructeur
-*/
-
-//------------------------ Tests for the constructor ---------------------------
-    
+ 
+    /**
+     * Argument 'size' must be strictly greater than zero.
+     */
     @Test (expected=IllegalArgumentException.class)
     public void testConstructor1() {
         new Car('a', 0, Orientation.HORIZONTAL, new Position(5,5));
     }
-    
-//-------------------------- Tests for Car.getId() -----------------------------
-    
+
+    /**
+     * getId() normal case.
+     */
     @Test
     public void testGetId1() {
         Car tested = new Car('r', 1, Orientation.HORIZONTAL, new Position(7,7));
@@ -31,9 +27,10 @@ ainsi que la gestion correcte de la taille dans le constructeur
         char result = tested.getId();
         assertEquals(expected, result);
     }
-    
-//---------------------- Tests for Car.getOrientation() ------------------------
-    
+
+    /**
+     * getOrientation() normal case.
+     */
     @Test
     public void testGetOrientation1() {
         Car tested = new Car('a', 2, Orientation.VERTICAL, new Position(2,2));
@@ -42,18 +39,20 @@ ainsi que la gestion correcte de la taille dans le constructeur
         assertEquals(expected, result);
     }
 
-//----------------------- Tests for Car.getPosition() --------------------------
-
+    /**
+     * getPosition() normal case.
+     */
     @Test
-    public void testGetPosition2() {
-        Car tested = new Car('a', 3, Orientation.VERTICAL, new Position(-5,0));
-        Position expected = new Position(-5,0);
+    public void testGetPosition1() {
+        Car tested = new Car('a', 3, Orientation.VERTICAL, new Position(5,0));
+        Position expected = new Position(5,0);
         Position result = tested.getCurrentPosition();
         assertEquals(expected, result);
     }
 
-//---------------------- Tests for Car.move(direction) -------------------------
-    
+    /**
+     * move(Direction.DOWN) normal case.
+     */
     @Test
     public void testMove1() {
         Car tested = new Car('a', 2, Orientation.VERTICAL, new Position(6,6));
@@ -63,6 +62,9 @@ ainsi que la gestion correcte de la taille dans le constructeur
         assertEquals(expected, result);
     }
     
+    /**
+     * move(Direction.UP) normal case.
+     */
     @Test
     public void testMove2() {
         Car tested = new Car('a', 2, Orientation.VERTICAL, new Position(6,6));
@@ -72,6 +74,9 @@ ainsi que la gestion correcte de la taille dans le constructeur
         assertEquals(expected, result);
     }
     
+    /**
+     * move(Direction.LEFT) normal case.
+     */
     @Test
     public void testMove3() {
         Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(6,6));
@@ -81,6 +86,9 @@ ainsi que la gestion correcte de la taille dans le constructeur
         assertEquals(expected, result);
     }
     
+    /**
+     * move(Direction.RIGHT) normal case.
+     */
     @Test
     public void testMove4() {
         Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(6,6));
@@ -90,24 +98,36 @@ ainsi que la gestion correcte de la taille dans le constructeur
         assertEquals(expected, result);
     }
     
+    /**
+     * move(Direction.LEFT), exception : incompatible car orientation
+     */
     @Test (expected=IllegalArgumentException.class)
     public void testMove5() {
         Car tested = new Car('a', 2, Orientation.VERTICAL, new Position(6,6));
         tested.move(Direction.LEFT);
     }
     
+    /**
+     * move(Direction.RIGHT), exception : incompatible car orientation
+     */
     @Test (expected=IllegalArgumentException.class)
     public void testMove6() {
         Car tested = new Car('a', 2, Orientation.VERTICAL, new Position(6,6));
         tested.move(Direction.RIGHT);
     }
     
+    /**
+     * move(Direction.DOWN), exception : incompatible car orientation
+     */
     @Test (expected=IllegalArgumentException.class)
     public void testMove7() {
         Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(6,6));
         tested.move(Direction.DOWN);
     }
     
+    /**
+     * move(Direction.UP), exception : incompatible car orientation
+     */
     @Test (expected=IllegalArgumentException.class)
     public void testMove8() {
         Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(6,6));

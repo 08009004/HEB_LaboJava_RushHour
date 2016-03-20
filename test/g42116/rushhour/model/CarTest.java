@@ -103,7 +103,7 @@ public class CarTest {
     }
     
     /**
-     * move(Direction.LEFT), exception : incompatible car orientation
+     * move(Direction.LEFT), exception: incompatible car orientation.
      */
     @Test (expected=IllegalArgumentException.class)
     public void testMove5() {
@@ -112,7 +112,7 @@ public class CarTest {
     }
     
     /**
-     * move(Direction.RIGHT), exception : incompatible car orientation
+     * move(Direction.RIGHT), exception: incompatible car orientation.
      */
     @Test (expected=IllegalArgumentException.class)
     public void testMove6() {
@@ -121,7 +121,7 @@ public class CarTest {
     }
     
     /**
-     * move(Direction.DOWN), exception : incompatible car orientation
+     * move(Direction.DOWN), exception: incompatible car orientation.
      */
     @Test (expected=IllegalArgumentException.class)
     public void testMove7() {
@@ -130,7 +130,7 @@ public class CarTest {
     }
     
     /**
-     * move(Direction.UP), exception : incompatible car orientation
+     * move(Direction.UP), exception : incompatible car orientation.
      */
     @Test (expected=IllegalArgumentException.class)
     public void testMove8() {
@@ -139,7 +139,7 @@ public class CarTest {
     }
     
     /**
-     * getPositions() normal case, with Orientation.HORIZONTAL
+     * getPositions() normal case, with Orientation.HORIZONTAL.
      */
     @Test
     public void testGetPositions1() {
@@ -152,7 +152,25 @@ public class CarTest {
     }
     
     /**
-     * — Si la voiture est verticale de position (1,2) et de taille 3 la méthode retournera
-une liste contenant les positions (1,2), (2,2) et (3,2).
+     * getPositions() normal case, with Orientation.VERTICAL.
      */
+    @Test
+    public void testGetPositions2() {
+        Car tested = new Car('a', 3, Orientation.VERTICAL, new Position(1,2));
+        List<Position> expected = Arrays.asList(
+            new Position(1,2),
+            new Position(2,2),
+            new Position(3,2));
+        List<Position> result = tested.getPositions();
+        assertEquals(expected, result);
+    }
+    
+    /**
+     * getPositions(), exception: orientation attribute = null.
+     */
+    @Test (expected=NullPointerException.class) 
+    public void testGetPositions3() {
+        Car tested = new Car('a', 4, Orientation.HORIZONTAL, null);
+        tested.getPositions();
+    }
 }

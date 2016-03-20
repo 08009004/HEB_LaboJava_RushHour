@@ -116,7 +116,15 @@ public class Car {
                 &&  (direction == Direction.LEFT 
                         || direction == Direction.RIGHT));
     }
+
+// NullPointerException = judicieux? si non aussi retirer le test.
     
+    /**
+     * Returns a list of all the positions occupied by the car.
+     * @return  the list of the positions occupied
+     * @throws  NullPointerException if the orientation of the car is not 
+     *          HORIZONTAL or VERTICAL.
+     */
     public List<Position> getPositions() {
         List<Position> occupied = new ArrayList<>();
         occupied.add(currentPosition);
@@ -127,8 +135,8 @@ public class Car {
             } else if (this.orientation == Orientation.VERTICAL) {
                 occupied.add(occupied.get(i-1).getPosition(Direction.DOWN));
             } else {
-                throw new NullPointerException("orientation must be VERTICAL or "
-                    + "HORIZONTAL.");
+                throw new NullPointerException("Orientation of the car cannot "
+                    + "be null.");
             }
         }
         

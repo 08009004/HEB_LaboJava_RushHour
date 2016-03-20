@@ -20,8 +20,7 @@ public class Car {
      * Full constructor.
      * 
      * @param   id              the car's identifier
-     * @param   size            the number (between 1 and 4, included) of boxes 
-     *                          occupied by the car
+     * @param   size            the number of boxes occupied by the car
      * @param   orientation     the car's orientation on the board
      * @param   initialPosition the car's position on the board (leftmost 
      *                          occupied board box for horizontal cars, topmost 
@@ -33,8 +32,8 @@ public class Car {
                 Orientation orientation, Position initialPosition) {
         
         if (size <= 0) {
-            throw new IllegalArgumentException(
-                    "Car size was: " + size + ". It must be between 1 and 4.");
+            throw new IllegalArgumentException("Car size was: " + size 
+                    + ". It must be strictly greater than 0.");
         }
         this.id = id;
         this.size = size;
@@ -117,13 +116,17 @@ public class Car {
                         || direction == Direction.RIGHT));
     }
 
-// NullPointerException = judicieux? si non aussi retirer le test.
+/*          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    NullPointerException: judicieux? si non aussi retirer le test.
+*/
     
     /**
      * Returns a list of all the positions occupied by the car.
+     * 
      * @return  the list of the positions occupied
-     * @throws  NullPointerException if the orientation of the car is not 
-     *          HORIZONTAL or VERTICAL.
+     * @throws  NullPointerException if car size is greater than 1 and its 
+     *          orientation of the car is not HORIZONTAL or VERTICAL.
      */
     public List<Position> getPositions() {
         List<Position> occupied = new ArrayList<>();

@@ -1,8 +1,18 @@
+/*
+Sauf mention explicite du contraire, toutes les méthodes non triviales du modèle 
+devront être testées mais aucune méthode de la vue ne devra l’être.
+
+Les accesseurs peuvent être considérés comme triviaux.
+
+Les tests unitaires de getPositions() ne peuvent pas tenir compte d’un 
+quelconque ordre dans la liste des positions.
+-> comme Mastermind?
+*/
+
+
 package g42116.rushhour.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,7 +24,7 @@ import static org.junit.Assert.*;
 public class CarTest {
  
     /**
-     * Argument 'size' must be strictly greater than zero.
+     * Constructor, exception: 'size' must be strictly greater than zero.
      */
     @Test (expected=IllegalArgumentException.class)
     public void testConstructor1() {

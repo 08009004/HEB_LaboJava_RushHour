@@ -113,22 +113,29 @@ public class Board {
      */
     public boolean canPut(Car car) {
         List<Position> desired = car.getPositions();
-        Car gridCar = null;
-        for (Position pos : desired) {
-// ecrire une methode privee pour verifier si la position est en dehors du plateau.
-            if ((pos.getRow() > height()-1) || (pos.getRow() < 0)) {
-                return false;
-            }
-            if ((pos.getColumn() > width()-1) || (pos.getColumn() <0)) {
-                return false;
-            }
-            gridCar = this.grid[pos.getRow()][pos.getColumn()];
-            
-            if ((gridCar != null) || (gridCar != car)) {
-                    return false;
-            }
+        Car boardSquare = null;
+        
+        for (Position element : desired) {
+            if ( !isOntheBoard(element) ) return false;
+            boardSquare = this.grid[element.getRow()][element.getColumn()];
+            if ((boardSquare != null) || (boardSquare != car)) return false;
         }
+        
         return true;
+    }
+    
+    /**
+     * Checks if a given position is on the game board.
+     * 
+     * @param   position    the position to check
+     * @return              true if the position is on the game board, otherwise
+     *                      false
+     */
+    private boolean isOntheBoard(Position position) {
+        return (position.getRow() < height() ) 
+            && (position.getRow() > 0)
+            && (position.getColumn() < width() ) 
+            && (position.getColumn() > 0);
     }
     
     /**

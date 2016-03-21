@@ -1,5 +1,7 @@
 package g42116.rushhour.model;
 
+import java.util.List;
+
 /**
  * This class defines the game board object.
  * 
@@ -93,13 +95,41 @@ public class Board {
     /**
      * Returns the car occupying the position passed as a parameter.
      * 
-     * @param   position the position to check
-     * @return      the car occupying the position, or null if the position is 
-     *              empty
+     * @param   position    the position to check
+     * @return              the car occupying the position, or null if the 
+     *                      position is empty
      */
     public Car getCarAt(Position position) {
         return grid[position.getRow()][position.getColumn()];
     }
     
+    /**
+     * Checks that all of the positions of a given car are not off the board,  
+     * nor occupied by another car.
+     * 
+     * @param   car the car to check
+     * @return      true if all of the positions required for the car are free, 
+     *              otherwise false
+     */
+    public boolean canPut(Car car) {
+        List<Position> desired = car.getPositions();
+        for (Position pos : desired) {
+            if (pos.getRow() > height()-1) return false;
+            if (pos.getColumn() > width()-1) return false;
+            if (this.grid[pos.getRow()][pos.getColumn()] != null) return false;
+        }
+        return true;
+    }
     
+    /**
+     * Adds a car on the board.
+     * 
+     * @param   car the car to add
+     */
+    public void put(Car car) {
+        List<Position> occupy = car.getPositions();
+        for (Position pos : occupy) {
+            this.grid[pos.getRow()][pos.getColumn()] = car;
+        }
+    }
 }

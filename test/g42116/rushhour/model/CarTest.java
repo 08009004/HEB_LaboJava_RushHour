@@ -3,6 +3,7 @@ Sauf mention explicite du contraire, toutes les méthodes non triviales du modè
 devront être testées mais aucune méthode de la vue ne devra l’être.
 
 Les accesseurs peuvent être considérés comme triviaux.
+-> c'est quand meme mieux de les tester
 
 Les tests unitaires de getPositions() ne peuvent pas tenir compte d’un 
 quelconque ordre dans la liste des positions.

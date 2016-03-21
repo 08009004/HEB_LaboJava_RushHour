@@ -23,7 +23,7 @@ public class BoardTest {
     public void testGetHeight() {
         Board tested = new Board(3, 4, new Position(0, 0));
         int expected = 3;
-        int result = tested.getHeight();
+        int result = tested.height();
         assertEquals(expected, result);
     }
     
@@ -34,7 +34,7 @@ public class BoardTest {
     public void testGetWidth() {
         Board tested = new Board(3, 4, new Position(0, 0));
         int expected = 4;
-        int result = tested.getWidth();
+        int result = tested.width();
         assertEquals(expected, result);
     }
 

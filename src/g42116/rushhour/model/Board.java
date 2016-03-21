@@ -1,7 +1,7 @@
 package g42116.rushhour.model;
 
 /**
- * This class defines the game board oject.
+ * This class defines the game board object.
  * 
  * @author john
  */
@@ -27,8 +27,8 @@ public class Board {
      * @param   height  the height of the game board
      * @param   exit    the exit position
      * @throws          IllegalArgumentException if length or height are 
-     *                  strictly lesser than 1, or if exit is not on a board 
-     *                  side
+     *                  strictly lesser than 1, or if exit is not on one of the 
+     *                  board sides
      */
     public Board(int height, int width, Position exit) {
         if (height < 1) {
@@ -43,7 +43,7 @@ public class Board {
         
         if (!isOnBoardSide(exit)) {
             throw new IllegalArgumentException("Exit position was: " + exit
-                    + "It must be on a board side.");
+                    + "It must be on one of the board sides.");
         }
 
         this.exit = exit;
@@ -58,32 +58,48 @@ public class Board {
      */
     private boolean isOnBoardSide(Position candidate){
         return (candidate.getRow() == 0) 
-            || (candidate.getRow() == (getHeight() - 1) )
+            || (candidate.getRow() == (height() - 1) )
             || (candidate.getColumn() == 0) 
-            || (candidate.getColumn() == (getWidth() - 1) );
+            || (candidate.getColumn() == (width() - 1) );
     }
     
     /**
      * Returns the height of the game board.
+     * 
      * @return the height of the board
      */
-    public int getHeight() {
+    public int height() {
         return grid.length;
     }
     
     /**
      * Returns the width of the game board.
+     * 
      * @return  the width of the board
      */
-    public int  getWidth() {
+    public int  width() {
         return grid[0].length;
     }
     
     /**
      * Returns the exit position on the game board.
+     * 
      * @return  the exit position
      */
     public Position getExit() {
         return this.exit;
     }
+    
+    /**
+     * Returns the car occupying the position passed as a parameter.
+     * 
+     * @param   position the position to check
+     * @return      the car occupying the position, or null if the position is 
+     *              empty
+     */
+    public Car getCarAt(Position position) {
+        return grid[position.getRow()][position.getColumn()];
+    }
+    
+    
 }

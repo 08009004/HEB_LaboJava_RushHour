@@ -12,6 +12,15 @@ public class Board {
     private Position exit;
     
     /**
+     * Minimal constructor: instantiates a 6 x 6 boxes game board, with the exit
+     * on position (2,5).
+     */
+    public Board() {
+        this.grid = new Car[6][6];
+        this.exit = new Position(2,5);
+    }
+    
+    /**
      * Full constructor.
      * 
      * @param   width  the length of the game board

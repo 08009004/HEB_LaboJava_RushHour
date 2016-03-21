@@ -2,6 +2,8 @@ package g42116.rushhour.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import static g42116.rushhour.model.Orientation.*;
+import static g42116.rushhour.model.Direction.*;
 
 /**
  * This class defines the Car object type.
@@ -108,12 +110,10 @@ public class Car {
      *                      orientation of the car, false otherwise
      */
     private boolean isWrongOrientation(Direction direction) {
-        return (this.orientation == Orientation.HORIZONTAL
-                &&  (direction == Direction.DOWN 
-                        || direction == Direction.UP))
-            || (this.orientation == Orientation.VERTICAL
-                &&  (direction == Direction.LEFT 
-                        || direction == Direction.RIGHT));
+        return (this.orientation == HORIZONTAL
+                &&  (direction == DOWN || direction == UP))
+            || (this.orientation == VERTICAL
+                &&  (direction == LEFT || direction == RIGHT));
     }
 
 /*          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -133,10 +133,10 @@ public class Car {
         occupied.add(currentPosition);
         
         for (int i = 1; i < this.size; i++) {
-            if (this.orientation == Orientation.HORIZONTAL) {
-                occupied.add(occupied.get(i-1).getPosition(Direction.RIGHT));
-            } else if (this.orientation == Orientation.VERTICAL) {
-                occupied.add(occupied.get(i-1).getPosition(Direction.DOWN));
+            if (this.orientation == HORIZONTAL) {
+                occupied.add(occupied.get(i-1).getPosition(RIGHT));
+            } else if (this.orientation == VERTICAL) {
+                occupied.add(occupied.get(i-1).getPosition(DOWN));
             } else {
                 throw new NullPointerException("Orientation of the car cannot "
                     + "be null.");

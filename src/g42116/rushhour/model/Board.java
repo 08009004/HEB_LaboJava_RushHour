@@ -79,4 +79,11 @@ public class Board {
         return grid[0].length;
     }
     
+    /**
+     * Returns the exit position on the game board.
+     * @return  the exit position
+     */
+    public Position getExit() {
+        return this.exit;
+    }
 }

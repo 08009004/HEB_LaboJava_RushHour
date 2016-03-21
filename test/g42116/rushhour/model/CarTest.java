@@ -8,6 +8,7 @@ Les accesseurs peuvent être considérés comme triviaux.
 Les tests unitaires de getPositions() ne peuvent pas tenir compte d’un 
 quelconque ordre dans la liste des positions.
 -> comme Mastermind?
+-> pas besoin : d'accord avec Monsieur Servais.
 */
 
 

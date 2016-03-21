@@ -100,7 +100,7 @@ public class Board {
      *                      position is empty
      */
     public Car getCarAt(Position position) {
-        return grid[position.getRow()][position.getColumn()];
+        return this.grid[position.getRow()][position.getColumn()];
     }
     
     /**
@@ -113,10 +113,20 @@ public class Board {
      */
     public boolean canPut(Car car) {
         List<Position> desired = car.getPositions();
+        Car gridCar = null;
         for (Position pos : desired) {
-            if (pos.getRow() > height()-1) return false;
-            if (pos.getColumn() > width()-1) return false;
-            if (this.grid[pos.getRow()][pos.getColumn()] != null) return false;
+// ecrire une methode privee pour verifier si la position est en dehors du plateau.
+            if ((pos.getRow() > height()-1) || (pos.getRow() < 0)) {
+                return false;
+            }
+            if ((pos.getColumn() > width()-1) || (pos.getColumn() <0)) {
+                return false;
+            }
+            gridCar = this.grid[pos.getRow()][pos.getColumn()];
+            
+            if ((gridCar != null) || (gridCar != car)) {
+                    return false;
+            }
         }
         return true;
     }
@@ -128,8 +138,8 @@ public class Board {
      */
     public void put(Car car) {
         List<Position> occupy = car.getPositions();
-        for (Position pos : occupy) {
-            this.grid[pos.getRow()][pos.getColumn()] = car;
+        for (Position element : occupy) {
+            this.grid[element.getRow()][element.getColumn()] = car;
         }
     }
 }

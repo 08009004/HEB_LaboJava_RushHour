@@ -24,19 +24,18 @@ public class Board {
     
     /**
      * DO NOT USE - method for testing purpose only.
+     * @param   testCar new Car('a', 2, HORIZONTAL, new Position(1,1))
      */
     public Board(Car testCar) {
-        Position tempPos = new  Position(0,0);
-//        testCar = new Car('a', 2, Orientation.HORIZONTAL, tempPos);
-        Car[][] temp = {
-            {testCar, testCar, null},
-            {null,    null,    null},
-            {null,    null,    null}
+        Car[][] testGrid = {
+            {null,    null,    null,    null,    null,    null},
+            {null,    testCar, testCar, null,    null,    null},
+            {null,    null,    null,    null,    null,    null}
         };
-        this.grid = temp;
-        this.exit = tempPos;
+        this.grid = testGrid;
+        this.exit = new  Position(2,5);
     }
-    
+  
     /**
      * Full constructor.
      * 

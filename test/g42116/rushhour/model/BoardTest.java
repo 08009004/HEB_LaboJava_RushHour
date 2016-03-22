@@ -2,6 +2,7 @@ package g42116.rushhour.model;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static g42116.rushhour.model.Orientation.*;
 
 /**
  *
@@ -83,18 +84,28 @@ public class BoardTest {
     }
     
     /**
-     * getCarAt() normal case.
+     * getCarAt() normal case (2 tests).
      */
     @Test
     public void  testGetCarAt() {
-        Car testCar = new Car('a', 2, Orientation.HORIZONTAL, new Position(0,0));
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
         Board tested = new Board(testCar);
         Car expected = testCar;
         Car result1 = tested.getCarAt(new Position(0,0));
-        Car result2 = tested.getCarAt(new Position(1,0));
-        assertEquals(expected, result1);
-        assertEquals(null, result2);
+        Car result2 = tested.getCarAt(new Position(1,2));
+        assertEquals(null, result1);
+        assertEquals(expected, result2);
     }
-    
-    
+
+/*    
+    @Test
+    public void testPutCar() {
+        Board tested = new Board();
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Board expected = new Board(testCar);
+        tested.put(testCar);
+        assertEquals(expected, tested);
+        
+    }
+*/    
 }

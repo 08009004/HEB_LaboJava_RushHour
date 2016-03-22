@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * This class defines the game board object.
  * 
- * @author john
+ * @author g42116
  */
 public class Board {
     
@@ -127,7 +127,7 @@ public class Board {
      */
     public boolean canPut(Car car) {
         List<Position> desired = car.getPositions();
-        Car boardSquare = null;
+        Car boardSquare;
         
         for (Position element : desired) {
             if ( !isOntheBoard(element) ) return false;

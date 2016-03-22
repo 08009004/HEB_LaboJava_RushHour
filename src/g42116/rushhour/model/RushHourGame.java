@@ -24,10 +24,31 @@ public class RushHourGame {
      *                      letting the game start
      * @param   redCar      the red car that the player tries to drive out of
      *                      the board
+     * @throws              IllegalArgumentException if the red car is not 
+     *                      completely on the game board, or if one of the cars 
+     *                      from argument 'carsList' cannot be added to it
      */
     public  RushHourGame(int boardHeight, int boardWidth, Position exit,
-                                                    List carsList, Car redCar) {
+                                              Car redCar, List<Car> carsList) {
         
+        this.board = new Board(boardHeight, boardWidth, exit);
+        
+        if (this.board.canPut(redCar)) {
+            this.board.put(redCar);
+            this.redCar = redCar;
+        } else {
+            throw new IllegalArgumentException("Red " + redCar + " was at least"
+                + " partly outside of the board.");
+        }
+        
+        for (Car element : carsList) {
+            if (this.board.canPut(element)) {
+                this.board.put(element);
+            } else {
+                throw new IllegalArgumentException("" + element + " could not "
+                        + "be added to the board.");
+            }
+        }
     }
 
     /**

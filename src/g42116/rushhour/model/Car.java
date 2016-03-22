@@ -78,7 +78,7 @@ public class Car {
      */
     @Override
     public String toString() {
-        return "Car" + id + " (size: " + size + ", orientation:" + orientation 
+        return "Car '" + id + "' (size: " + size + ", orientation:" + orientation 
                 + ", position:" + currentPosition + ')';
     }
     

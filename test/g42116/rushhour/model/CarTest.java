@@ -157,10 +157,11 @@ public class CarTest {
     public void testGetPositions1() {
         Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(1,2));
         List<Position> expected = Arrays.asList(
-            new Position(1,2),
-            new Position(1,3));
+            new Position(1,3),
+            new Position(1,2));
         List<Position> result = tested.getPositions();
-        assertEquals(expected, result);
+        assertTrue(
+                expected.containsAll(result) && result.containsAll(expected));
     }
     
     /**
@@ -170,11 +171,12 @@ public class CarTest {
     public void testGetPositions2() {
         Car tested = new Car('a', 3, Orientation.VERTICAL, new Position(1,2));
         List<Position> expected = Arrays.asList(
+            new Position(3,2),
             new Position(1,2),
-            new Position(2,2),
-            new Position(3,2));
+            new Position(2,2));
         List<Position> result = tested.getPositions();
-        assertEquals(expected, result);
+        assertTrue(
+                expected.containsAll(result) && result.containsAll(expected));
     }
     
     /**

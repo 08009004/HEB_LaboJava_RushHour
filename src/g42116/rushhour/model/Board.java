@@ -11,7 +11,7 @@ public class Board {
     
     //Class attributes:
     private Car[][] grid;
-    private Position exit;
+    private final Position exit;
     
     /**
      * Minimal constructor: instantiates a 6 x 6 boxes game board, with the exit
@@ -20,6 +20,21 @@ public class Board {
     public Board() {
         this.grid = new Car[6][6];
         this.exit = new Position(2,5);
+    }
+    
+    /**
+     * DO NOT USE - method for testing purpose only.
+     */
+    public Board(Car testCar) {
+        Position tempPos = new  Position(0,0);
+//        testCar = new Car('a', 2, Orientation.HORIZONTAL, tempPos);
+        Car[][] temp = {
+            {testCar, testCar, null},
+            {null,    null,    null},
+            {null,    null,    null}
+        };
+        this.grid = temp;
+        this.exit = tempPos;
     }
     
     /**
@@ -117,7 +132,9 @@ public class Board {
         
         for (Position element : desired) {
             if ( !isOntheBoard(element) ) return false;
+            
             boardSquare = this.grid[element.getRow()][element.getColumn()];
+            
             if ((boardSquare != null) || (boardSquare != car)) return false;
         }
         

@@ -10,17 +10,26 @@ import static org.junit.Assert.*;
 public class BoardTest {
 
     /**
-     * Constructor normal case.
+     * Minimal constructor normal case.
      */
-    public void testBoard() {
+    @Test
+    public void testBoard1() {
+        new Board();
+    }
+    
+    /**
+     * Full constructor normal case.
+     */
+    @Test
+    public void testBoard2() {
         new Board(6, 6, new Position(2,5));
     }
     
     /**
-     * getHeight() normal case.
+     * height() normal case.
      */
     @Test
-    public void testGetHeight() {
+    public void testHeight() {
         Board tested = new Board(3, 4, new Position(0, 0));
         int expected = 3;
         int result = tested.height();
@@ -28,10 +37,10 @@ public class BoardTest {
     }
     
     /**
-     * getWidth() normal case.
+     * width() normal case.
      */
     @Test
-    public void testGetWidth() {
+    public void testWidth() {
         Board tested = new Board(3, 4, new Position(0, 0));
         int expected = 4;
         int result = tested.width();
@@ -39,27 +48,53 @@ public class BoardTest {
     }
 
     /**
-     * Constructor, exception: width must be strictly greater than 0.
+     * Full constructor, exception: width must be strictly greater than 0.
      */
     @Test (expected=IllegalArgumentException.class)
-    public void testBoard1() {
+    public void testBoard3() {
         new Board(0, 6, null);
     }
     
     /**
-     * Constructor, exception: height must be strictly greater than 0.
+     * Full constructor, exception: height must be strictly greater than 0.
      */
     @Test (expected=IllegalArgumentException.class)
-    public void testBoard2() {
+    public void testBoard4() {
         new Board(6, 0, null);
     }
     
     /**
-     * Constructor, exception: exit must be on one of the board sides.
+     * Full constructor, exception: exit must be on one of the board sides.
      */
     @Test (expected=IllegalArgumentException.class)
-    public void testBoard3() {
+    public void testBoard5() {
         new Board(6, 6, new Position(2,4));
     }
+    
+    /**
+     * getExit() normal case.
+     */
+    @Test
+    public void testGetExit() {
+        Board tested = new Board();
+        Position expected = new Position(2,5);
+        Position result = tested.getExit();
+        assertEquals(expected, result);
+    }
+    
+    /**
+     * getCarAt() normal case.
+     */
+    @Test
+    public void  testGetCarAt() {
+        Car testCar = new Car('a', 2, Orientation.HORIZONTAL, new Position(0,0));
+        Board tested = new Board(testCar);
+        Car expected = testCar;
+        Car result1 = tested.getCarAt(new Position(0,0));
+        Car result2 = tested.getCarAt(new Position(1,0));
+        assertEquals(expected, result1);
+        assertEquals(null, result2);
+    }
+    
     
 }

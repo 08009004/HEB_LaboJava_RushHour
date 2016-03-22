@@ -84,6 +84,56 @@ public class BoardTest {
     }
     
     /**
+     * canPut(car) normal case.
+     */
+    @Test
+    public void testCanPutCar1() {
+    Board tested = new Board();
+    assertTrue(tested.canPut(new Car('a', 2, HORIZONTAL, new Position(2,0))));
+    }
+
+    /**
+     * canPut(car) returns false: car outside the board.
+     */
+    @Test
+    public void testCanPutCar2() {
+    Board tested = new Board();
+    assertFalse(tested.canPut(new Car('a', 3, VERTICAL, new Position(4,4))));
+    }
+
+    /**
+     * canPut(car), exception: car can't be null.
+     */
+    @Test (expected=NullPointerException.class)
+    public void testCanPutCar3() {
+        assertTrue(new Board().canPut(null));
+    }
+    
+///////////////////HERE: MUST TEST put(car)
+    /*    
+    @Test
+    public void testPutCar() {
+        Board tested = new Board();
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Board expected = new Board(testCar);
+        tested.put(testCar);
+        assertEquals(expected, tested);
+        
+    }
+*/    
+    
+    /**
+     * canPut(car) returns false: car overlaps another.
+     */
+    @Test
+    public void testCanPutCar4() {
+    Board tested = new Board();
+    assertTrue(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
+    tested.put(new Car('a', 4, HORIZONTAL, new Position(2,1)));
+    assertFalse(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
+    }
+    
+    /**
      * getCarAt() normal case (2 tests).
      */
     @Test

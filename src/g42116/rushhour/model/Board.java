@@ -124,17 +124,19 @@ public class Board {
      * @param   car the car to check
      * @return      true if all of the positions required for the car are free, 
      *              otherwise false
+     * @throws      NullPointerException if 'car' is null.
      */
-    public boolean canPut(Car car) {
-        List<Position> desired = car.getPositions();
+    public boolean canPut(Car car) {      
+        if (car == null) throw new NullPointerException("Car cannot be null.");
+        
+        List<Position> carPositions = car.getPositions();
         Car boardSquare;
         
-        for (Position element : desired) {
+        for (Position element : carPositions) {
             if ( !isOntheBoard(element) ) return false;
             
             boardSquare = this.grid[element.getRow()][element.getColumn()];
-            
-            if ((boardSquare != null) || (boardSquare != car)) return false;
+            if ((boardSquare != null) && (boardSquare != car)) return false;
         }
         
         return true;
@@ -149,9 +151,9 @@ public class Board {
      */
     private boolean isOntheBoard(Position position) {
         return (position.getRow() < height() ) 
-            && (position.getRow() > 0)
+            && (position.getRow() >= 0)
             && (position.getColumn() < width() ) 
-            && (position.getColumn() > 0);
+            && (position.getColumn() >= 0);
     }
     
     /**

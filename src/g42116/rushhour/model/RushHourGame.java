@@ -20,7 +20,7 @@ public class RushHourGame {
      * @param   boardHeight the height dimension for the game board
      * @param   boardWidth  the width dimension for the game board
      * @param   exit        the exit position on the game board
-     * @param   carsList    a list of the cars to place on the board before 
+     * @param   otherCars    a list of the cars to place on the board before 
      *                      letting the game start
      * @param   redCar      the red car that the player tries to drive out of
      *                      the board
@@ -29,7 +29,7 @@ public class RushHourGame {
      *                      from argument 'carsList' cannot be added to it
      */
     public  RushHourGame(int boardHeight, int boardWidth, Position exit,
-                                              Car redCar, List<Car> carsList) {
+                                              Car redCar, List<Car> otherCars) {
         
         this.board = new Board(boardHeight, boardWidth, exit);
         
@@ -41,7 +41,7 @@ public class RushHourGame {
                 + " partly outside of the board.");
         }
         
-        for (Car element : carsList) {
+        for (Car element : otherCars) {
             if (this.board.canPut(element)) {
                 this.board.put(element);
             } else {

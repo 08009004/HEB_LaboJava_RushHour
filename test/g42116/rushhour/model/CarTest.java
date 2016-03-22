@@ -5,10 +5,6 @@ devront être testées mais aucune méthode de la vue ne devra l’être.
 Les accesseurs peuvent être considérés comme triviaux.
 -> c'est quand meme mieux de les tester
 
-Les tests unitaires de getPositions() ne peuvent pas tenir compte d’un 
-quelconque ordre dans la liste des positions.
--> comme Mastermind?
--> pas besoin : d'accord avec Monsieur Servais.
 */
 
 

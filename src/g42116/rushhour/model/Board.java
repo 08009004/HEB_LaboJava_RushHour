@@ -1,6 +1,8 @@
 package g42116.rushhour.model;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class defines the game board object.
@@ -23,7 +25,7 @@ public class Board {
     }
     
     /**
-     * DO NOT USE - method for testing purpose only.
+     * DO NOT USE - method for equality testing purpose only.
      * @param   testCar new Car('a', 2, HORIZONTAL, new Position(1,1))
      */
     public Board(Car testCar) {
@@ -104,6 +106,38 @@ public class Board {
      */
     public Position getExit() {
         return this.exit;
+    }
+    
+        /**
+     * Checks if the board has the same attributes values as the parameter 
+     * board. Performs a deep equality check on the board grid content (2 
+     * dimensional array).
+     * 
+     * @param   other   the board against which the current board must be
+     *                  checked
+     * @return          true if current board attributes equal those of the 
+     *                  parameter board
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        final Board otherBoard = (Board) other;
+        return Arrays.deepEquals(this.grid, otherBoard.grid)
+            && this.exit.equals(otherBoard.exit);
+    }
+
+    /**
+     * Returns a hash code value for the board.
+     * 
+     * @return  a hash code value for this board
+     */
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 43 * hash + Arrays.deepHashCode(this.grid);
+        hash = 43 * hash + Objects.hashCode(this.exit);
+        return hash;
     }
     
     /**

@@ -21,7 +21,7 @@ public class PositionTest {
     }
     
     /**
-     * case: equals() == false
+     * case: equals() == false.
      */
     @Test
     public void testNotEquals() {

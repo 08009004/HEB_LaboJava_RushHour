@@ -84,6 +84,29 @@ public class BoardTest {
     }
     
     /**
+     * equals() and hashCode() normal cases.
+     */
+    @Test
+    public void testEqualsAndHashCode() {
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Board board1 = new Board(testCar);
+        Board board2 = new Board(testCar);
+        assertTrue(board1.equals(board2) && board2.equals(board1));
+        assertTrue(board1.hashCode() == board2.hashCode());
+    }
+    
+    /**
+     * case: equals() == false.
+     */
+    @Test
+    public void testNotEquals() {
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Board board1 = new Board(testCar);
+        Board board2 = new Board();
+        assertFalse(board1.equals(board2) && board2.equals(board1));
+    }
+    
+    /**
      * canPut(car) normal case.
      */
     @Test

@@ -20,7 +20,7 @@ public class RushHourGame {
      * @param   boardHeight the height dimension for the game board
      * @param   boardWidth  the width dimension for the game board
      * @param   exit        the exit position on the game board
-     * @param   otherCars    a list of the cars to place on the board before 
+     * @param   otherCars   a list of the cars to install on the board before 
      *                      letting the game start
      * @param   redCar      the red car that the player tries to drive out of
      *                      the board

@@ -124,12 +124,16 @@ public class BoardTest {
     
     /**
      * canPut(car) returns false: car overlaps another.
+     * uses Board.put(car)
      */
     @Test
     public void testCanPutCar4() {
     Board tested = new Board();
+    //testing that a car can initially be added on the board:
     assertTrue(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
+    //adding an overlaping car:
     tested.put(new Car('a', 4, HORIZONTAL, new Position(2,1)));
+    //testing that the initial car can't be added anymore:
     assertFalse(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
     }
     

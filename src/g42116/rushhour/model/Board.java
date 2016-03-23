@@ -198,6 +198,7 @@ public class Board {
     public void put(Car car) {
         List<Position> occupy = car.getPositions();
         for (Position element : occupy) {
+System.out.println("Pos: " + element);
             this.grid[element.getRow()][element.getColumn()] = car;
         }
     }

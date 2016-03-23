@@ -105,7 +105,19 @@ public class BoardTest {
         Board board2 = new Board();
         assertFalse(board1.equals(board2) && board2.equals(board1));
     }
+    /*
+    @Test
+    public void testPutCar() {
+    Board tested = new Board();
+    //        Board expected = new Board();
     
+    Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+    Board expected = new Board(testCar);
+    tested.put(testCar);
+    
+    assertEquals(expected, tested);
+    }
+    */   
     /**
      * canPut(car) normal case.
      */
@@ -151,13 +163,14 @@ public class BoardTest {
      */
     @Test
     public void testCanPutCar4() {
-    Board tested = new Board();
-    //testing that a car can initially be added on the board:
-    assertTrue(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
-    //adding an overlaping car:
-    tested.put(new Car('a', 4, HORIZONTAL, new Position(2,1)));
-    //testing that the initial car can't be added anymore:
-    assertFalse(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
+System.out.println("testCanPutCar4.1");
+        Board tested = new Board();
+        //testing that a car can initially be added on the board:
+        assertTrue(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
+        //adding an overlaping car:
+        tested.put(new Car('a', 4, HORIZONTAL, new Position(2,1)));
+        //testing that the initial car can't be added anymore:
+        assertFalse(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
     }
     
     /**

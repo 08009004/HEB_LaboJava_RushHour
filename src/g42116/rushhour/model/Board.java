@@ -32,6 +32,9 @@ public class Board {
         Car[][] testGrid = {
             {null,    null,    null,    null,    null,    null},
             {null,    testCar, testCar, null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
             {null,    null,    null,    null,    null,    null}
         };
         this.grid = testGrid;
@@ -107,8 +110,31 @@ public class Board {
     public Position getExit() {
         return this.exit;
     }
+
+    /**
+     * Returns a textual representation of the board object.
+     * 
+     * @return  a textual representation of the board grid content, line 
+     *          by line, where an empty board square is represented by an em 
+     *          dash
+     */
+    @Override
+    public String toString() {
+        String textualGrid = "\n GAME BOARD\n";
+        for (Car[] row : grid) {
+            for (Car column : row) {
+                if (column == null) {
+                    textualGrid = textualGrid.concat("—\u0009");
+                } else {
+                    textualGrid = textualGrid.concat(column.getId() + "\u0009");
+                }
+            }
+            textualGrid = textualGrid.concat("\n");
+        }
+        return textualGrid;
+    }
     
-        /**
+    /**
      * Checks if the board has the same attributes values as the parameter 
      * board. Performs a deep equality check on the board grid content (2 
      * dimensional array).
@@ -160,7 +186,7 @@ public class Board {
      *              otherwise false
      * @throws      NullPointerException if 'car' is null.
      */
-    public boolean canPut(Car car) {      
+    public boolean canPut(Car car) { 
         if (car == null) throw new NullPointerException("Car cannot be null.");
         
         List<Position> carPositions = car.getPositions();
@@ -198,7 +224,6 @@ public class Board {
     public void put(Car car) {
         List<Position> occupy = car.getPositions();
         for (Position element : occupy) {
-System.out.println("Pos: " + element);
             this.grid[element.getRow()][element.getColumn()] = car;
         }
     }

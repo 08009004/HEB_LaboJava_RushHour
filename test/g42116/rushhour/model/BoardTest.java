@@ -98,26 +98,26 @@ public class BoardTest {
     /**
      * case: equals() == false.
      */
-    @Test
+//    @Test
     public void testNotEquals() {
         Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
         Board board1 = new Board(testCar);
         Board board2 = new Board();
         assertFalse(board1.equals(board2) && board2.equals(board1));
     }
-    /*
+
+    /**
+     * put(car) normal case.
+     */
     @Test
     public void testPutCar() {
-    Board tested = new Board();
-    //        Board expected = new Board();
-    
-    Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
-    Board expected = new Board(testCar);
-    tested.put(testCar);
-    
-    assertEquals(expected, tested);
+        Board tested = new Board();
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Board expected = new Board(testCar);
+        tested.put(testCar);
+        assertEquals(expected, tested);
     }
-    */   
+  
     /**
      * canPut(car) normal case.
      */
@@ -142,20 +142,7 @@ public class BoardTest {
     @Test (expected=NullPointerException.class)
     public void testCanPutCar3() {
         assertTrue(new Board().canPut(null));
-    }
-    
-///////////////////HERE: MUST TEST put(car)
-    /*    
-    @Test
-    public void testPutCar() {
-        Board tested = new Board();
-        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
-        Board expected = new Board(testCar);
-        tested.put(testCar);
-        assertEquals(expected, tested);
-        
-    }
-*/    
+    }   
     
     /**
      * canPut(car) returns false: car overlaps another.
@@ -163,7 +150,6 @@ public class BoardTest {
      */
     @Test
     public void testCanPutCar4() {
-System.out.println("testCanPutCar4.1");
         Board tested = new Board();
         //testing that a car can initially be added on the board:
         assertTrue(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
@@ -176,26 +162,15 @@ System.out.println("testCanPutCar4.1");
     /**
      * getCarAt() normal case (2 tests).
      */
-    @Test
-    public void  testGetCarAt() {
-        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
-        Board tested = new Board(testCar);
-        Car expected = testCar;
-        Car result1 = tested.getCarAt(new Position(0,0));
-        Car result2 = tested.getCarAt(new Position(1,2));
-        assertEquals(null, result1);
-        assertEquals(expected, result2);
-    }
+//    @Test
+//    public void  testGetCarAt() {
+//        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+//        Board tested = new Board(testCar);
+//        Car expected = testCar;
+//        Car result1 = tested.getCarAt(new Position(0,0));
+//        Car result2 = tested.getCarAt(new Position(1,2));
+//        assertEquals(null, result1);
+//        assertEquals(expected, result2);
+//    }
 
-/*    
-    @Test
-    public void testPutCar() {
-        Board tested = new Board();
-        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
-        Board expected = new Board(testCar);
-        tested.put(testCar);
-        assertEquals(expected, tested);
-        
-    }
-*/    
 }

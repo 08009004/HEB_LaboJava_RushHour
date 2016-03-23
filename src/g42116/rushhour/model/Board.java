@@ -1,5 +1,6 @@
 package g42116.rushhour.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -190,13 +191,33 @@ public class Board {
         if (car == null) throw new NullPointerException("Car cannot be null.");
         
         List<Position> carPositions = car.getPositions();
-        Car boardSquare;
         
         for (Position element : carPositions) {
             if ( !isOntheBoard(element) ) return false;
-            
-            boardSquare = this.grid[element.getRow()][element.getColumn()];
-            if ((boardSquare != null) && (boardSquare != car)) return false;
+            if (containsOther(element, car)) return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Checks if a car can be moved in a given direction, that is:
+     *  - the car does not exit the board ;
+     *  - it is not blocked by another car in the given direction.
+     * 
+     * @param   car         the car to move
+     * @param   direction   the desired direction
+     * @return              true if the move is possible, otherwise false
+     */
+    public boolean canMove(Car car, Direction direction) {
+        if (car == null) throw new NullPointerException("Car cannot be null.");
+        
+        List<Position> positions = car.getPositions();
+        
+        for (Position element : positions) {
+            element.getPosition(direction);
+            if (!isOntheBoard(element)) return false;
+            if (containsOther(element, car)) return false;
         }
         
         return true;
@@ -217,6 +238,18 @@ public class Board {
     }
     
     /**
+     * Checks if a given board square is occupied by another car than the one 
+     * passed as a parameter.
+     * 
+     * @param position  the board square to check
+     * @param car       the car checked
+     * @return          true if another car occupies the board square
+     */
+    private boolean containsOther(Position position, Car car) {
+        return (getCarAt(position) != null && getCarAt(position) != car);
+    }
+    
+    /**
      * Adds a car on the board.
      * 
      * @param   car the car to add
@@ -227,4 +260,49 @@ public class Board {
             this.grid[element.getRow()][element.getColumn()] = car;
         }
     }
+    
+    /**
+     * Deletes a car from the board: fills all the grid squares occupied by null
+     * pointers.
+     * 
+     * @param   car the car to delete
+     */
+    public void remove(Car car) {
+        List<Position> remove = car.getPositions();
+        for (Position element : remove) {
+            this.grid[element.getRow()][element.getColumn()] = null;
+        }
+    }
+
+    /**
+     * Scans the board grid to find a car whose id matches the parameter 'id'.
+     * 
+     * @param   id  the id of the car searched
+     * @return      the car if found, otherwise null
+     */
+    public Car getCar(char id) {
+        Car searched = null;
+        Car currentCar;
+        boolean found = false;
+        int line = 0;
+        int column;
+        
+        while ((line < width()) && (!found)) {
+            column = 0;
+            while ((column < height() && (!found))) {
+                currentCar = this.grid[line][column];
+                
+                if (currentCar.getId() == id) {
+                    searched = currentCar;
+                    found = true;
+                }
+                column++;
+            }
+            line++;
+        }
+        
+        return searched;
+    }
+    
+
 }

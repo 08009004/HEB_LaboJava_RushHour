@@ -83,25 +83,6 @@ public class Car {
     }
     
     /**
-     * Modifies current car position by moving it one box in the direction 
-     * received as a parameter.
-     * 
-     * @param   direction   the desired car move direction
-     * @throws              IllegalArgumentException if the requested move 
-     *                      direction is not compatible with the orientation of 
-     *                      the car
-     */
-    public void move(Direction direction) {
-        if (isWrongOrientation(direction)) {
-            throw new IllegalArgumentException("Incompatible move arguments "
-                    + "(car orientation: " + this.orientation
-                    + " ; car direction: " + direction + ").");
-        }
-        
-        currentPosition = currentPosition.getPosition(direction);
-    }
-    
-    /**
      * Checks the validity of a given move direction against the orientation of
      * the car.
      * 
@@ -114,6 +95,51 @@ public class Car {
                 &&  (direction == DOWN || direction == UP))
             || (this.orientation == VERTICAL
                 &&  (direction == LEFT || direction == RIGHT));
+    }
+    
+    /**
+     * Modifies current car position by moving it one square further in the 
+     * direction received as a parameter.
+     * 
+     * @param   direction   the desired car move direction
+     * @throws              IllegalArgumentException if the requested move 
+     *                      direction is not compatible with the orientation of 
+     *                      the car
+     */
+    public void move(Direction direction) {
+        if (isWrongOrientation(direction)) {
+            throw new IllegalArgumentException("Incompatible move arguments "
+                    + "(car orientation: " + this.orientation
+                    + " ; move direction: " + direction + ").");
+        }
+        
+        currentPosition = currentPosition.getPosition(direction);
+    }
+    
+    /**
+     * Simulates a translation of the car positions in the desired move 
+     * direction (the actual car stays unchanged).
+     * @param   desired the desired move direction   
+     * @return          a list of the candidate positions that the car would
+     *                  occupy if Car.move(direction) was applied
+     * @throws          IllegalArgumentException if the requested move 
+     *                  direction is not compatible with the orientation of the 
+     *                  car
+     */
+    public List<Position> getTranslated(Direction desired) {
+        if (isWrongOrientation(desired)) {
+            throw new IllegalArgumentException("Incompatible move arguments "
+                    + "(car orientation: " + this.orientation
+                    + " ; desired direction: " + desired + ").");
+        }
+        
+        List<Position> translation = getPositions();
+        
+        for (Position element : translation) {
+            element.getPosition(desired);
+        }
+        
+        return translation;
     }
 
 /*          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -145,4 +171,5 @@ public class Car {
         
         return occupied;
     }
+    
 }

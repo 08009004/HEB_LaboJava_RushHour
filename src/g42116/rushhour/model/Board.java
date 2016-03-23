@@ -177,7 +177,7 @@ public class Board {
     public Car getCarAt(Position position) {
         return this.grid[position.getRow()][position.getColumn()];
     }
-    
+
     /**
      * Checks that all of the positions of a given car are not off the board,  
      * nor occupied by another car.
@@ -192,12 +192,7 @@ public class Board {
         
         List<Position> carPositions = car.getPositions();
         
-        for (Position element : carPositions) {
-            if ( !isOntheBoard(element) ) return false;
-            if (containsOther(element, car)) return false;
-        }
-        
-        return true;
+        return appropriateName(car, carPositions);
     }
     
     /**
@@ -212,17 +207,27 @@ public class Board {
     public boolean canMove(Car car, Direction direction) {
         if (car == null) throw new NullPointerException("Car cannot be null.");
         
-        List<Position> positions = car.getPositions();
+        List<Position> candidate = car.getTranslated(direction);
         
-        for (Position element : positions) {
-            element.getPosition(direction);
-            if (!isOntheBoard(element)) return false;
+        return appropriateName(car, candidate);
+    }
+    
+    /**
+     * Checks if a given 
+     * 
+     * @param car
+     * @param carPositions
+     * @return 
+     */
+    private boolean appropriateName(Car car,List<Position> carPositions) {
+        for (Position element : carPositions) {
+            if ( !isOntheBoard(element) ) return false;
             if (containsOther(element, car)) return false;
         }
         
         return true;
     }
-    
+        
     /**
      * Checks if a given position is on the game board.
      * 
@@ -303,6 +308,5 @@ public class Board {
         
         return searched;
     }
-    
 
 }

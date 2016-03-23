@@ -146,7 +146,6 @@ public class BoardTest {
     
     /**
      * canPut(car) returns false: car overlaps another.
-     * uses Board.put(car)
      */
     @Test
     public void testCanPutCar4() {
@@ -162,15 +161,18 @@ public class BoardTest {
     /**
      * getCarAt() normal case (2 tests).
      */
-//    @Test
-//    public void  testGetCarAt() {
-//        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
-//        Board tested = new Board(testCar);
-//        Car expected = testCar;
-//        Car result1 = tested.getCarAt(new Position(0,0));
-//        Car result2 = tested.getCarAt(new Position(1,2));
-//        assertEquals(null, result1);
-//        assertEquals(expected, result2);
-//    }
+    @Test
+    public void  testGetCarAt() {
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Board tested = new Board();
+        Car expected = testCar;
+        
+        tested.put(testCar);
+        Car result1 = tested.getCarAt(new Position(0,0));
+        Car result2 = tested.getCarAt(new Position(1,2));
+        
+        assertEquals(null, result1);
+        assertEquals(expected, result2);
+    }
 
 }

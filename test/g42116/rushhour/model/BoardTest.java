@@ -183,7 +183,7 @@ public class BoardTest {
     }
     
     /**
-     * getCarAt() normal case (2 tests).
+     * getCarAt() normal case.
      */
     @Test
     public void testGetCarAt1() {
@@ -192,18 +192,31 @@ public class BoardTest {
         Car expected = testCar;
         
         tested.put(testCar);
-        Car result1 = tested.getCarAt(new Position(0,0));
-        Car result2 = tested.getCarAt(new Position(1,2));
+        Car result = tested.getCarAt(new Position(1,2));
         
-        assertEquals(null, result1);
-        assertEquals(expected, result2);
+        assertEquals(expected, result);
     }
 
+    /**
+     * getCarAt() null case.
+     */
+    @Test
+    public void testGetCarAt2() {
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Board tested = new Board();
+        Car expected = testCar;
+        
+        tested.put(testCar);
+        Car result = tested.getCarAt(new Position(0,0));
+        
+        assertEquals(null, result);
+    }
+    
     /**
      * getCarAt(), exception : passed position is outside the board.
      */
     @Test (expected=IllegalArgumentException.class)
-    public void testGetCarAt2() {
+    public void testGetCarAt3() {
         Board tested = new Board();
         tested.getCarAt(new Position(6,4));
     }
@@ -244,6 +257,20 @@ public class BoardTest {
         Board tested = new Board();
         assertNull(tested.getCar('b'));
     }
+    
+    /**
+     * canMove(car, direction) normal case.
+     */
+    
+    /**
+     * canMove(car, direction) 'false' case.
+     */
+    
+    /**
+     * canMove(car, direction), exception: car == null.
+     */
+    
+    
     
     /**
      * This method declares and instantiates a board for test purpose.

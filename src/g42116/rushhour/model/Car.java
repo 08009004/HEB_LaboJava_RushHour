@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static g42116.rushhour.model.Orientation.*;
 import static g42116.rushhour.model.Direction.*;
+import java.util.Objects;
 
 /**
  * This class defines the Car object type.
@@ -81,6 +82,41 @@ public class Car {
         return "Car '" + id + "' (size: " + size + ", orientation:" + orientation 
                 + ", position:" + currentPosition + ')';
     }
+
+    /**
+     * Checks if the board has the same attributes values as the parameter 
+     * board. Performs a deep equality check on the board grid content (2 
+     * dimensional array).
+     * 
+     * @param   other   the car against which the current car must be checked
+     * @return          true if current board attributes equal those of the 
+     *                  parameter board
+     */    
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        final Car otherCar = (Car) other;
+
+        return (this.id == otherCar.id) && (this.size == otherCar.size)
+                && (this.orientation == otherCar.orientation)
+                && currentPosition.equals(otherCar.currentPosition);
+    }
+
+    /**
+     * Returns a hash code value for the car.
+     * 
+     * @return  a hash code value for this car
+     */
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + this.id;
+        hash = 79 * hash + this.size;
+        hash = 79 * hash + Objects.hashCode(this.orientation);
+        hash = 79 * hash + Objects.hashCode(this.currentPosition);
+        return hash;
+    }    
     
     /**
      * Checks the validity of a given move direction against the orientation of

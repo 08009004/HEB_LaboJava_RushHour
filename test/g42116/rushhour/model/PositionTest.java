@@ -27,7 +27,7 @@ public class PositionTest {
     public void testNotEquals() {
         Position x = new Position(11,9);
         Position y = new Position(3,11);
-        assertFalse(x.equals(y) && y.equals(x));
+        assertFalse(x.equals(y) || y.equals(x));
     }
   
     /**

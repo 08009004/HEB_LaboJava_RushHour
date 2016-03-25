@@ -10,6 +10,8 @@ Les accesseurs peuvent être considérés comme triviaux.
 
 package g42116.rushhour.model;
 
+import static g42116.rushhour.model.Direction.*;
+import static g42116.rushhour.model.Orientation.*;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -26,15 +28,71 @@ public class CarTest {
      */
     @Test (expected=IllegalArgumentException.class)
     public void testConstructor1() {
-        new Car('a', 0, Orientation.HORIZONTAL, new Position(5,5));
+        new Car('a', 0, HORIZONTAL, new Position(5,5));
     }
 
+    /**
+     * equals() and hashCode() 'true' cases.
+     */
+    @Test
+    public void testEqualsAndHashCode() {
+        Car car1 = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Car car2 = new Car('a', 2, HORIZONTAL, new Position(1,1));        
+        
+        assertTrue(car1.equals(car2) && car2.equals(car1));
+        assertTrue(car1.hashCode() == car2.hashCode());
+    }
+    
+    /**
+     * equals() 'false' case: different 'id' attributes.
+     */
+    @Test
+    public void testNotEquals1() {
+        Car car1 = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Car car2 = new Car('b', 2, HORIZONTAL, new Position(1,1));
+        
+        assertFalse(car1.equals(car2) || car2.equals(car1));
+    }    
+
+    /**
+     * equals() 'false' case: different 'size' attributes.
+     */
+    @Test
+    public void testNotEquals2() {
+        Car car1 = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Car car2 = new Car('a', 3, HORIZONTAL, new Position(1,1));
+        
+        assertFalse(car1.equals(car2) || car2.equals(car1));
+    }
+    
+    /**
+     * equals() 'false' case: different 'orientation' attributes.
+     */
+    @Test
+    public void testNotEquals3() {
+        Car car1 = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Car car2 = new Car('a', 2, VERTICAL, new Position(1,1));
+        
+        assertFalse(car1.equals(car2) || car2.equals(car1));
+    }
+    
+    /**
+     * equals() 'false' case: different 'position' attributes.
+     */
+    @Test
+    public void testNotEquals4() {
+        Car car1 = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Car car2 = new Car('b', 2, HORIZONTAL, new Position(1,2));
+        
+        assertFalse(car1.equals(car2) || car2.equals(car1));
+    }
+    
     /**
      * getId() normal case.
      */
     @Test
     public void testGetId1() {
-        Car tested = new Car('r', 1, Orientation.HORIZONTAL, new Position(7,7));
+        Car tested = new Car('r', 1, HORIZONTAL, new Position(7,7));
         char expected = 'r';
         char result = tested.getId();
         assertEquals(expected, result);
@@ -45,8 +103,8 @@ public class CarTest {
      */
     @Test
     public void testGetOrientation1() {
-        Car tested = new Car('a', 2, Orientation.VERTICAL, new Position(2,2));
-        Orientation expected = Orientation.VERTICAL;
+        Car tested = new Car('a', 2, VERTICAL, new Position(2,2));
+        Orientation expected = VERTICAL;
         Orientation result = tested.getOrientation();
         assertEquals(expected, result);
     }
@@ -56,7 +114,7 @@ public class CarTest {
      */
     @Test
     public void testGetPosition1() {
-        Car tested = new Car('a', 3, Orientation.VERTICAL, new Position(5,0));
+        Car tested = new Car('a', 3, VERTICAL, new Position(5,0));
         Position expected = new Position(5,0);
         Position result = tested.getCurrentPosition();
         assertEquals(expected, result);
@@ -67,7 +125,7 @@ public class CarTest {
      */
     @Test
     public void testMove1() {
-        Car tested = new Car('a', 2, Orientation.VERTICAL, new Position(6,6));
+        Car tested = new Car('a', 2, VERTICAL, new Position(6,6));
         Position expected = new Position(7,6);
         tested.move(Direction.DOWN);
         Position result = tested.getCurrentPosition();
@@ -79,7 +137,7 @@ public class CarTest {
      */
     @Test
     public void testMove2() {
-        Car tested = new Car('a', 2, Orientation.VERTICAL, new Position(6,6));
+        Car tested = new Car('a', 2, VERTICAL, new Position(6,6));
         Position expected = new Position(5,6);
         tested.move(Direction.UP);
         Position result = tested.getCurrentPosition();
@@ -91,9 +149,9 @@ public class CarTest {
      */
     @Test
     public void testMove3() {
-        Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(6,6));
+        Car tested = new Car('a', 2, HORIZONTAL, new Position(6,6));
         Position expected = new Position(6,5);
-        tested.move(Direction.LEFT);
+        tested.move(LEFT);
         Position result = tested.getCurrentPosition();
         assertEquals(expected, result);
     }
@@ -103,9 +161,9 @@ public class CarTest {
      */
     @Test
     public void testMove4() {
-        Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(6,6));
+        Car tested = new Car('a', 2, HORIZONTAL, new Position(6,6));
         Position expected = new Position(6,7);
-        tested.move(Direction.RIGHT);
+        tested.move(RIGHT);
         Position result = tested.getCurrentPosition();
         assertEquals(expected, result);
     }
@@ -115,8 +173,8 @@ public class CarTest {
      */
     @Test (expected=IllegalArgumentException.class)
     public void testMove5() {
-        Car tested = new Car('a', 2, Orientation.VERTICAL, new Position(6,6));
-        tested.move(Direction.LEFT);
+        Car tested = new Car('a', 2, VERTICAL, new Position(6,6));
+        tested.move(LEFT);
     }
     
     /**
@@ -124,8 +182,8 @@ public class CarTest {
      */
     @Test (expected=IllegalArgumentException.class)
     public void testMove6() {
-        Car tested = new Car('a', 2, Orientation.VERTICAL, new Position(6,6));
-        tested.move(Direction.RIGHT);
+        Car tested = new Car('a', 2, VERTICAL, new Position(6,6));
+        tested.move(RIGHT);
     }
     
     /**
@@ -133,8 +191,8 @@ public class CarTest {
      */
     @Test (expected=IllegalArgumentException.class)
     public void testMove7() {
-        Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(6,6));
-        tested.move(Direction.DOWN);
+        Car tested = new Car('a', 2, HORIZONTAL, new Position(6,6));
+        tested.move(DOWN);
     }
     
     /**
@@ -142,8 +200,8 @@ public class CarTest {
      */
     @Test (expected=IllegalArgumentException.class)
     public void testMove8() {
-        Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(6,6));
-        tested.move(Direction.UP);
+        Car tested = new Car('a', 2, HORIZONTAL, new Position(6,6));
+        tested.move(UP);
     }
     
     /**
@@ -151,7 +209,7 @@ public class CarTest {
      */
     @Test
     public void testGetPositions1() {
-        Car tested = new Car('a', 2, Orientation.HORIZONTAL, new Position(1,2));
+        Car tested = new Car('a', 2, HORIZONTAL, new Position(1,2));
         
         List<Position> expected = Arrays.asList(
             new Position(1,3),
@@ -169,7 +227,7 @@ public class CarTest {
      */
     @Test
     public void testGetPositions2() {
-        Car tested = new Car('a', 3, Orientation.VERTICAL, new Position(1,2));
+        Car tested = new Car('a', 3, VERTICAL, new Position(1,2));
         
         List<Position> expected = Arrays.asList(
             new Position(3,2),
@@ -188,7 +246,7 @@ public class CarTest {
      */
     @Test (expected=NullPointerException.class) 
     public void testGetPositions3() {
-        Car tested = new Car('a', 4, Orientation.HORIZONTAL, null);
+        Car tested = new Car('a', 4, HORIZONTAL, null);
         tested.getPositions();
     }
 }

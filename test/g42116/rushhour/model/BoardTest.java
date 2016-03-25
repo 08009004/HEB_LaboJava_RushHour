@@ -94,9 +94,9 @@ public class BoardTest {
             {null,    testCar, testCar, null,    null,    null},
             {null,    null,    null,    null,    null,    null}
         };
-        
-//        Car testCar2 = new Car('a', 2, HORIZONTAL, new Position(1,1));        
         Board board1 = new Board(testGrid1);
+        
+        Car testCar2 = new Car('a', 2, HORIZONTAL, new Position(1,1));        
         Car[][] testGrid2 = {
             {null,    null,    null,    null,    null,    null},
             {null,    testCar, testCar, null,    null,    null},
@@ -109,10 +109,10 @@ public class BoardTest {
     }
     
     /**
-     * case: equals() == false.
+     * equals() 'false' case: different grids.
      */
-//    @Test
-    public void testNotEquals() {
+    @Test
+    public void testNotEquals1() {
         Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
         Car[][] testGrid = {
             {null,    null,    null,    null,    null,    null},
@@ -124,7 +124,17 @@ public class BoardTest {
         };
         Board board1 = new Board(testGrid);
         Board board2 = new Board();
-        assertFalse(board1.equals(board2) && board2.equals(board1));
+        assertFalse(board1.equals(board2) || board2.equals(board1));
+    }
+    
+        /**
+     * equals() 'false' case: different grids.
+     */
+    @Test
+    public void testNotEquals2() {
+        Board board1 = new Board(6, 6, new Position(4, 0));
+        Board board2 = new Board();
+        assertFalse(board1.equals(board2) || board2.equals(board1));
     }
 
     /**

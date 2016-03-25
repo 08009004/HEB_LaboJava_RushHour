@@ -26,23 +26,6 @@ public class Board {
     }
     
     /**
-     * DO NOT USE - method for equality testing purpose only.
-     * @param   testCar new Car('a', 2, HORIZONTAL, new Position(1,1))
-     */
-    public Board(Car testCar) {
-        Car[][] testGrid = {
-            {null,    null,    null,    null,    null,    null},
-            {null,    testCar, testCar, null,    null,    null},
-            {null,    null,    null,    null,    null,    null},
-            {null,    null,    null,    null,    null,    null},
-            {null,    null,    null,    null,    null,    null},
-            {null,    null,    null,    null,    null,    null}
-        };
-        this.grid = testGrid;
-        this.exit = new  Position(2,5);
-    }
-  
-    /**
      * Full constructor.
      * 
      * @param   width  the length of the game board
@@ -69,6 +52,15 @@ public class Board {
         }
 
         this.exit = exit;
+    }
+    
+    /**
+     * DO NOT USE - method for testing purpose only.
+     * @param   testGrid the baord grid
+     */
+    Board(Car[][] testGrid) { 
+        this.grid = testGrid;
+        this.exit = new  Position(2,5);
     }
     
     /**

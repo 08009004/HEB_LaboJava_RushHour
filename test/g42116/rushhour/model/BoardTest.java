@@ -89,8 +89,21 @@ public class BoardTest {
     @Test
     public void testEqualsAndHashCode() {
         Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
-        Board board1 = new Board(testCar);
-        Board board2 = new Board(testCar);
+        Car[][] testGrid1 = {
+            {null,    null,    null,    null,    null,    null},
+            {null,    testCar, testCar, null,    null,    null},
+            {null,    null,    null,    null,    null,    null}
+        };
+        
+//        Car testCar2 = new Car('a', 2, HORIZONTAL, new Position(1,1));        
+        Board board1 = new Board(testGrid1);
+        Car[][] testGrid2 = {
+            {null,    null,    null,    null,    null,    null},
+            {null,    testCar, testCar, null,    null,    null},
+            {null,    null,    null,    null,    null,    null}
+        };
+        Board board2 = new Board(testGrid2);
+        
         assertTrue(board1.equals(board2) && board2.equals(board1));
         assertTrue(board1.hashCode() == board2.hashCode());
     }
@@ -101,7 +114,15 @@ public class BoardTest {
 //    @Test
     public void testNotEquals() {
         Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
-        Board board1 = new Board(testCar);
+        Car[][] testGrid = {
+            {null,    null,    null,    null,    null,    null},
+            {null,    testCar, testCar, null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null}
+        };
+        Board board1 = new Board(testGrid);
         Board board2 = new Board();
         assertFalse(board1.equals(board2) && board2.equals(board1));
     }
@@ -111,10 +132,20 @@ public class BoardTest {
      */
     @Test
     public void testPutCar() {
-        Board tested = new Board();
         Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
-        Board expected = new Board(testCar);
+        Car[][] testGrid = {
+            {null,    null,    null,    null,    null,    null},
+            {null,    testCar, testCar, null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null}
+        };
+        Board expected = new Board(testGrid);
+        
+        Board tested = new Board();
         tested.put(testCar);
+        
         assertEquals(expected, tested);
     }
   

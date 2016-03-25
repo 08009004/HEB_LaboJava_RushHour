@@ -203,7 +203,7 @@ public class BoardTest {
      * getCarAt() normal case (2 tests).
      */
     @Test
-    public void  testGetCarAt() {
+    public void testGetCarAt1() {
         Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
         Board tested = new Board();
         Car expected = testCar;
@@ -216,4 +216,12 @@ public class BoardTest {
         assertEquals(expected, result2);
     }
 
+    /**
+     * getCarAt(), exception : passed position is outside the board.
+     */
+    @Test (expected=IllegalArgumentException.class)
+    public void testGetCarAt2() {
+        Board tested = new Board();
+        tested.getCarAt(new Position(6, 4));
+    }
 }

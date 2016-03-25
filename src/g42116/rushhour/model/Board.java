@@ -166,8 +166,15 @@ public class Board {
      * @param   position    the position to check
      * @return              the car occupying the position, or null if the 
      *                      position is empty
+     * @throws              IllegalArgumentException if position is outside the 
+     *                      board
      */
     public Car getCarAt(Position position) {
+        if (!isOntheBoard(position)) {
+            throw new IllegalArgumentException("Position " + position
+                    + " is outside the board. Passed position must be on the "
+                    + "board.");
+        }
         return this.grid[position.getRow()][position.getColumn()];
     }
 

@@ -56,7 +56,7 @@ public class Board {
     
     /**
      * DO NOT USE - method for testing purpose only.
-     * @param   testGrid the baord grid
+     * @param   testGrid the board grid
      */
     Board(Car[][] testGrid) { 
         this.grid = testGrid;
@@ -105,7 +105,7 @@ public class Board {
     }
 
     /**
-     * Returns a textual representation of the board object.
+     * USE ONLY TO DEBUG - Returns a textual representation of the board object.
      * 
      * @return  a textual representation of the board grid content, line 
      *          by line, where an empty board square is represented by an em 
@@ -142,8 +142,9 @@ public class Board {
         if (this == other) return true;
         if (other == null || getClass() != other.getClass()) return false;
         final Board otherBoard = (Board) other;
-        return Arrays.deepEquals(this.grid, otherBoard.grid)
-            && this.exit.equals(otherBoard.exit);
+        
+        return Arrays.deepEquals(this.grid, otherBoard.grid) 
+                && this.exit.equals(otherBoard.exit);
     }
 
     /**
@@ -184,7 +185,12 @@ public class Board {
         
         List<Position> carPositions = car.getPositions();
         
-        return appropriateName(car, carPositions);
+        for (Position element : carPositions) {
+            if ( !isOntheBoard(element) 
+                    ||(getCarAt(element) != null) ) return false;
+        }
+        
+        return true;
     }
     
     /**
@@ -201,20 +207,9 @@ public class Board {
         
         List<Position> candidate = car.getTranslated(direction);
         
-        return appropriateName(car, candidate);
-    }
-    
-    /**
-     * Checks if a given 
-     * 
-     * @param car
-     * @param carPositions
-     * @return 
-     */
-    private boolean appropriateName(Car car,List<Position> carPositions) {
-        for (Position element : carPositions) {
-            if ( !isOntheBoard(element) ) return false;
-            if (containsOther(element, car)) return false;
+        for (Position element : candidate) {
+            if ( !isOntheBoard(element) 
+                    || (containsOther(element, car)) ) return false;
         }
         
         return true;

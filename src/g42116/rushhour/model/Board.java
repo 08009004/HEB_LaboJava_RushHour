@@ -193,8 +193,8 @@ public class Board {
         List<Position> carPositions = car.getPositions();
         
         for (Position element : carPositions) {
-            if ( !isOntheBoard(element) 
-                    ||(getCarAt(element) != null) ) return false;
+            if ( !isOntheBoard(element) ||(getCarAt(element) != null) ) 
+                return false;
         }
         
         return true;
@@ -215,8 +215,8 @@ public class Board {
         List<Position> candidate = car.getTranslated(direction);
         
         for (Position element : candidate) {
-            if ( !isOntheBoard(element) 
-                    || (containsOther(element, car)) ) return false;
+            if ( !isOntheBoard(element) || (containsOther(element, car)) ) 
+                return false;
         }
         
         return true;
@@ -280,27 +280,15 @@ public class Board {
      * @return      the car if found, otherwise null
      */
     public Car getCar(char id) {
-        Car searched = null;
-        Car currentCar;
-        boolean found = false;
-        int line = 0;
-        int column;
         
-        while ((line < width()) && (!found)) {
-            column = 0;
-            while ((column < height() && (!found))) {
-                currentCar = this.grid[line][column];
-                
-                if ( (currentCar != null) && (currentCar.getId() == id) ) {
-                    searched = currentCar;
-                    found = true;
-                }
-                column++;
+        for (Car[] row : grid) {
+            for (Car columnElement : row) {
+                if(columnElement != null && columnElement.getId()==id)
+                    return columnElement;
             }
-            line++;
         }
+        return null;
         
-        return searched;
     }
 
 }

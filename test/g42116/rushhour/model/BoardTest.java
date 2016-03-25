@@ -112,17 +112,8 @@ public class BoardTest {
      * equals() 'false' case: different grids.
      */
     @Test
-    public void testNotEquals1() {
-        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
-        Car[][] testGrid = {
-            {null,    null,    null,    null,    null,    null},
-            {null,    testCar, testCar, null,    null,    null},
-            {null,    null,    null,    null,    null,    null},
-            {null,    null,    null,    null,    null,    null},
-            {null,    null,    null,    null,    null,    null},
-            {null,    null,    null,    null,    null,    null}
-        };
-        Board board1 = new Board(testGrid);
+    public void testNotEquals1() { 
+        Board board1 = createTestBoard();
         Board board2 = new Board();
         assertFalse(board1.equals(board2) || board2.equals(board1));
     }
@@ -142,19 +133,11 @@ public class BoardTest {
      */
     @Test
     public void testPutCar() {
-        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
-        Car[][] testGrid = {
-            {null,    null,    null,    null,    null,    null},
-            {null,    testCar, testCar, null,    null,    null},
-            {null,    null,    null,    null,    null,    null},
-            {null,    null,    null,    null,    null,    null},
-            {null,    null,    null,    null,    null,    null},
-            {null,    null,    null,    null,    null,    null}
-        };
-        Board expected = new Board(testGrid);
-        
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));        
         Board tested = new Board();
         tested.put(testCar);
+        
+        Board expected = createTestBoard();
         
         assertEquals(expected, tested);
     }
@@ -222,6 +205,63 @@ public class BoardTest {
     @Test (expected=IllegalArgumentException.class)
     public void testGetCarAt2() {
         Board tested = new Board();
-        tested.getCarAt(new Position(6, 4));
+        tested.getCarAt(new Position(6,4));
+    }
+    
+    /**
+     * removeC(car) normal case.
+     */
+    @Test
+    public void testRemoveCar() {
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Board tested = createTestBoard();;
+        tested.remove(testCar);
+        
+        Board expected = new Board();
+        
+        assertEquals(expected, tested);
+    }
+    
+    /**
+     * getCar(id) normal case.
+     */
+    @Test
+    public void testGetCar1() {
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Board tested = createTestBoard();
+        
+        Car expected = testCar;
+        Car result = tested.getCar('a');
+                
+        assertEquals(expected, result);
+    }
+    
+    /**
+     * getCar(id) null case.
+     */
+    @Test
+    public void testGetCar2() {
+        Board tested = new Board();
+        assertNull(tested.getCar('b'));
+    }
+    
+    /**
+     * This method declares and instantiates a board for test purpose.
+     * 
+     * @return  a board board with its exit on position (2,5) and that contains 
+     *          only the following car:
+     *          new Car('a', 2, HORIZONTAL, new Position(1,1)
+     */
+    private static Board createTestBoard() {
+        Car testCar = new Car('a', 2, HORIZONTAL, new Position(1,1));
+        Car[][] testGrid = {
+            {null,    null,    null,    null,    null,    null},
+            {null,    testCar, testCar, null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null},
+            {null,    null,    null,    null,    null,    null}
+        };   
+        return new Board(testGrid);
     }
 }

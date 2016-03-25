@@ -225,15 +225,15 @@ public class Board {
     /**
      * Checks if a given position is on the game board.
      * 
-     * @param   position    the position to check
+     * @param   candidate    the position to check
      * @return              true if the position is on the game board, otherwise
      *                      false
      */
-    private boolean isOntheBoard(Position position) {
-        return (position.getRow() < height() ) 
-            && (position.getRow() >= 0)
-            && (position.getColumn() < width() ) 
-            && (position.getColumn() >= 0);
+    private boolean isOntheBoard(Position candidate) {
+        return (candidate.getRow() < height() ) 
+            && (candidate.getRow() >= 0)
+            && (candidate.getColumn() < width() ) 
+            && (candidate.getColumn() >= 0);
     }
     
     /**
@@ -291,7 +291,7 @@ public class Board {
             while ((column < height() && (!found))) {
                 currentCar = this.grid[line][column];
                 
-                if (currentCar.getId() == id) {
+                if ( (currentCar != null) && (currentCar.getId() == id) ) {
                     searched = currentCar;
                     found = true;
                 }

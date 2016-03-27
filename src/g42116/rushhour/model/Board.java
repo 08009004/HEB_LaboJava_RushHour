@@ -208,6 +208,7 @@ public class Board {
      * @param   car         the car to move
      * @param   direction   the desired direction
      * @return              true if the move is possible, otherwise false
+     * @throws              NullPointerException if the car parameter is null
      */
     public boolean canMove(Car car, Direction direction) {
         if (car == null) throw new NullPointerException("Car cannot be null.");

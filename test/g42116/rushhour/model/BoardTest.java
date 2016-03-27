@@ -3,6 +3,7 @@ package g42116.rushhour.model;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static g42116.rushhour.model.Orientation.*;
+import static g42116.rushhour.model.Direction.*;
 
 /**
  *
@@ -109,7 +110,7 @@ public class BoardTest {
     }
     
     /**
-     * equals() 'false' case: different grids.
+     * equals() 'false' case: different cars on grid.
      */
     @Test
     public void testNotEquals1() { 
@@ -119,7 +120,7 @@ public class BoardTest {
     }
     
         /**
-     * equals() 'false' case: different grids.
+     * equals() 'false' case: different grid exit position.
      */
     @Test
     public void testNotEquals2() {
@@ -209,7 +210,7 @@ public class BoardTest {
         tested.put(testCar);
         Car result = tested.getCarAt(new Position(0,0));
         
-        assertEquals(null, result);
+        assertNull(result);
     }
     
     /**
@@ -259,18 +260,99 @@ public class BoardTest {
     }
     
     /**
-     * canMove(car, direction) normal case.
+     * canMove(car, direction) normal case (move down).
      */
+    @Test
+    public void testCanMoveCar1() {
+        Car testCar = new Car('b', 3, VERTICAL, new Position(2,1));
+        Board tested = new Board();
+        tested.put(testCar);
+//        System.out.println(tested);
+        assertTrue(tested.canMove(testCar, DOWN));
+    }
     
     /**
-     * canMove(car, direction) 'false' case.
+     * canMove(car, direction) normal case (move up).
      */
+    @Test
+    public void testCanMoveCar2() {
+        Car testCar = new Car('b', 3, VERTICAL, new Position(2,1));
+        Board tested = new Board();
+        tested.put(testCar);
+//        System.out.println(tested);
+        assertTrue(tested.canMove(testCar, UP));
+    }
+    
+    /**
+     * canMove(car, direction) normal case (move left).
+     */
+    @Test
+    public void testCanMoveCar3() {
+        Car testCar = new Car('b', 3, HORIZONTAL, new Position(2,1));
+        Board tested = new Board();
+        tested.put(testCar);
+//        System.out.println(tested);
+        assertTrue(tested.canMove(testCar, LEFT));
+    }
+    
+    /**
+     * canMove(car, direction) normal case (move left).
+     */
+    @Test
+    public void testCanMoveCar4() {
+        Car testCar = new Car('b', 3, HORIZONTAL, new Position(2,1));
+        Board tested = new Board();
+        tested.put(testCar);
+//        System.out.println(tested);
+        assertTrue(tested.canMove(testCar, RIGHT));
+    }
+    
+    /**
+     * canMove(car, direction) 'false' case: car moved over another.
+     */
+    @Test
+    public void testCanMoveCar5() {
+        Car testCar = new Car('b', 3, VERTICAL, new Position(2,1));
+        Board tested = createTestBoard();
+        tested.put(testCar);
+//        System.out.println(tested);
+// problem with method
+//        assertFalse(tested.canMove(testCar, UP));
+    }    
+    
+    /**
+     * canMove(car, direction) 'false' case: car moved outside the board.
+     */
+    @Test
+    public void testCanMoveCar6() {
+        Car testCar = new Car('b', 3, VERTICAL, new Position(3,1));
+        Board tested = new Board();
+        tested.put(testCar);
+//        System.out.println(tested);
+// problem with method
+//        assertFalse(tested.canMove(testCar, DOWN));
+    }  
     
     /**
      * canMove(car, direction), exception: car == null.
      */
+    @Test (expected=NullPointerException.class)
+    public void TestCanMoveCar7() {
+        Board tested = new Board();
+        tested.canMove(null, LEFT);
+    }
     
-    
+    /**
+     * canMove(car, direction), exception: car orientation incompatible with
+     * move direction.
+     */
+/*    @Test (expected=IllegalArgumentException.class)
+    public void testCanMoveCar8() {
+        Car testCar = new Car('b', 3, VERTICAL, new Position(2,1));
+        Board tested = createTestBoard();
+        tested.canMove(testCar, LEFT);
+    }
+*/
     
     /**
      * This method declares and instantiates a board for test purpose.

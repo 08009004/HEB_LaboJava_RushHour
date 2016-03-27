@@ -267,7 +267,6 @@ public class BoardTest {
         Car testCar = new Car('b', 3, VERTICAL, new Position(2,1));
         Board tested = new Board();
         tested.put(testCar);
-//        System.out.println(tested);
         assertTrue(tested.canMove(testCar, DOWN));
     }
     
@@ -279,7 +278,6 @@ public class BoardTest {
         Car testCar = new Car('b', 3, VERTICAL, new Position(2,1));
         Board tested = new Board();
         tested.put(testCar);
-//        System.out.println(tested);
         assertTrue(tested.canMove(testCar, UP));
     }
     
@@ -291,7 +289,6 @@ public class BoardTest {
         Car testCar = new Car('b', 3, HORIZONTAL, new Position(2,1));
         Board tested = new Board();
         tested.put(testCar);
-//        System.out.println(tested);
         assertTrue(tested.canMove(testCar, LEFT));
     }
     
@@ -303,7 +300,6 @@ public class BoardTest {
         Car testCar = new Car('b', 3, HORIZONTAL, new Position(2,1));
         Board tested = new Board();
         tested.put(testCar);
-//        System.out.println(tested);
         assertTrue(tested.canMove(testCar, RIGHT));
     }
     
@@ -315,9 +311,7 @@ public class BoardTest {
         Car testCar = new Car('b', 3, VERTICAL, new Position(2,1));
         Board tested = createTestBoard();
         tested.put(testCar);
-//        System.out.println(tested);
-// problem with method
-//        assertFalse(tested.canMove(testCar, UP));
+        assertFalse(tested.canMove(testCar, UP));
     }    
     
     /**
@@ -328,9 +322,7 @@ public class BoardTest {
         Car testCar = new Car('b', 3, VERTICAL, new Position(3,1));
         Board tested = new Board();
         tested.put(testCar);
-//        System.out.println(tested);
-// problem with method
-//        assertFalse(tested.canMove(testCar, DOWN));
+        assertFalse(tested.canMove(testCar, DOWN));
     }  
     
     /**
@@ -341,18 +333,6 @@ public class BoardTest {
         Board tested = new Board();
         tested.canMove(null, LEFT);
     }
-    
-    /**
-     * canMove(car, direction), exception: car orientation incompatible with
-     * move direction.
-     */
-/*    @Test (expected=IllegalArgumentException.class)
-    public void testCanMoveCar8() {
-        Car testCar = new Car('b', 3, VERTICAL, new Position(2,1));
-        Board tested = createTestBoard();
-        tested.canMove(testCar, LEFT);
-    }
-*/
     
     /**
      * This method declares and instantiates a board for test purpose.

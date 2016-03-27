@@ -331,7 +331,6 @@ public class CarTest {
         tested.getTranslated(DOWN);
     }
     
-    
     /**
      * getPositions(), exception: orientation.VERTICAL and direction.LEFT.
      */

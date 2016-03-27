@@ -249,4 +249,96 @@ public class CarTest {
         Car tested = new Car('a', 4, HORIZONTAL, null);
         tested.getPositions();
     }
+    
+    /**
+     * getTranslated(RIGHT) normal case, with Orientation.HORIZONTAL.
+     */
+    @Test
+    public void testGetTranslated1() {
+        Car tested = new Car('a', 2, HORIZONTAL, new Position(1,2));
+        
+        List<Position> expected = Arrays.asList(
+            new Position(1,4),
+            new Position(1,3)
+        );
+        
+        List<Position> result = tested.getTranslated(RIGHT);
+        
+        assertTrue(
+                expected.containsAll(result) && result.containsAll(expected));
+    }
+    
+    /**
+     * getTranslated(LEFT) normal case, with Orientation.HORIZONTAL.
+     */
+    @Test
+    public void testGetTranslated2() {
+        Car tested = new Car('a', 2, HORIZONTAL, new Position(1,2));
+        
+        List<Position> expected = Arrays.asList(
+            new Position(1,2),
+            new Position(1,1)
+        );
+        
+        List<Position> result = tested.getTranslated(LEFT);
+        
+        assertTrue(
+                expected.containsAll(result) && result.containsAll(expected));
+    }
+
+    /**
+     * getTranslated(UP) normal case, with Orientation.HORIZONTAL.
+     */
+    @Test
+    public void testGetTranslated3() {
+        Car tested = new Car('a', 2, VERTICAL, new Position(1,2));
+        
+        List<Position> expected = Arrays.asList(
+            new Position(0,2),
+            new Position(1,2)
+        );
+        
+        List<Position> result = tested.getTranslated(UP);
+        
+        assertTrue(
+                expected.containsAll(result) && result.containsAll(expected));
+    }
+    
+    /**
+     * getTranslated(DOWN) normal case, with Orientation.UP.
+     */
+    @Test
+    public void testGetTranslated4() {
+        Car tested = new Car('a', 2, VERTICAL, new Position(1,2));
+        
+        List<Position> expected = Arrays.asList(
+            new Position(2,2),
+            new Position(3,2)
+        );
+        
+        List<Position> result = tested.getTranslated(DOWN);
+        
+        assertTrue(
+                expected.containsAll(result) && result.containsAll(expected));
+    } 
+    
+    /**
+     * getPositions(), exception: orientation.HORIZONTAL and direction.DOWN.
+     */
+    @Test (expected=IllegalArgumentException.class) 
+    public void testGetTranslated5() {
+        Car tested = new Car('a', 4, HORIZONTAL, null);
+        tested.getTranslated(DOWN);
+    }
+    
+    
+    /**
+     * getPositions(), exception: orientation.VERTICAL and direction.LEFT.
+     */
+    @Test (expected=IllegalArgumentException.class) 
+    public void testGetTranslated6() {
+        Car tested = new Car('a', 4, VERTICAL, null);
+        tested.getTranslated(LEFT);
+    }
+    
 }

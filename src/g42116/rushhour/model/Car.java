@@ -171,8 +171,8 @@ public class Car {
         
         List<Position> translation = getPositions();
         
-        for (Position element : translation) {
-            element.getPosition(desired);
+        for (int i = 0; i < translation.size(); i++) {
+            translation.set(i, translation.get(i).getPosition(desired));  
         }
         
         return translation;

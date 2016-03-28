@@ -1,5 +1,6 @@
 package g42116.rushhour.model;
 
+import static g42116.rushhour.model.Orientation.*;
 import java.util.List;
 
 /**
@@ -24,12 +25,17 @@ public class RushHourGame {
      *                      letting the game start
      * @param   redCar      the red car that the player tries to drive out of
      *                      the board
+     * @throws              RushHourException if the red car is not in alignment
+     *                      with the exit position
      * @throws              IllegalArgumentException if the red car is not 
      *                      completely on the game board, or if one of the cars 
      *                      from argument 'carsList' cannot be added to it
      */
     public  RushHourGame(int boardHeight, int boardWidth, Position exit,
-                                              Car redCar, List<Car> otherCars) {
+                    Car redCar, List<Car> otherCars) throws RushHourException {
+        
+        if (exitMismatch(redCar, exit)) throw new RushHourException("The red "
+            + "car must be aligned with the exit position.");
         
         this.board = new Board(boardHeight, boardWidth, exit);
         
@@ -49,6 +55,20 @@ public class RushHourGame {
                         + "be added to the board.");
             }
         }
+    }
+    
+    /**
+     * Checks if a given red car is in alignment with a given exit position.
+     * @param   redCar  the red car candidate car
+     * @param   exit    the exit candidate position
+     * @return          true if the red car is mismatched with the exit, 
+     *                  otherwise false
+     */
+    private boolean exitMismatch(Car redCar, Position exit) {
+        return (redCar.getOrientation() == HORIZONTAL)
+            && (redCar.getCurrentPosition().getRow() != exit.getRow() )
+            || (redCar.getOrientation() == VERTICAL)
+            && (redCar.getCurrentPosition().getColumn() != exit.getColumn() );
     }
 
     /**

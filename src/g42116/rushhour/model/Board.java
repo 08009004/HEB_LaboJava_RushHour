@@ -1,6 +1,5 @@
 package g42116.rushhour.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -193,7 +192,7 @@ public class Board {
         List<Position> carPositions = car.getPositions();
         
         for (Position element : carPositions) {
-            if ( !isOntheBoard(element) ||(getCarAt(element) != null) ) 
+            if ( !isOntheBoard(element) || (getCarAt(element) != null) ) 
                 return false;
         }
         
@@ -270,7 +269,7 @@ public class Board {
     public void remove(Car car) {
         List<Position> remove = car.getPositions();
         for (Position element : remove) {
-            this.grid[element.getRow()][element.getColumn()] = null;
+            this.grid[element.getRow()][element.getColumn()] = null;          
         }
     }
 
@@ -288,8 +287,8 @@ public class Board {
                     return columnElement;
             }
         }
-        return null;
         
+        return null; 
     }
 
 }

@@ -81,24 +81,30 @@ public class RushHourGame {
     }
     
     /**
-     * Moves a given car in a given direction if it is possible.
+     * Moves a given car in a given direction if such a move is possible.
      * 
      * @param   id          the 'id' attribute of the car to move
      * @param   direction   the direction of the move
+     * @throws              RushHourException if there is no car matching the id
+     *                      parameter, or if the desired move is impossible
      */
-    public void move(char id, Direction direction) {
-/* 
-pour cela la méthode:
+    public void move(char id, Direction direction) throws RushHourException {
+        Car car = this.board.getCar(id);
         
-— vérifie qu’il y a bien une voiture avec cet id et la récupère, grâce à la 
-méthode getCar de Board ;
-— vérifie que la voiture peut se déplacer dans cette direction grâce à la 
-méthode canMove de Board ;
-— retire la voiture du plateau ;
-— déplace la voiture dans la direction donnée ;
-— replace la voiture sur le plateau.
-*/
-
+        if (car == null) {
+            throw new RushHourException("Id was: " + id + ". There is no such "
+                + "car on the board.");
+        }
+        
+        if (this.board.canMove(car, direction)) {
+            this.board.remove(car);
+            car.move(direction);
+            this.board.put(car);
+        } else {
+            throw new RushHourException("Illegal move: the car is either "
+                + "being moved outside the board limits, or there is "
+                + "another car blocking it.");
+        }
     }
     
     /**

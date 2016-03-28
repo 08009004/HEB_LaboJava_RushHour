@@ -1,5 +1,6 @@
 package g42116.rushhour.model;
 
+import static g42116.rushhour.model.Direction.*;
 import static g42116.rushhour.model.Orientation.*;
 import java.util.Arrays;
 import java.util.List;
@@ -16,19 +17,17 @@ public class RushHourGameTest {
      * Full constructor normal case.
      */
     @Test 
-    public void testRushHourGame1() {
+    public void testRushHourGame1() throws RushHourException {
+        Position exit = new Position(2,5);
+        Car redCar = new Car('r', 2, HORIZONTAL, new Position(2,0));        
         List<Car> otherCars = Arrays.asList(
             new Car('a', 3, HORIZONTAL, new Position(1,2)),
             new Car('b', 3, VERTICAL, new Position(2,3)),
             new Car('c', 4, HORIZONTAL, new Position(5,0))
         );
         
-        try {
-            new RushHourGame(6, 6, new Position(2,5), 
-                    new Car('a', 2, HORIZONTAL, new Position(2,0)), otherCars);
-        } catch (RushHourException rhe) {
-            System.out.println("erreur: " + rhe);
-        }
+        new RushHourGame(6, 6, exit, redCar, otherCars);
+
     }
 
     /**
@@ -37,6 +36,8 @@ public class RushHourGameTest {
      */
     @Test (expected=RushHourException.class)
     public void testRushHourGame2() throws RushHourException {
+        Position exit = new Position(2,5);
+        Car redCar = new Car('r', 2, VERTICAL, new Position(2,0));        
         List<Car> otherCars = Arrays.asList(
             new Car('a', 3, HORIZONTAL, new Position(1,2)),
             new Car('b', 3, VERTICAL, new Position(2,3)),
@@ -44,8 +45,7 @@ public class RushHourGameTest {
         );
         
 
-        new RushHourGame(6, 6, new Position(2,5), 
-                    new Car('a', 2, VERTICAL, new Position(2,0)), otherCars);
+        new RushHourGame(6, 6, exit, redCar, otherCars);
 
     }  
     
@@ -53,13 +53,11 @@ public class RushHourGameTest {
      * Full constructor, exception : red car partly outside the board.
      */
     @Test (expected = IllegalArgumentException.class)
-    public void testRushHourGame3() {
-        try {
-            new RushHourGame(6, 6, new Position(0,0), 
-                    new Car('a', 2, VERTICAL, new Position(5,0)), null);
-        } catch (RushHourException rhe) {
-            System.out.println("erreur: " + rhe);
-        }     
+    public void testRushHourGame3() throws RushHourException {
+        Position exit = new Position(0,0);
+        Car redCar = new Car('r', 2, VERTICAL, new Position(5,0));        
+        
+        new RushHourGame(6, 6, exit, redCar, null); 
     }
 
     
@@ -67,18 +65,15 @@ public class RushHourGameTest {
      * Full constructor, exception : cars from 'otherCars' outside the board.
      */
     @Test (expected = IllegalArgumentException.class)
-    public void testRushHourGame4() {
+    public void testRushHourGame4() throws RushHourException {
+        Position exit = new Position(2,5);
+        Car redCar = new Car('r', 2, HORIZONTAL, new Position(2,0));
         List<Car> otherCars = Arrays.asList(
             new Car('a', 3, HORIZONTAL, new Position(1,2)),
             new Car('b', 3, VERTICAL, new Position(4,1))
         );
-        
-        try {
-            new RushHourGame(6, 6, new Position(2,5), 
-                    new Car('a', 2, HORIZONTAL, new Position(2,0)), otherCars);
-        } catch (RushHourException rhe) {
-            System.out.println("erreur: " + rhe);
-        }
+
+        new RushHourGame(6, 6, exit, redCar, otherCars);
     }
 
 
@@ -86,19 +81,36 @@ public class RushHourGameTest {
      * Full constructor, exception : some cars from 'otherCars' overlap.
      */
     @Test (expected = IllegalArgumentException.class)
-    public void testRushHourGame5() {
+    public void testRushHourGame5() throws RushHourException {
+        Position exit = new Position(2,5);
+        Car redCar = new Car('r', 2, HORIZONTAL, new Position(2,0)); 
         List<Car> otherCars = Arrays.asList(
             new Car('a', 3, HORIZONTAL, new Position(1,2)),
             new Car('b', 3, VERTICAL, new Position(2,3)),
             new Car('c', 4, HORIZONTAL, new Position(3,2))
         );
         
-        try {
-            new RushHourGame(6, 6, new Position(2,5), 
-                    new Car('a', 2, HORIZONTAL, new Position(2,0)), otherCars);
-        } catch (RushHourException rhe) {
-            System.out.println("erreur: " + rhe);
-        }        
+            new RushHourGame(6, 6, exit, redCar, otherCars);    
     }
     
+    /**
+     * move(car, direction) normal case.
+     */
+    @Test
+    public void testMove1() throws RushHourException {
+        Position exit = new Position(2, 5);
+        Car redCar = new Car('r', 2, HORIZONTAL, new Position(2,0));        
+        List<Car> otherCars = Arrays.asList(
+            new Car('a', 3, HORIZONTAL, new Position(1,2)),
+            new Car('b', 3, VERTICAL, new Position(2,3)),
+            new Car('c', 4, VERTICAL, new Position(2,5))
+        );
+        RushHourGame tested = new RushHourGame(6, 6, exit, redCar, otherCars);
+        List<Position> expected = redCar.getTranslated(RIGHT);
+        
+        tested.move('r', RIGHT);
+        List<Position> result = redCar.getPositions();
+        
+        assertEquals(expected, result);
+    }
 }

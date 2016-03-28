@@ -34,8 +34,8 @@ public class RushHourGame {
     public  RushHourGame(int boardHeight, int boardWidth, Position exit,
                     Car redCar, List<Car> otherCars) throws RushHourException {
         
-        if (exitMismatch(redCar, exit)) throw new RushHourException("The red "
-            + "car must be aligned with the exit position.");
+        if ( !matchingExit(redCar, exit) ) throw new RushHourException(
+                        "The red car must be aligned with the exit position.");
         
         this.board = new Board(boardHeight, boardWidth, exit);
         
@@ -58,17 +58,17 @@ public class RushHourGame {
     }
     
     /**
-     * Checks if a given red car is in alignment with a given exit position.
+     * Controls if a given red car is on the same line as a given exit position.
      * @param   redCar  the red car candidate car
      * @param   exit    the exit candidate position
-     * @return          true if the red car is mismatched with the exit, 
+     * @return          true if the red car is aligned with the exit, 
      *                  otherwise false
      */
-    private boolean exitMismatch(Car redCar, Position exit) {
+    private boolean matchingExit(Car redCar, Position exit) {
         return (redCar.getOrientation() == HORIZONTAL)
-            && (redCar.getCurrentPosition().getRow() != exit.getRow() )
+            && (redCar.getCurrentPosition().getRow() == exit.getRow() )
             || (redCar.getOrientation() == VERTICAL)
-            && (redCar.getCurrentPosition().getColumn() != exit.getColumn() );
+            && (redCar.getCurrentPosition().getColumn() == exit.getColumn() );
     }
 
     /**
@@ -108,13 +108,13 @@ public class RushHourGame {
     }
     
     /**
-     * Checks if the game is over (i.e. if the red car has been driven off the
-     * board).
+     * Checks if the game is over (i.e. if the red car occupies the exit
+     * position).
      * 
      * @return  true if the game is over, otherwise false
      */
     public boolean isOver() {
-        return true;
+        return ( this.board.getCarAt(this.board.getExit()) == redCar );
     }
     
 }

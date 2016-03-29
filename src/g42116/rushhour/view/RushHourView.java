@@ -48,13 +48,12 @@ public class RushHourView {
         System.out.print("\n" + initialMessage);
 /* API: "A Scanner breaks its input into tokens using a delimiter pattern, which 
         by default matches whitespace."
-        "nextLine() advances this scanner past the current line and returns the 
+        nextLine() "advances this scanner past the current line and returns the 
         input that was skipped."
 */
         do {
             str1 = keyboard.nextLine();
-            str1 = str1.replace(" ", "");
-            str1 = str1.replace("\t", "");
+            str1 = str1.replace(" ", "").replace("\t", "");
             
             if (str1.equals("")) {
                 System.out.print("You have keyed in a blank character. "
@@ -70,5 +69,5 @@ public class RushHourView {
 
         return str1.charAt(0);
     }
-    
+            
 }

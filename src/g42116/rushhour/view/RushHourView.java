@@ -1,7 +1,11 @@
 package g42116.rushhour.view;
 
 import g42116.rushhour.model.RushHourGame;
+import java.awt.event.KeyEvent;
 import java.util.Scanner;
+import javax.swing.ActionMap;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -22,12 +26,21 @@ public class RushHourView {
 //Votre programme doit être robuste, vous devez gérer les erreurs éventuelles de l’uti-
 //lisateur.
     public void play() {
+        String str1 = "Select the car that you want to move: ";
+        String str2 = "Please enter a valid car identifier: ";
+        String str3 = "Which way would you like to move it?\n"
+                    + "press U for Up,  D for Down, L for Left or R for Right: ";
+        String str4 = "Please press a keyboard arrow key. ";
         
         char currentCar;
+        char moveDirection;
         
         while (!this.game.isOver()) {            
-            currentCar = askCarID("Select the car that you want to move: ",
-                "Please enter a valid car identifier: ");
+            currentCar = askChar(str1, str2);
+            do {                
+                moveDirection = askChar(str3, str4);
+            } while (true);
+
         }
     }
     
@@ -40,9 +53,10 @@ public class RushHourView {
      * @param   newRequest      message printed to screen to prompt for a new 
      *                          input if user didn't key in a single non-blank 
      *                          character
-     * @return                  the character keyed in by the user
+     * @return                  the upper case version of the character keyed in
+     *                          by the user
      */
-    private char askCarID(String initialMessage, String newRequest) {
+    private static char askChar(String initialMessage, String newRequest) {
         Scanner keyboard = new Scanner(System.in);
         String str1;
         System.out.print("\n" + initialMessage);
@@ -54,6 +68,7 @@ public class RushHourView {
         do {
             str1 = keyboard.nextLine();
             str1 = str1.replace(" ", "").replace("\t", "");
+            str1 = str1.toUpperCase();
             
             if (str1.equals("")) {
                 System.out.print("You have keyed in a blank character. "
@@ -69,5 +84,21 @@ public class RushHourView {
 
         return str1.charAt(0);
     }
-            
+
+    public static void main(String[] args) {
+        String str1 = "Select the car that you want to move: ";
+        String str2 = "Please enter a valid car identifier: ";
+        String str3 = "Which way would you like to move it?\n"
+                    + "press U for Up,  D for Down, L for Left or R for Right: ";
+        String str4 = "Please press a keyboard arrow key. ";
+        
+        char currentCar;
+        char moveDirection;
+           
+            currentCar = askChar(str1, str2);
+System.out.println("currentCar = " + currentCar);
+//            do {                
+//                moveDirection = askChar(str3, str4);
+//            } while (moveDirection != );
+    }
 }

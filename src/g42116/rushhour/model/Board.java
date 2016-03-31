@@ -211,7 +211,7 @@ public class Board {
      */
     public boolean canMove(Car car, Direction direction) {
         if (car == null) throw new NullPointerException("Car cannot be null.");
-        
+              
         List<Position> candidate = car.getTranslated(direction);
         
         for (Position element : candidate) {

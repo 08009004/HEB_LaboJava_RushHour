@@ -35,7 +35,7 @@ public class Display {
      * 
      * @param   board   the board to display
      */
-    static void displayBoard(Board board) {
+    public static void displayBoard(Board board) {
         printLineOfDashes(board.width());
         
         for (int i = 0; i < board.height()  ; i++) {

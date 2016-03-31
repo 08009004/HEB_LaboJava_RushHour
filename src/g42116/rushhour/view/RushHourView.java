@@ -8,7 +8,8 @@ import static g42116.rushhour.model.Direction.*;
 import static g42116.rushhour.view.Display.displayBoard;
 
 /**
- *
+ * This class manages the game visuals.
+ * 
  * @author john
  */
 public class RushHourView {
@@ -23,7 +24,7 @@ public class RushHourView {
     /**
      * As long as the game is not over, this method prompts the player to key-in
      * a car ID and a direction, then moves this car in the desired direction
-     * if possible and prints the game board to screen.
+     * if possible ; then prints the game board to screen.
      */
     public void play() {
         String query1 = "Select the car that you want to move: ";
@@ -43,12 +44,15 @@ public class RushHourView {
             } catch (RushHourException rhe) {
                 System.out.println("ERROR - " 
                                     + rhe + "\nPlease try a different move.\n");
+            } catch (IllegalArgumentException iae) {
+                System.out.println("ERROR - " 
+                                    + iae + "\nPlease try a different move.\n");                
             }
             
             displayBoard(this.game.getBoard());
         } while (!this.game.isOver());
         
-        
+        System.out.println("\nGAME COMPLETED, CONGRATULATIONS!");
         
     }
     

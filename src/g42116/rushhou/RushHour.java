@@ -32,9 +32,9 @@ dans le (nouveau) package g12345.rushhour.
         Position exit = new Position(2, 5);
         Car redCar = new Car('R', 2, HORIZONTAL, new Position(2,0));
         List<Car> otherCars = Arrays.asList(
-            new Car('A', 3, HORIZONTAL, new Position(1,2)),
-            new Car('B', 2, VERTICAL, new Position(2,3)),
-            new Car('C', 4, HORIZONTAL, new Position(5,0))
+            new Car('1', 3, HORIZONTAL, new Position(1,2)),
+            new Car('2', 2, VERTICAL, new Position(2,3)),
+            new Car('3', 4, HORIZONTAL, new Position(5,0))
         );
         RushHourGame game;
 

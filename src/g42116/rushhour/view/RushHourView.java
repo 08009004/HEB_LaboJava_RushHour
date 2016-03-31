@@ -31,6 +31,7 @@ public class RushHourView {
         String error1 = "Please enter a valid car identifier: ";
         String query2 = "Which way would you like to move it? ";
         String error2 = "Please enter a valid direction: ";
+        String exceptionError;
         
         char carID;
         Direction direction;
@@ -42,8 +43,15 @@ public class RushHourView {
             try {
                 this.game.move(carID, direction);
             } catch (RushHourException | IllegalArgumentException e) {
-                System.out.println("ERROR - " 
-                                    + e + "\nPlease try a different move.\n");
+                
+                exceptionError = e.getMessage();
+                exceptionError = exceptionError.replace(
+                        "java.lang.IllegalArgumentException: ", "");
+                exceptionError = exceptionError.replace(
+                        "g42116.rushhour.model.RushHourException: ", "");
+                
+                System.out.println("ERROR - " + exceptionError
+                                    + "\n\nPlease try a different move:");
             }
             
             displayBoard(this.game.getBoard());

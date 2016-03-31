@@ -41,12 +41,9 @@ public class RushHourView {
         
             try {
                 this.game.move(carID, direction);
-            } catch (RushHourException rhe) {
+            } catch (RushHourException | IllegalArgumentException e) {
                 System.out.println("ERROR - " 
-                                    + rhe + "\nPlease try a different move.\n");
-            } catch (IllegalArgumentException iae) {
-                System.out.println("ERROR - " 
-                                    + iae + "\nPlease try a different move.\n");                
+                                    + e + "\nPlease try a different move.\n");
             }
             
             displayBoard(this.game.getBoard());

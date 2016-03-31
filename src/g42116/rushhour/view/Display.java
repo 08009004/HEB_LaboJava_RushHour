@@ -31,7 +31,7 @@ public class Display {
     }
     
     /**
-     * Displays character lines representing the game board in the terminal.
+     * Displays lines of characters representing the game board in the terminal.
      * 
      * @param   board   the board to display
      */

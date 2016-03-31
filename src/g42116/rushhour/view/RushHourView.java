@@ -1,9 +1,11 @@
 package g42116.rushhour.view;
 
+import java.util.Scanner;
+import g42116.rushhour.model.RushHourException;
+import g42116.rushhour.model.RushHourGame;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
-import g42116.rushhour.model.RushHourGame;
-import java.util.Scanner;
+import static g42116.rushhour.view.Display.displayBoard;
 
 /**
  *
@@ -17,20 +19,35 @@ public class RushHourView {
     public RushHourView(RushHourGame game) {
         this.game = game;
     }
-    
-//tant que le jeu n’est pas terminé (le joueur n’a pas gagné) le programme
-//demande à l’utilisateur un id et une direction et déplace la voiture correspondante
-//dans la direction demandée, puis affiche le plateau.
-//Votre programme doit être robuste, vous devez gérer les erreurs éventuelles de l’uti-
-//lisateur.
+
+    /**
+     * As long as the game is not over, this method prompts the player to key-in
+     * a car ID and a direction, then moves this car in the desired direction
+     * if possible and prints the game board to screen.
+     */
     public void play() {
         String query1 = "Select the car that you want to move: ";
         String error1 = "Please enter a valid car identifier: ";
         String query2 = "Which way would you like to move it? ";
         String error2 = "Please enter a valid direction: ";
         
-        char carID = askChar(query1, error1);
-        Direction direction = askDir(query2, error2);
+        char carID;
+        Direction direction;
+        
+        do {
+            carID = askChar(query1, error1);
+            direction = askDir(query2, error2);
+        
+            try {
+                this.game.move(carID, direction);
+            } catch (RushHourException rhe) {
+                System.out.println("ERROR - " 
+                                    + rhe + "\nPlease try a different move.\n");
+            }
+            
+            displayBoard(this.game.getBoard());
+        } while (!this.game.isOver());
+        
         
         
     }
@@ -45,7 +62,7 @@ public class RushHourView {
      *                  user didn't key in a single non-blank character
      * @return          user's entry (upper case)
      */
-    private static char askChar(String query, String error) {
+    private char askChar(String query, String error) {
         Scanner keyboard = new Scanner(System.in);
         String str1;
         System.out.print("\n" + query);
@@ -86,20 +103,19 @@ public class RushHourView {
      * @return          character representative of the user's choice (upper
      *                  case)
      */
-    private static Direction askDir(String query, String error) {
-        char desiredDir;
+    private Direction askDir(String query, String error) {
+        char keyedIn;
         query = query.concat("\npress U for Up, D for Down, L for Left "
                 + "or R for Right: ");
         do {                
-            desiredDir = askChar(query, error);
-            switch (desiredDir) {
+            keyedIn = askChar(query, error);
+            switch (keyedIn) {
                 case 'U': return UP;
                 case 'D': return DOWN;
                 case 'L': return LEFT;
                 case 'R': return RIGHT;
                 default:
-                    System.out.print(desiredDir + " is not a valid "
-                            + "direction.");
+                    System.out.print(keyedIn + " is not a valid direction.");
                     break;
             }   
         } while (true);

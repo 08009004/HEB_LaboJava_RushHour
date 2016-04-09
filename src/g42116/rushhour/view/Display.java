@@ -4,6 +4,7 @@ import g42116.rushhour.model.Board;
 import g42116.rushhour.model.Car;
 import g42116.rushhour.model.Position;
 import static g42116.rushhour.model.Orientation.*;
+import static g42116.rushhour.view.Colour.*;
 
 /**
  * This class serves the purpose of displaying the game board.
@@ -51,10 +52,12 @@ public class Display {
      * @param   number  the number of dashes printed
      */
     private static void printLineOfDashes(int number) {
-        System.out.print("\n\u0020");
+        String line = "\n\u0020";
         for (int i = 0; i < number; i++) {
-            System.out.print("-");
+            line += "-";
         }
+        line += "\u0020";
+        System.out.print(ColourString.to(line, GREEN, WHITE));
     }
     
     /**
@@ -69,34 +72,33 @@ public class Display {
      * @param   currentRow  the row being printed
      */
     private static void printRow(Board board, int currentRow) {
+        String row = "\n";
         Position boardSquare;
         int exitColumn = board.getExit().getColumn();
         int exitRow = board.getExit().getRow();
         
-        if((exitColumn == 0)
-            && (exitRow == currentRow)) {
-            System.out.print("\nx");
+        if((exitColumn == 0) && (exitRow == currentRow)) {
+            row += ColourString.to("x", GREEN, WHITE);
         } else {
-            System.out.print("\n|");
+            row += ColourString.to("|", GREEN, WHITE);
         }
 
         for (int i = 0; i < board.width(); i++) {
             boardSquare = new Position(currentRow, i);
             
             if (board.getCarAt(boardSquare) == null) {
-//                System.out.print("\u0020");  <- prints a space caracter
-                System.out.print(".");
+                row += ColourString.to("\u0020", YELLOW, BLACK);
             } else {
-                System.out.print(board.getCarAt(boardSquare).getId());
+                row += ColourString.to(""+board.getCarAt(boardSquare).getId(), RED, WHITE);
             }
         }
         
-        if((exitColumn == board.width()-1)
-            && (exitRow == currentRow)) {
-            System.out.print("x");
+        if((exitColumn == board.width()-1) && (exitRow == currentRow)) {
+            row += ColourString.to("x", GREEN, RED);
         } else {
-            System.out.print("|");
+            row += ColourString.to("|", GREEN, WHITE);
         }
-
+        
+        System.out.print(row);
     }
 }

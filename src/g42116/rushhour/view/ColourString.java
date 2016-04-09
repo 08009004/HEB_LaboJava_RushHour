@@ -10,14 +10,6 @@ import static g42116.rushhour.view.Colour.*;
  */
 public class ColourString {
     
-    public static void main(String[] args) {
-        String mess = "hyia";
-        mess = colourTo(mess, BLACK, RED);
-        System.out.println(mess);
-        
-        System.out.println("RED.ordinal() = " + RED.ordinal());
-    }
-    
     /**
      * Returns terminal default colour settings.
      * 
@@ -43,7 +35,7 @@ public class ColourString {
      * @throws              NullPointerException if either of the colour fields
      *                      is left at null
      */
-    public static String colourTo(String string, Colour background, Colour foreground) {
+    public static String to(String string, Colour background, Colour foreground) {
         if (background == null || foreground == null) {
             throw new NullPointerException("Background and foreground " 
                     + "parameters can't be null.");
@@ -51,5 +43,16 @@ public class ColourString {
         return "\033[3" + foreground.ordinal() 
                 + ";4" + background.ordinal() 
                 + "m" + string + toDefault();
+    }
+    
+    /**
+     * Main method to test the class.
+     * 
+     * @param args unused
+     */
+    public static void main(String[] args) {
+        String test = "hyia";
+        test = to(test, GREEN, RED);
+        System.out.println(test);
     }
 }

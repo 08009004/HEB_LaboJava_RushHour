@@ -58,11 +58,12 @@ public class Display {
     }
     
     /**
-     * Prints a game board row in the terminal as follow:
-     *  - first a pipe character (or a cross if it is adjacent to the exit)
-     *  - followed by dots for empty boxes or the car's id if the box is 
-     *    occupied
-     *  - finally a pipe character (or a cross if it is adjacent to the exit).
+     * Prints a carriage return followed by a game board row in the terminal as 
+     * follows:
+     *  - first a pipe character (or a cross if row's first box is the exit) ;
+     *  - followed by dots for empty boxes or the car's id if the box is
+     *    occupied ;
+     *  - finally a pipe character (or a cross if row's last box  the exit).
      * 
      * @param   board       the board being printed
      * @param   currentRow  the row being printed

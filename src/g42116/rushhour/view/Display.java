@@ -62,7 +62,8 @@ public class Display {
             line += "-";
         }
         line += "\u0020";
-        System.out.print(ColourString.to(line, GREEN, WHITE));
+        line = ColourString.to(line, BLACK, WHITE);
+        System.out.print(line);
     }
     
     /**
@@ -83,9 +84,9 @@ public class Display {
         int exitRow = board.getExit().getRow();
         
         if((exitColumn == 0) && (exitRow == currentRow)) {
-            row += ColourString.to("X", WHITE, BLUE);
+            row += ColourString.to("X", BLACK, CYAN);
         } else {
-            row += ColourString.to("|", GREEN, WHITE);
+            row += ColourString.to("|", BLACK, WHITE);
         }
 
         for (int i = 0; i < board.width(); i++) {
@@ -101,9 +102,9 @@ public class Display {
         }
         
         if((exitColumn == board.width()-1) && (exitRow == currentRow)) {
-            row += ColourString.to("X", WHITE, BLUE);
+            row += ColourString.to("X", BLACK, RED);
         } else {
-            row += ColourString.to("|", GREEN, WHITE);
+            row += ColourString.to("|", BLACK, WHITE);
         }
         
         System.out.print(row);

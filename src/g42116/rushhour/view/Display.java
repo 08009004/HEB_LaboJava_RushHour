@@ -20,14 +20,19 @@ public class Display {
      */
     public static void main(String[] args) {
         Board board = new Board();
-        Car redCar = new Car('1', 2, HORIZONTAL, new Position(2,0));
-        Car car1 = new Car('2', 3, VERTICAL, new Position(2,2));
-        Car car2 = new Car('3', 3, VERTICAL, new Position(2,4));
+        Car redCar = new Car('R', 2, HORIZONTAL, new Position(2,0));
+        Car car1 = new Car('3', 3, VERTICAL, new Position(2,2));
+        Car car2 = new Car('6', 3, VERTICAL, new Position(2,4));
         
         board.put(redCar);
         if (board.canPut(car1)) board.put(car1);
         if (board.canPut(car2)) board.put(car2);
         
+//System.out.println("setBackColour(car1.getId()) = " + setBackColour(car1.getId()));
+//System.out.println("setIdColour(car1.getId()) = " + setIdColour(car1.getId()));
+//System.out.println("setBackColour(car2.getId()) = " + setBackColour(car2.getId()));
+//System.out.println("setIdColour(car1.getId()) = " + setIdColour(car1.getId()));
+
         displayBoard(board);
     }
     
@@ -87,9 +92,11 @@ public class Display {
             boardSquare = new Position(currentRow, i);
             
             if (board.getCarAt(boardSquare) == null) {
-                row += ColourString.to("\u0020", YELLOW, BLACK);
+                row += ColourString.to("\u0020", WHITE, BLACK);
             } else {
-                row += ColourString.to(""+board.getCarAt(boardSquare).getId(), RED, WHITE);
+                row += ColourString.to("" + board.getCarAt(boardSquare).getId(), 
+                        setBackColour(board.getCarAt(boardSquare).getId()), 
+                        setIdColour(board.getCarAt(boardSquare).getId()));
             }
         }
         
@@ -100,5 +107,39 @@ public class Display {
         }
         
         System.out.print(row);
+    }
+    
+    /**
+     * Sets the background colour of a car character on the board displayed
+     * according to its 'id' attribute.
+     * 
+     * @param   carID   the car ID
+     * @return          a colour based on the 'id' UTF code number (red only if
+     *                  car id is 'R', never white)
+     */
+    private static Colour setBackColour(char carID) {
+        int col;
+        col = carID % 6;
+        if (col == 1) col = 6;
+        if (carID == 'R') col = 1;
+        return Colour.values()[col];
+    }
+    
+    /**
+     * Sets the 'id' character's font colour when displayed.
+     * 
+     * @param   carID   the 'id' of the car
+     * @return          BLACK if the background should be of a light colour,
+     *                  otherwise WHITE
+     */
+    private static Colour setIdColour(char carID) {
+        switch (setBackColour(carID)) {
+            case BLACK:
+            case RED:
+            case BLUE:
+            case MAGENTA:
+                return WHITE;
+        }
+        return BLACK;
     }
 }

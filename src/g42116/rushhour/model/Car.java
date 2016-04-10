@@ -126,7 +126,7 @@ public class Car {
      * @return              true if the direction is incompatible with the 
      *                      orientation of the car, false otherwise
      */
-    private boolean isWrongOrientation(Direction direction) {
+    public boolean isWrongOrientation(Direction direction) {
         return (this.orientation == HORIZONTAL
                 &&  (direction == DOWN || direction == UP))
             || (this.orientation == VERTICAL

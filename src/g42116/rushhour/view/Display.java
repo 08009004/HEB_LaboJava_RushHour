@@ -7,7 +7,7 @@ import static g42116.rushhour.model.Orientation.*;
 import static g42116.rushhour.view.Colour.*;
 
 /**
- * This class serves the purpose of displaying the game board.
+ * This class serves the purpose of displaying the game board to screen.
  * 
  * @author john
  */
@@ -78,7 +78,7 @@ public class Display {
         int exitRow = board.getExit().getRow();
         
         if((exitColumn == 0) && (exitRow == currentRow)) {
-            row += ColourString.to("x", GREEN, WHITE);
+            row += ColourString.to("X", WHITE, BLUE);
         } else {
             row += ColourString.to("|", GREEN, WHITE);
         }
@@ -94,7 +94,7 @@ public class Display {
         }
         
         if((exitColumn == board.width()-1) && (exitRow == currentRow)) {
-            row += ColourString.to("x", GREEN, RED);
+            row += ColourString.to("X", WHITE, BLUE);
         } else {
             row += ColourString.to("|", GREEN, WHITE);
         }

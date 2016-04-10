@@ -22,43 +22,77 @@ public class RushHourView {
     }
 
     /**
-     * As long as the game is not over, this method prompts the player to key-in
+     * As long as the game is not over, this method prompts the player to key in
      * a car ID and a direction, then moves this car in the desired direction
      * if possible ; then prints the game board to screen.
      */
     public void play() {
-        String query1 = "Select the car that you want to move: ";
-        String error1 = "Please enter a valid car identifier: ";
+        String query1 = "Which car would you like to move: ";
+        String error1A = "Not a car ID. Please enter a valid ID: ";
+        String error1B = "No such car on the board. Please select a valid car.";
         String query2 = "Which way would you like to move it? ";
         String error2 = "Please enter a valid direction: ";
-        String exceptionError;
+        String query3 = "Please try another move: ";
         
         char carID;
         Direction direction;
         
         do {
-            carID = askChar(query1, error1);
-            direction = askDir(query2, error2);
-        
+            carID = requestID(query1, error1A, error1B);
+            direction = requestDir(query2, error2, carID);
+            
             try {
                 this.game.move(carID, direction);
-            } catch (RushHourException | IllegalArgumentException e) {
-                
-                exceptionError = e.getMessage();
-                exceptionError = exceptionError.replace(
-                        "java.lang.IllegalArgumentException: ", "");
-                exceptionError = exceptionError.replace(
-                        "g42116.rushhour.model.RushHourException: ", "");
-                
-                System.out.println("ERROR - " + exceptionError
-                                    + "\n\nPlease try a different move:");
+
+            } catch (RushHourException rhe) {
+                System.out.println(rhe.getMessage().replace(
+                                "g42116.rushhour.model.RushHourException: ", "")
+                        + "\n\n"
+                        + query3);
             }
             
             displayBoard(this.game.getBoard());
+            
         } while (!this.game.isOver());
         
         System.out.println("\nGAME COMPLETED, CONGRATULATIONS!");
         
+    }
+
+    /**
+     * Asks player to key in the ID of the car that he wants to move.
+     * 
+     * @param   query   message printed to screen to prompt the user to key in 
+     *                  the ID of the car that he wants to move
+     * @param   error1  message printed to screen to prompt for a new input if 
+     *                  user didn't key in a single non-blank character 
+     * @param   error2  message printed to screen to prompt for a new input if 
+     *                  the ID entered doesn't match that of one of the cars 
+     *                  present on the board
+     * @return          player's entry
+     */
+    private char requestID(String query, String error1, String error2) {
+        char carID;
+        
+        do {
+            carID = askChar(query, error1);
+            if (!isValidID(carID)) {
+                    System.out.println(error2);
+                    carID = askChar(query, error1);
+            }
+        } while (!isValidID(carID));
+        
+        return carID;
+    }
+    
+    /**
+     * Checks that a car is present on the board.
+     * 
+     * @param   carID   the 'id' attribute of the car being searched for
+     * @return          true if that car is found on the board, otherwise false
+     */
+    private boolean isValidID(char carID) {
+        return this.game.getBoard().getCar(carID) != null;
     }
     
     /**
@@ -98,6 +132,44 @@ public class RushHourView {
         } while (str1.length() > 1 || str1.equals(""));
 
         return str1.charAt(0);
+    }
+
+    /**
+     * Asks player to key in the direction which he wants to move a car.
+     * 
+     * @param   query   message printed to screen to prompt the user to key in 
+     *                  the direction
+     * @param   error   message printed to screen to prompt for a new input if 
+     *                  the direction selected is mismatched match with the
+     *                  orientation of the car
+     * @param   carID   the car that the player wants to move
+     * @return          player's entry
+     */
+    private Direction requestDir(String query, String error, char carID) {
+        Direction direction;
+        
+        do {
+            direction = askDir(query, error);
+            if (areMismatched(carID, direction)) {
+                    System.out.println("Car " + carID + " can't be moved in the"
+                        + " selected direction. ");
+                    direction = askDir(query, error);
+                }
+        } while (!isValidID(carID));
+        
+        return direction;
+    }
+    
+    /**
+     * Checks if a car can be moved in a given direction or not.
+     * 
+     * @param   carID       the car being checked
+     * @param   direction   the desired move direction
+     * @return              true if the car and the direction are incompatible,
+     *                      otherwise false
+     */
+    private boolean areMismatched(char carID, Direction direction) {
+        return this.game.getBoard().getCar(carID).isWrongOrientation(direction);
     }
     
     /**

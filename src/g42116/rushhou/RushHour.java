@@ -45,7 +45,9 @@ dans le (nouveau) package g12345.rushhour
             view.play();
 
         } catch (RushHourException rhe) {
-            System.out.println("Impossible to start the game. " + rhe);
+            System.out.println("Impossible to start the game. " 
+                    + rhe.getMessage().replace(
+                            "g42116.rushhour.model.RushHourException: ", ""));
         }
     }
     

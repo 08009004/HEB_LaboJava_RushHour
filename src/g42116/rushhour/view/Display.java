@@ -84,7 +84,6 @@ public class Display {
      * @param   currentRow  the row being printed
      */
     private static void printRow(Board board, int currentRow) {
-//        String row = "\n";
         String row = "";
         Position boardSquare;
         int exitColumn = board.getExit().getColumn();
@@ -101,15 +100,18 @@ public class Display {
                 boardSquare = new Position(currentRow, j);
 
                 if (board.getCarAt(boardSquare) == null) {
-                    for (int k = 0; k < 3; k++) {
-                        row += ColourString.to("\u0020", WHITE, BLACK);
-                    }
+                    row += ColourString.to("\u0020\u0020\u0020", WHITE, BLACK);
 
                 } else {
                     for (int k = 0; k < 3; k++) {
-                        row += ColourString.to("" + board.getCarAt(boardSquare).getId(), 
-                                setBackColour(board.getCarAt(boardSquare).getId()), 
-                                setIdColour(board.getCarAt(boardSquare).getId()));    
+                        if((boxLine==1) && (k==1)) {
+                            row += board.getCarAt(boardSquare).getId();
+//                                setCarColour(board.getCarAt(boardSquare).getId()), 
+//                                setIdColour(board.getCarAt(boardSquare).getId())); 
+                        } else {
+                            row += "\u0020";
+                        }
+   
                     }
                 }
             }
@@ -154,7 +156,7 @@ public class Display {
      * @return          a colour based on the 'id' UTF code number (red only if
      *                  car id is 'R', never white)
      */
-    private static Colour setBackColour(char carID) {
+    private static Colour setCarColour(char carID) {
         int col;
         col = carID % 6;
         if (col == 1) col = 6;
@@ -163,14 +165,14 @@ public class Display {
     }
     
     /**
-     * Sets the 'id' character's font colour when displayed.
+     * Sets a car's 'id' font display colour, based on the car's own colour.
      * 
      * @param   carID   the 'id' of the car
      * @return          BLACK if the background should be of a light colour,
      *                  otherwise WHITE
      */
     private static Colour setIdColour(char carID) {
-        switch (setBackColour(carID)) {
+        switch (setCarColour(carID)) {
             case BLACK:
             case RED:
             case BLUE:

@@ -45,14 +45,14 @@ public class Display {
         System.out.print("\n");
         
         System.out.println(ColourString.to(
-                            createLineOfDashes(3*board.width()), BLUE, WHITE));
+                            createLineOfDashes(3*board.width()), BLACK, WHITE));
 
         for (int i = 0; i < board.height()  ; i++) {
             printRow(board, i);
         }
         
         System.out.println(ColourString.to(
-                            createLineOfDashes(3*board.width()), BLUE, WHITE));
+                            createLineOfDashes(3*board.width()), BLACK, WHITE));
 
         System.out.print("\n");
     }
@@ -73,57 +73,58 @@ public class Display {
     }
     
     /**
-     * Prints a carriage return followed by a game board row in the terminal as 
-     * follows:
-     *  - first a pipe character (or a cross if row's first box is the exit) ;
-     *  - followed by dots for empty boxes or the car's id if the box is
-     *    occupied ;
-     *  - finally a pipe character (or a cross if row's last box  the exit).
+     * Prints three lines in the terminal, representing a board row as follows:
+     * 
+     * 1 - first 3 pipe characters on top of each other (or a space character on
+     *     top of an X on top of another space if row's first box is the exit);
+     * 2 - followed by space characters filling empty boxes or the car's id in 
+     *     the center of the box if the it is occupied;
+     * 3 - then 3 pipe characters on top of each other (or a space character on
+     *    top of an X on top of another space if row's first box is the exit);
+     * 4 - finally a carriage return character.
      * 
      * @param   board       the board being printed
      * @param   currentRow  the row being printed
      */
     private static void printRow(Board board, int currentRow) {
-        String row = "";
-        Position boardSquare;
+        String boardRow = "";
         int exitColumn = board.getExit().getColumn();
         int exitRow = board.getExit().getRow();
+        Car carOnBox;
+        boolean isExit;
         
         for (int boxLine = 0; boxLine < 3; boxLine++) {
             
-            row += verticalBorder(
-                    (exitColumn == 0) && (exitRow == currentRow), 
-                    boxLine);
+            isExit = (exitColumn == 0) && (exitRow == currentRow);
+            boardRow += ColourString.to(
+                                     sideBorder(isExit, boxLine), BLACK, WHITE);
 
+            for (int box = 0; box < board.width(); box++) {
+                
+                carOnBox = board.getCarAt(new Position(currentRow, box));
 
-            for (int j = 0; j < board.width(); j++) {
-                boardSquare = new Position(currentRow, j);
+                for (int boxColumn = 0; boxColumn < 3; boxColumn++) { 
 
-                if (board.getCarAt(boardSquare) == null) {
-                    row += ColourString.to("\u0020\u0020\u0020", WHITE, BLACK);
-
-                } else {
-                    for (int k = 0; k < 3; k++) {
-                        if((boxLine==1) && (k==1)) {
-                            row += board.getCarAt(boardSquare).getId();
-//                                setCarColour(board.getCarAt(boardSquare).getId()), 
-//                                setIdColour(board.getCarAt(boardSquare).getId())); 
-                        } else {
-                            row += "\u0020";
-                        }
-   
+                    if((carOnBox != null) && (boxLine==1) && (boxColumn==1)) {
+                            boardRow += ColourString.to("" + carOnBox.getId(), 
+                                                    setCarColour(carOnBox), 
+                                                         setIdColour(carOnBox)); 
+                    } else {
+                            boardRow += ColourString.to("\u0020", 
+                                                    setCarColour(carOnBox), 
+                                                         setIdColour(carOnBox));
                     }
                 }
             }
 
-            row += verticalBorder(
-                    (exitColumn == board.width()-1) && (exitRow == currentRow), 
-                    boxLine);
+            isExit = (exitColumn == board.width()-1) && (exitRow == currentRow);
+            boardRow += ColourString.to(
+                                     sideBorder(isExit, boxLine), BLACK, WHITE);
 
-            row += "\n";
+            boardRow += "\n";
         }
         
-        System.out.print(row);
+        System.out.print(boardRow);
     }
     
     /**
@@ -134,7 +135,7 @@ public class Display {
      * @return          'X' (if counter equals 1) or a space character when 
      *                  isExit is true, otherwise a pipe character
      */
-    private static String verticalBorder(boolean isExit, int counter) {
+    private static String sideBorder(boolean isExit, int counter) {
         String row = "";
         if(isExit) {
             if (counter == 1) {
@@ -152,27 +153,33 @@ public class Display {
      * Sets the background colour of a car character on the board displayed
      * according to its 'id' attribute.
      * 
-     * @param   carID   the car ID
-     * @return          a colour based on the 'id' UTF code number (red only if
-     *                  car id is 'R', never white)
+     * @param   Car the car
+     * @return      a colour based on the 'id' UTF code number (red only if car 
+     *              id is 'R', and white only if car equals null)
      */
-    private static Colour setCarColour(char carID) {
-        int col;
-        col = carID % 6;
-        if (col == 1) col = 6;
-        if (carID == 'R') col = 1;
-        return Colour.values()[col];
+    private static Colour setCarColour(Car car) {
+        int colourIndex;
+        
+        if (car == null) {
+            colourIndex = 7;
+        } else {
+            colourIndex = car.getId() % 6;
+            if (colourIndex == 1) colourIndex = 6;
+            if (car.getId() == 'R') colourIndex = 1;
+        }
+        return Colour.values()[colourIndex];
     }
     
     /**
-     * Sets a car's 'id' font display colour, based on the car's own colour.
+     * Sets a car's 'id' font display colour, based on the car's colour by 
+     * setCarColour(Car car).
      * 
-     * @param   carID   the 'id' of the car
+     * @param   carID   the car
      * @return          BLACK if the background should be of a light colour,
      *                  otherwise WHITE
      */
-    private static Colour setIdColour(char carID) {
-        switch (setCarColour(carID)) {
+    private static Colour setIdColour(Car car) {
+        switch (setCarColour(car)) {
             case BLACK:
             case RED:
             case BLUE:

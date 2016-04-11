@@ -9,7 +9,7 @@ import java.util.List;
  * @author john
  */
 public class RushHourGame {
-    
+
     // Class attributes:
     private Board board;
     private Car redCar;
@@ -33,12 +33,12 @@ public class RushHourGame {
      */
     public  RushHourGame(int boardHeight, int boardWidth, Position exit,
                     Car redCar, List<Car> otherCars) throws RushHourException {
-        
+
         if ( !matchingExit(redCar, exit) ) throw new RushHourException(
                         "The red car must be aligned with the exit position.");
-        
+
         this.board = new Board(boardHeight, boardWidth, exit);
-        
+
         if (this.board.canPut(redCar)) {
             this.board.put(redCar);
             this.redCar = redCar;
@@ -46,7 +46,7 @@ public class RushHourGame {
             throw new IllegalArgumentException("Red " + redCar + " was at least"
                 + " partly outside of the board.");
         }
-        
+
         for (Car element : otherCars) {
             if (this.board.canPut(element)) {
                 this.board.put(element);
@@ -56,7 +56,7 @@ public class RushHourGame {
             }
         }
     }
-    
+
     /**
      * Controls if a given red car is on the same line as a given exit position.
      * @param   redCar  the red car candidate car
@@ -90,23 +90,28 @@ public class RushHourGame {
      */
     public void move(char id, Direction direction) throws RushHourException {
         Car car = this.board.getCar(id);
-        
+
         if (car == null) {
-            throw new RushHourException("Id was: " + id + ". There is no such "
-                + "car on the board.");
+            throw new RushHourException("Id was: " + id
+                                      + ". There is no such car on the board.");
         }
-        
+
+        if (car.isWrongOrientation(direction)) {
+            throw new RushHourException("The orientation of the car "
+                                              + "doesn't allow for this move.");
+        }
+
         if (this.board.canMove(car, direction)) {
             this.board.remove(car);
             car.move(direction);
             this.board.put(car);
         } else {
-            throw new RushHourException("Illegal move: the car is either "
-                + "being moved outside the board limits, or there is "
-                + "another car blocking it.");
+            throw new RushHourException("This move is not possible: the car is "
+                    + "either being moved outside the board limits, or there is"
+                    + " another car blocking it.");
         }
     }
-    
+
     /**
      * Checks if the game is over (i.e. if the red car occupies the exit
      * position).
@@ -116,5 +121,17 @@ public class RushHourGame {
     public boolean isOver() {
         return ( this.board.getCarAt(this.board.getExit()) == redCar );
     }
-    
+
+    /**
+     * Verifies if parameter character matches the 'id' attribute of a car 
+     * present on this game's board.
+     * 
+     * @param   carID   the 'id' attribute of the car being searched for
+     * @return          true if there is a car with this ID on the board, 
+     *                  otherwise false
+     */
+    public boolean isValidId(char carID) {
+        return this.board.getCar(carID) != null;
+    }
+
 }

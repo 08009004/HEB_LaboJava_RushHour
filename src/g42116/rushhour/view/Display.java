@@ -92,13 +92,10 @@ public class Display {
         
         for (int boxLine = 0; boxLine < 3; boxLine++) {
             
-            if((exitColumn == 0) && (exitRow == currentRow)) {
+            row += verticalBorder(
+                    (exitColumn == 0) && (exitRow == currentRow), 
+                    boxLine);
 
-                row += "X";
-            } else {
-                row += "t";
-                row += "|";
-            }
 
             for (int j = 0; j < board.width(); j++) {
                 boardSquare = new Position(currentRow, j);
@@ -117,7 +114,9 @@ public class Display {
                 }
             }
 
-            System.out.print(verticalBorder((exitColumn == board.width()-1) && (exitRow == currentRow)));
+            row += verticalBorder(
+                    (exitColumn == board.width()-1) && (exitRow == currentRow), 
+                    boxLine);
 
             row += "\n";
         }
@@ -125,14 +124,25 @@ public class Display {
         System.out.print(row);
     }
     
-    private static String verticalBorder(boolean condition) {
+    /**
+     * Formats the vertical border boxes (for end and start of board rows).
+     * 
+     * @param   isExit  controls method behaviour
+     * @param   counter itration counter
+     * @return          'X' (if counter equals 1) or a space character when 
+     *                  isExit is true, otherwise a pipe character
+     */
+    private static String verticalBorder(boolean isExit, int counter) {
         String row = "";
-        if(condition) {
-            row += "X";
+        if(isExit) {
+            if (counter == 1) {
+                row += "X";
+            } else {
+                row += "\u0020";
+            }
         } else {
-                row += "|";
+            row += "|";
         }
-        row += "b";
         return row;
     }
     

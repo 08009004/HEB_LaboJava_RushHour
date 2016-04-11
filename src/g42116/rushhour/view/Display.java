@@ -42,28 +42,34 @@ public class Display {
      * @param   board   the board to display
      */
     public static void displayBoard(Board board) {
-        printLineOfDashes(board.width());
+        System.out.print("\n");
         
+        System.out.println(ColourString.to(
+                            createLineOfDashes(3*board.width()), BLUE, WHITE));
+
         for (int i = 0; i < board.height()  ; i++) {
             printRow(board, i);
         }
-        printLineOfDashes(board.width());
+        
+        System.out.println(ColourString.to(
+                            createLineOfDashes(3*board.width()), BLUE, WHITE));
+
         System.out.print("\n");
     }
     
     /**
-     * Prints a carriage return followed by a line of dashes.
+     * Creates a  line of dash characters.
      * 
      * @param   number  the number of dashes printed
      */
-    private static void printLineOfDashes(int number) {
-        String line = "\n\u0020";
+    private static String createLineOfDashes(int number) {
+        String line = "\u0020";
         for (int i = 0; i < number; i++) {
             line += "-";
         }
         line += "\u0020";
-        line = ColourString.to(line, BLACK, WHITE);
-        System.out.print(line);
+//        line += "\n";
+        return line;
     }
     
     /**
@@ -78,36 +84,56 @@ public class Display {
      * @param   currentRow  the row being printed
      */
     private static void printRow(Board board, int currentRow) {
-        String row = "\n";
+//        String row = "\n";
+        String row = "";
         Position boardSquare;
         int exitColumn = board.getExit().getColumn();
         int exitRow = board.getExit().getRow();
         
-        if((exitColumn == 0) && (exitRow == currentRow)) {
-            row += ColourString.to("X", BLACK, CYAN);
-        } else {
-            row += ColourString.to("|", BLACK, WHITE);
-        }
-
-        for (int i = 0; i < board.width(); i++) {
-            boardSquare = new Position(currentRow, i);
+        for (int boxLine = 0; boxLine < 3; boxLine++) {
             
-            if (board.getCarAt(boardSquare) == null) {
-                row += ColourString.to("\u0020", WHITE, BLACK);
+            if((exitColumn == 0) && (exitRow == currentRow)) {
+
+                row += "X";
             } else {
-                row += ColourString.to("" + board.getCarAt(boardSquare).getId(), 
-                        setBackColour(board.getCarAt(boardSquare).getId()), 
-                        setIdColour(board.getCarAt(boardSquare).getId()));
+                row += "t";
+                row += "|";
             }
-        }
-        
-        if((exitColumn == board.width()-1) && (exitRow == currentRow)) {
-            row += ColourString.to("X", BLACK, RED);
-        } else {
-            row += ColourString.to("|", BLACK, WHITE);
+
+            for (int j = 0; j < board.width(); j++) {
+                boardSquare = new Position(currentRow, j);
+
+                if (board.getCarAt(boardSquare) == null) {
+                    for (int k = 0; k < 3; k++) {
+                        row += ColourString.to("\u0020", WHITE, BLACK);
+                    }
+
+                } else {
+                    for (int k = 0; k < 3; k++) {
+                        row += ColourString.to("" + board.getCarAt(boardSquare).getId(), 
+                                setBackColour(board.getCarAt(boardSquare).getId()), 
+                                setIdColour(board.getCarAt(boardSquare).getId()));    
+                    }
+                }
+            }
+
+            System.out.print(verticalBorder((exitColumn == board.width()-1) && (exitRow == currentRow)));
+
+            row += "\n";
         }
         
         System.out.print(row);
+    }
+    
+    private static String verticalBorder(boolean condition) {
+        String row = "";
+        if(condition) {
+            row += "X";
+        } else {
+                row += "|";
+        }
+        row += "b";
+        return row;
     }
     
     /**

@@ -27,11 +27,6 @@ public class Display {
         board.put(redCar);
         if (board.canPut(car1)) board.put(car1);
         if (board.canPut(car2)) board.put(car2);
-        
-//System.out.println("setBackColour(car1.getId()) = " + setBackColour(car1.getId()));
-//System.out.println("setIdColour(car1.getId()) = " + setIdColour(car1.getId()));
-//System.out.println("setBackColour(car2.getId()) = " + setBackColour(car2.getId()));
-//System.out.println("setIdColour(car1.getId()) = " + setIdColour(car1.getId()));
 
         displayBoard(board);
     }
@@ -45,14 +40,14 @@ public class Display {
         System.out.print("\n");
         
         System.out.println(ColourString.to(
-                            createLineOfDashes(3*board.width()), BLACK, WHITE));
+                                  lineOfDashes(3*board.width()), BLACK, WHITE));
 
         for (int i = 0; i < board.height()  ; i++) {
             printRow(board, i);
         }
         
         System.out.println(ColourString.to(
-                            createLineOfDashes(3*board.width()), BLACK, WHITE));
+                                  lineOfDashes(3*board.width()), BLACK, WHITE));
 
         System.out.print("\n");
     }
@@ -62,7 +57,7 @@ public class Display {
      * 
      * @param   number  the number of dashes printed
      */
-    private static String createLineOfDashes(int number) {
+    private static String lineOfDashes(int number) {
         String line = "\u0020";
         for (int i = 0; i < number; i++) {
             line += "-";

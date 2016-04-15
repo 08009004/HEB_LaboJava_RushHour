@@ -7,8 +7,11 @@ import g42116.rushhour.model.RushHourGame;
 import static g42116.rushhour.model.Orientation.*;
 import g42116.rushhour.view.RushHourView;
 import g42116.rushhour.view.Display;
+import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
+import javax.json.JsonObject;
+import javax.json.stream.JsonParser;
 
 /**
  *
@@ -29,11 +32,15 @@ public class RushHour {
             new Car('2', 2, VERTICAL, new Position(2,3)),
             new Car('3', 4, HORIZONTAL, new Position(5,0))
         );
+        
+        JsonParser parser = new JsonParser();
+        Object language = parser.parse(new FileReader("src.g42116.rushhour.view.TextsEnglish.json"));
+        
         RushHourGame game;
 
         try {
             game = new RushHourGame(6, 6, exit, redCar, otherCars);
-            RushHourView view = new RushHourView(game);
+            RushHourView view = new RushHourView(game, (JsonObject) language);
             Display.displayBoard(game.getBoard());
             view.play();
 

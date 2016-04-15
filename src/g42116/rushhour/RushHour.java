@@ -1,4 +1,4 @@
-package g42116.rushhou;
+package g42116.rushhour;
 
 import g42116.rushhour.model.Car;
 import g42116.rushhour.model.Position;
@@ -15,13 +15,6 @@ import java.util.List;
  * @author john
  */
 public class RushHour {
-
-/*
-Lancer le programme
-Placez la méthode principale du jeu dans une nouvelle classe RushHour qui se trouve
-dans le (nouveau) package g12345.rushhour
-    -> NAME PROBLEM
-*/
     
     /**
      * Main method: run to start playing.

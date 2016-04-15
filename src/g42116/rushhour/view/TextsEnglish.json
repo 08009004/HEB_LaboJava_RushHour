@@ -1,0 +1,8 @@
+{
+    "query1": "Which car would you like to move: ",
+    "error1A": "Please enter a valid ID: ",
+    "error1B": "No such car on the board. Please select a valid car.",
+    "query2": "Which way would you like to move it? ",
+    "error2": "Please enter a valid direction: ",
+    "query3": "Please try another move: "
+}

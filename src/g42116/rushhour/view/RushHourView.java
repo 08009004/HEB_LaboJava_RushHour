@@ -7,6 +7,7 @@ import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
 import static g42116.rushhour.view.Display.displayBoard;
 import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 /**
  * This class manages the game visuals.
@@ -31,7 +32,7 @@ public class RushHourView {
      */
     public void play() {
         
-        String query1 = "Which car would you like to move: ";
+        String query1 = this.language.getString("query1");
         String error1A = "Please enter a valid ID: ";
         String error1B = "No such car on the board. Please select a valid car.";
         String query2 = "Which way would you like to move it? ";

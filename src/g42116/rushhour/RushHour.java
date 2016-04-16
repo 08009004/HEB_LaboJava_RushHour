@@ -7,11 +7,15 @@ import g42116.rushhour.model.RushHourGame;
 import static g42116.rushhour.model.Orientation.*;
 import g42116.rushhour.view.RushHourView;
 import g42116.rushhour.view.Display;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.StringReader;
 import java.util.Arrays;
 import java.util.List;
+import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.stream.JsonParser;
+import javax.json.JsonReader;
 
 /**
  *
@@ -33,14 +37,22 @@ public class RushHour {
             new Car('3', 4, HORIZONTAL, new Position(5,0))
         );
         
-        JsonParser parser = new JsonParser();
-        Object language = parser.parse(new FileReader("src.g42116.rushhour.view.TextsEnglish.json"));
+//        String s = File.separator;
+//        File langPath = new File("blablabla");
+//        try {
+        JsonReader langReader = Json.createReader(
+                new StringReader(
+                        "/home/NetBeansProjects/RushHour-Ruiz/src/g42116/rushhour/view"));
+        JsonObject language = langReader.readObject();
+//        } catch (FileNotFoundException fnfe) {
+//        }
+        
         
         RushHourGame game;
 
         try {
             game = new RushHourGame(6, 6, exit, redCar, otherCars);
-            RushHourView view = new RushHourView(game, (JsonObject) language);
+            RushHourView view = new RushHourView(game, language);
             Display.displayBoard(game.getBoard());
             view.play();
 

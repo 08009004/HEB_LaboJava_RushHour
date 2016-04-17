@@ -29,20 +29,11 @@ public class tempTest {
 //FileReader is = new FileReader("/home/NetBeansProjects/RushHour-Ruiz/src/g42116/rushhour/view/TextsEnglish.json");
 FileReader is = new FileReader("src/g42116/rushhour/view/TextsEnglish.json");
 JsonReader rdr = Json.createReader(is);
+JsonObject obj = rdr.readObject();
 rdr.close();
+obj.getString("query1");
+System.out.println("obj.getString(query1) = " + obj.getString("query1"));
         
-        
-// The class Json contains methods to create readers from input sources (InputStream and Reader)
-// The following example demonstrates how to read an empty JSON array from a string: 
-//      JsonReader jsonReader = Json.createReader(new StringReader("[]"));
-//        JsonArray array = jsonReader.readArray();
-//        jsonReader.close();
-        
-        
-        
-        
-//  "/home/NetBeansProjects/RushHour-Ruiz/src/g42116/rushhour/view/TextsEnglish.json"));
-//  "src/g42116/rushhour/view/TextsEnglish.json"));
-//        JsonObject language = langReader.readObject();
+
     }
 }

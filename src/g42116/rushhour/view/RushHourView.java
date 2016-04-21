@@ -7,7 +7,6 @@ import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
 import static g42116.rushhour.view.Display.displayBoard;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
 
 /**
  * This class manages the game visuals.
@@ -32,12 +31,12 @@ public class RushHourView {
      */
     public void play() {
         
-        String query1 = this.language.getString("query1");
-        String error1A = "Please enter a valid ID: ";
-        String error1B = "No such car on the board. Please select a valid car.";
-        String query2 = "Which way would you like to move it? ";
-        String error2 = "Please enter a valid direction: ";
-        String query3 = "Please try another move: ";
+        String query1 = this.language.getString("queryCarId");
+        String error1A = this.language.getString("wasInvalidId");
+        String error1B = this.language.getString("noSuchCar");
+        String query2 = this.language.getString("queryDirection");
+        String error2 = this.language.getString("wasInvalidDir");
+        String query3 = this.language.getString("queryDifferentMove");
 
         char carID;
         Direction direction;
@@ -60,7 +59,7 @@ public class RushHourView {
 
         } while (!this.game.isOver());
 
-        System.out.println("\nGAME COMPLETED, CONGRATULATIONS!");
+        System.out.println(this.language.getString("endOfGame"));
     }
 
     /**
@@ -114,13 +113,13 @@ public class RushHourView {
             str1 = str1.toUpperCase();
 
             if (str1.equals("")) {
-                System.out.print("You only keyed in blank characters. "
+                System.out.print(this.language.getString("errBlankCharsOnly")
                     + error);
             }
 
             if (str1.length() > 1) {
-                System.out.print("You have keyed in several characters. "
-                    + error);
+                System.out.print(this.language.getString("errTooManyChars") 
+                                                                       + error);
             }
 
         } while (str1.length() > 1 || str1.equals(""));
@@ -142,8 +141,7 @@ public class RushHourView {
      */
     private Direction requestDir(String query, String error) {
         char keyedIn;
-        query = query.concat("\npress U for Up, D for Down, L for Left "
-                + "or R for Right: ");
+        query = query.concat(this.language.getString("moveDirections"));
         do {
             keyedIn = askChar(query, error);
             switch (keyedIn) {
@@ -152,7 +150,8 @@ public class RushHourView {
                 case 'L': return LEFT;
                 case 'R': return RIGHT;
                 default:
-                    System.out.print(keyedIn + " is not a valid direction.");
+                    System.out.print(keyedIn 
+                                            + this.language.getInt("isNotDir"));
                     break;
             }
         } while (true);

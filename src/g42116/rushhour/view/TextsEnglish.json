@@ -1,8 +1,13 @@
 {
-    "query1": "Which car would you like to move: ",
-    "error1A": "Please enter a valid ID: ",
-    "error1B": "No such car on the board. Please select a valid car.",
-    "query2": "Which way would you like to move it? ",
-    "error2": "Please enter a valid direction: ",
-    "query3": "Please try another move: "
+    "queryCarId": "Which car would you like to move: ",
+    "wasInvalidId": "Please enter a valid ID: ",
+    "noSuchCar": "No such car on the board. Please select a valid car.",
+    "queryDirection": "Which way would you like to move it? ",
+    "wasInvalidDir": "Please enter a valid direction: ",
+    "queryDifferentMove": "Please try another move: ",
+    "endOfGame": "\nGAME COMPLETED, CONGRATULATIONS!",
+    "errBlankCharsOnly": "You only keyed in blank characters. ",
+    "errTooManyChars": "You have keyed too many characters. ",
+    "moveDirections":"\npress U for Up, D for Down, L for Left or R for Right: ",
+    "isNotDir": " is not a valid direction."
 }

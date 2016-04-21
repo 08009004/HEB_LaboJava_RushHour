@@ -25,14 +25,14 @@ public class Car {
      * @param   id              the car's identifier
      * @param   size            the number of boxes occupied by the car
      * @param   orientation     the car's orientation on the board
-     * @param   initialPosition the car's position on the board (leftmost 
+     * @param   initPos the car's position on the board (leftmost 
      *                          occupied board box for horizontal cars, topmost 
      *                          occupied box for vertical ones)
      * @throws                  IllegalArgumentException if the car size passed 
      *                          is not 1 or more
      */
     public Car(char id, int size, 
-                Orientation orientation, Position initialPosition) {
+                Orientation orientation, Position initPos) {
         
         if (size <= 0) {
             throw new IllegalArgumentException("Car size was: " + size 
@@ -41,7 +41,7 @@ public class Car {
         this.id = id;
         this.size = size;
         this.orientation = orientation;
-        this.currentPosition = initialPosition;
+        this.currentPosition = initPos;
     }
     
     /**

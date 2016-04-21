@@ -41,16 +41,12 @@ gameReader.close();
 //Position test = (Position) gameInit.getJsonObject("test");
 //System.out.println("test = " + test);
 
-//reading inner object from json object
 JsonObject innerObject = gameInit.getJsonObject("test");
-Position pos = new Position(innerObject.getInt("row"), innerObject.getInt("column"));
-        System.out.println("pos = " + pos);
-/*
-address.setStreet(innerObject.getString("street"));
-address.setCity(innerObject.getString("city"));
-address.setZipcode(innerObject.getInt("zipcode"));
-emp.setAddress(address);
-*/
+Position pos = new Position(
+        innerObject.getInt("row"), 
+        innerObject.getInt("column"));
+System.out.println("pos = " + pos);
+
         
 /*      Position exit = new Position(2, 5);
         Car redCar = new Car('R', 2, HORIZONTAL, new Position(2,0));

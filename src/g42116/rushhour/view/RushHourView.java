@@ -6,7 +6,16 @@ import g42116.rushhour.model.RushHourGame;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
 import static g42116.rushhour.view.Display.displayBoard;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 /**
  * This class manages the game visuals.
@@ -19,9 +28,45 @@ public class RushHourView {
     private final RushHourGame game;
     private final JsonObject language;
 
-    public RushHourView(RushHourGame game, JsonObject language) {
+    public RushHourView(RushHourGame game) {
         this.game = game;
-        this.language = language;
+        this.language = askLanguage();
+    }
+    
+    private JsonObject askLanguage() {
+        System.out.println("Language choices: ");
+        File folderPath = new File("src/g42116/rushhour/lang/");
+        List<File> folderContent = Arrays.asList(folderPath.listFiles());
+
+        String printList = "";
+        int index;
+        int selected;
+        
+        do {
+            index = 1;
+            
+            for (File file : folderContent) {
+                printList = index + " - " + file.getName();
+                printList = printList.replace("Texts", "");
+                printList = printList.replace(".json", "");
+                System.out.println(printList);
+                index++;
+            }
+            
+            selected = askChar("Select your language: ", "not valid. ");
+        } while (selected < 1 || selected > folderContent.size());
+        
+        JsonObject language = null;
+        
+        try {
+            JsonReader langReader = Json.createReader(new FileReader(folderContent.get(selected)));
+            language = langReader.readObject();
+            langReader.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RushHourView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return language;
     }
 
     /**
@@ -141,7 +186,7 @@ public class RushHourView {
      */
     private Direction requestDir(String query, String error) {
         char keyedIn;
-        query = query.concat(this.language.getString("moveDirections"));
+        query = query.concat("\n" + this.language.getString("moveDirections"));
         do {
             keyedIn = askChar(query, error);
             switch (keyedIn) {

@@ -7,7 +7,7 @@
     "queryDifferentMove": "Please try another move: ",
     "endOfGame": "\nGAME COMPLETED, CONGRATULATIONS!",
     "errBlankCharsOnly": "You only keyed in blank characters. ",
-    "errTooManyChars": "You have keyed too many characters. ",
-    "moveDirections":"\npress U for Up, D for Down, L for Left or R for Right: ",
+    "errTooManyChars": "You have keyed in more than one character. ",
+    "moveDirections":"press U for Up, D for Down, L for Left or R for Right: ",
     "isNotDir": " is not a valid direction."
 }

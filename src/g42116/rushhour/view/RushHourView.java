@@ -11,8 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -28,6 +26,11 @@ public class RushHourView {
     private final RushHourGame game;
     private JsonObject language;
 
+    /**
+     * Full constructor.
+     * 
+     * @param   game    the game to show the user
+     */
     public RushHourView(RushHourGame game) {
         this.game = game;
 
@@ -77,6 +80,45 @@ public class RushHourView {
         } while (selected < 1 || selected > folderContent.size());
 
         return folderContent.get(selected);
+    }
+
+    /**
+     * Asks user to key in a character, until only a single character is keyed 
+     * in (blank characters are ignored).
+     * 
+     * @param   query   message printed to screen to prompt the user to key in a 
+     *                  character
+     * @param   error   message printed to screen to prompt for a new input if 
+     *                  user didn't key in a single non-blank character
+     * @return          user's entry (upper case)
+     */
+    private char askChar(String query, String error) {
+        Scanner keyboard = new Scanner(System.in);
+        String str1;
+        System.out.print("\n" + query);
+/* API: "A Scanner breaks its input into tokens using a delimiter pattern, which 
+        by default matches whitespace."
+        nextLine() "advances this scanner past the current line and returns the 
+        input that was skipped."
+*/
+        do {
+            str1 = keyboard.nextLine();
+            str1 = str1.replace(" ", "").replace("\t", "");
+            str1 = str1.toUpperCase();
+
+            if (str1.equals("")) {
+                System.out.print(this.language.getString("errBlankCharsOnly")
+                    + error);
+            }
+
+            if (str1.length() > 1) {
+                System.out.print(this.language.getString("errTooManyChars") 
+                                                                       + error);
+            }
+
+        } while (str1.length() > 1 || str1.equals(""));
+
+        return str1.charAt(0);
     }
 
     /**
@@ -141,45 +183,6 @@ public class RushHourView {
         } while (!this.game.isValidId(carID));
 
         return carID;
-    }
-
-    /**
-     * Asks user to key in a character, until only a single character is keyed 
-     * in (blank characters are ignored).
-     * 
-     * @param   query   message printed to screen to prompt the user to key in a 
-     *                  character
-     * @param   error   message printed to screen to prompt for a new input if 
-     *                  user didn't key in a single non-blank character
-     * @return          user's entry (upper case)
-     */
-    private char askChar(String query, String error) {
-        Scanner keyboard = new Scanner(System.in);
-        String str1;
-        System.out.print("\n" + query);
-/* API: "A Scanner breaks its input into tokens using a delimiter pattern, which 
-        by default matches whitespace."
-        nextLine() "advances this scanner past the current line and returns the 
-        input that was skipped."
-*/
-        do {
-            str1 = keyboard.nextLine();
-            str1 = str1.replace(" ", "").replace("\t", "");
-            str1 = str1.toUpperCase();
-
-            if (str1.equals("")) {
-                System.out.print(this.language.getString("errBlankCharsOnly")
-                    + error);
-            }
-
-            if (str1.length() > 1) {
-                System.out.print(this.language.getString("errTooManyChars") 
-                                                                       + error);
-            }
-
-        } while (str1.length() > 1 || str1.equals(""));
-
-        return str1.charAt(0);
     }
 
     /**

@@ -5,9 +5,6 @@ import g42116.rushhour.model.Car;
 import g42116.rushhour.model.Position;
 import static g42116.rushhour.model.Orientation.*;
 import static g42116.rushhour.view.Colour.*;
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * This class serves the purpose of displaying the game board to screen.

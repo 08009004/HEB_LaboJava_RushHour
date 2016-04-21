@@ -26,14 +26,34 @@ public class RushHourView {
 
     //Class attribute:
     private final RushHourGame game;
-    private final JsonObject language;
+    private JsonObject language;
 
     public RushHourView(RushHourGame game) {
         this.game = game;
-        this.language = askLanguage();
+
+        //Set default language: English.
+        JsonObject language = null;
+        try {
+            JsonReader langReader = Json.createReader(new FileReader("src/g42116/rushhour/lang/TextsEnglish.json"));
+            language = langReader.readObject();
+            langReader.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("Default language file not found.");
+        }
+        this.language = language;
+
+        //Ask for player's prefered language:
+        try { 
+            JsonReader langReader = Json.createReader(new FileReader(askLanguage()));
+            language = langReader.readObject();
+        } catch (FileNotFoundException ex) {
+            System.out.println("Desired language file not found.");
+        }
+        
+        this.language = language;
     }
     
-    private JsonObject askLanguage() {
+    private File askLanguage() {
         System.out.println("Language choices: ");
         File folderPath = new File("src/g42116/rushhour/lang/");
         List<File> folderContent = Arrays.asList(folderPath.listFiles());
@@ -41,10 +61,10 @@ public class RushHourView {
         String printList = "";
         int index;
         int selected;
-        
+
         do {
             index = 1;
-            
+
             for (File file : folderContent) {
                 printList = index + " - " + file.getName();
                 printList = printList.replace("Texts", "");
@@ -52,21 +72,11 @@ public class RushHourView {
                 System.out.println(printList);
                 index++;
             }
-            
+
             selected = askChar("Select your language: ", "not valid. ");
         } while (selected < 1 || selected > folderContent.size());
-        
-        JsonObject language = null;
-        
-        try {
-            JsonReader langReader = Json.createReader(new FileReader(folderContent.get(selected)));
-            language = langReader.readObject();
-            langReader.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(RushHourView.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-        return language;
+        return folderContent.get(selected);
     }
 
     /**

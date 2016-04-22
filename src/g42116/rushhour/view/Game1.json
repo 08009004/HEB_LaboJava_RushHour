@@ -2,9 +2,9 @@
     "exit": { "row":2, "column":5 },
 
     "redCar": {
-        "id": 'R',
+        "id": "R",
         "length": 2,
-        "orientation": HORIZONTAL,
+        "orientation": "HORIZONTAL",
         "initPos": { "row":2, "column":0 }
     },
 
@@ -12,21 +12,21 @@
         "car1": {
             "id": "1", 
             "length": 3, 
-            "orintetation": HORIZONTAL, 
+            "orintetation": "HORIZONTAL", 
             "initPos": { "row":1, "column":2 }
         }
 
         "car2": {
             "id": "2", 
             "length": 2, 
-            "orintetation": VERTICAL, 
+            "orintetation": "VERTICAL", 
             "initPos": { "row":2, "column":3 }
         }
 
         "car3": {
             "id": "3", 
             "length": 4, 
-            "orintetation": HORIZONTAL, 
+            "orintetation": "HORIZONTAL", 
             "initPos": { "row":5, "column":0 }
         }
     ]

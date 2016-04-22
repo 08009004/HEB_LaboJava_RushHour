@@ -9,5 +9,7 @@
     "errBlankCharsOnly": "You only keyed in blank characters. ",
     "errTooManyChars": "You have keyed in more than one character. ",
     "moveDirections":"press U for Up, D for Down, L for Left or R for Right: ",
-    "isNotDir": " is not a valid direction."
+    "isNotDir": " is not a valid direction.",
+    
+    "queryLanguage": "Select your language: "
 }

@@ -35,25 +35,25 @@ public class RushHourView {
         this.game = game;
 
         //Set default language: English.
-        JsonObject language = null;
+        JsonObject langObject = null;
         try {
             JsonReader langReader = Json.createReader(new FileReader("src/g42116/rushhour/lang/TextsEnglish.json"));
-            language = langReader.readObject();
+            langObject = langReader.readObject();
             langReader.close();
         } catch (FileNotFoundException ex) {
             System.out.println("Default language file not found.");
         }
-        this.language = language;
+        this.language = langObject;
 
         //Ask for player's prefered language:
         try { 
             JsonReader langReader = Json.createReader(new FileReader(askLanguage()));
-            language = langReader.readObject();
+            langObject = langReader.readObject();
         } catch (FileNotFoundException ex) {
             System.out.println("Desired language file not found.");
         }
         
-        this.language = language;
+        this.language = langObject;
     }
     
     private File askLanguage() {
@@ -76,8 +76,9 @@ public class RushHourView {
                 index++;
             }
 
-            selected = askChar("Select your language: ", "not valid. ");
-        } while (selected < 1 || selected > folderContent.size());
+            selected = Character.getNumericValue(askChar(language.getString("queryLanguage"), "not valid. "));
+            selected--;
+        } while (selected < 0 || selected > folderContent.size() - 1);
 
         return folderContent.get(selected);
     }

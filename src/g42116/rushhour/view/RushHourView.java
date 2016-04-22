@@ -11,9 +11,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+// import javax.json.Json;
+// import javax.json.JsonObject;
+// import javax.json.JsonReader;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
+import java.io.Reader;
 
 /**
  * This class manages the game visuals.
@@ -37,7 +40,9 @@ public class RushHourView {
         //Set default language: English.
         JsonObject langObject = null;
         try {
-            JsonReader langReader = Json.createReader(new FileReader("src/g42116/rushhour/lang/TextsEnglish.json"));
+//            JsonReader langReader = Json.createReader(new FileReader("src/g42116/rushhour/lang/TextsEnglish.json"));
+            Reader file = new FileReader("src/g42116/rushhour/lang/TextsEnglish.json");
+            JsonReader langReader = new JsonReader(file);
             langObject = langReader.readObject();
             langReader.close();
         } catch (FileNotFoundException ex) {

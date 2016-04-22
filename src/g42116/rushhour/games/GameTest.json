@@ -1,0 +1,10 @@
+{
+    "exit": { "row":2, "column":5 },
+
+    "redCar": {
+        "id": "R",
+        "length": 2,
+        "orientation": "HORIZONTAL",
+        "initPos": { "row":2, "column":0 }
+    }
+}

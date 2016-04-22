@@ -56,6 +56,12 @@ public class RushHourView {
         this.language = langObject;
     }
     
+    /**
+     * Asks user to select the game language amongst the language files, from
+     * a list of JSon objects.
+     * 
+     * @return the .json language configuration file
+     */
     private File askLanguage() {
         System.out.println("Language choices: ");
         File folderPath = new File("src/g42116/rushhour/lang/");

@@ -6,7 +6,7 @@ import g42116.rushhour.model.RushHourException;
 import g42116.rushhour.model.RushHourGame;
 import static g42116.rushhour.model.Orientation.*;
 import g42116.rushhour.view.RushHourView;
-import g42116.rushhour.view.Display;
+import static g42116.rushhour.view.Display.*;
 import java.util.Arrays;
 import java.util.List;
 import javax.json.JsonObject;
@@ -38,7 +38,8 @@ public class RushHour {
         try {
             game = new RushHourGame(6, 6, exit, redCar, otherCars);
             RushHourView view = new RushHourView(game);
-            Display.displayBoard(game.getBoard());
+            clearScreen();
+            displayBoard(game.getBoard());
             view.play();
 
         } catch (RushHourException rhe) {
@@ -46,7 +47,7 @@ public class RushHour {
                     + rhe.getMessage().replace(
                             "g42116.rushhour.model.RushHourException: ", ""));
         }
+
     }
-    
 
 }

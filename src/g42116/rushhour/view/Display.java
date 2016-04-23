@@ -183,4 +183,13 @@ public class Display {
         }
         return BLACK;
     }
+    
+    /**
+     *  Clears the terminal screen by printing 100 empty lines.
+     */
+    public static void clearScreen() {
+        for (int i = 0; i < 100; i++) {
+            System.out.println("");
+        }
+    }
 }

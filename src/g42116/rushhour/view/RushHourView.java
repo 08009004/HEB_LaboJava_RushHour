@@ -5,18 +5,18 @@ import g42116.rushhour.model.RushHourException;
 import g42116.rushhour.model.RushHourGame;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
-import static g42116.rushhour.view.Display.displayBoard;
+import static g42116.rushhour.view.Display.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
-// import javax.json.Json;
-// import javax.json.JsonObject;
-// import javax.json.JsonReader;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
-import java.io.Reader;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+//import com.google.gson.JsonObject;
+//import com.google.gson.stream.JsonReader;
+//import java.io.Reader;
 
 /**
  * This class manages the game visuals.
@@ -40,9 +40,9 @@ public class RushHourView {
         //Set default language: English.
         JsonObject langObject = null;
         try {
-//            JsonReader langReader = Json.createReader(new FileReader("src/g42116/rushhour/lang/TextsEnglish.json"));
-            Reader file = new FileReader("src/g42116/rushhour/lang/TextsEnglish.json");
-            JsonReader langReader = new JsonReader(file);
+            JsonReader langReader = Json.createReader(new FileReader("src/g42116/rushhour/lang/TextsEnglish.json"));
+//            Reader file = new FileReader("src/g42116/rushhour/lang/TextsEnglish.json");
+//            JsonReader langReader = new JsonReader(file);
             langObject = langReader.readObject();
             langReader.close();
         } catch (FileNotFoundException ex) {
@@ -138,8 +138,7 @@ public class RushHourView {
      * a car ID and a direction, then moves this car in the desired direction
      * if possible ; then prints the game board to screen.
      */
-    public void play() {
-        
+    public void play() {        
         String query1 = this.language.getString("queryCarId");
         String error1A = this.language.getString("wasInvalidId");
         String error1B = this.language.getString("noSuchCar");
@@ -164,6 +163,7 @@ public class RushHourView {
                         + query3);
             }
 
+            clearScreen();
             displayBoard(this.game.getBoard());
 
         } while (!this.game.isOver());

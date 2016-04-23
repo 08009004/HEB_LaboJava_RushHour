@@ -9,7 +9,6 @@ import g42116.rushhour.view.RushHourView;
 import static g42116.rushhour.view.Display.*;
 import java.util.Arrays;
 import java.util.List;
-import javax.json.JsonObject;
 
 /**
  *
@@ -30,8 +29,6 @@ public class RushHour {
             new Car('2', 2, VERTICAL, new Position(2,3)),
             new Car('3', 4, HORIZONTAL, new Position(5,0))
         );
-
-        JsonObject language = null;
 
         RushHourGame game;
 

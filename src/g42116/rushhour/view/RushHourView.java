@@ -1,22 +1,20 @@
 package g42116.rushhour.view;
 
-import java.util.Scanner;
 import g42116.rushhour.model.RushHourException;
 import g42116.rushhour.model.RushHourGame;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
 import static g42116.rushhour.view.Display.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-//import com.google.gson.JsonObject;
-//import com.google.gson.stream.JsonReader;
-//import java.io.Reader;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class manages the game visuals.
@@ -27,7 +25,7 @@ public class RushHourView {
 
     //Class attribute:
     private final RushHourGame game;
-    private JsonObject language;
+    private JsonNode language;
 
     /**
      * Full constructor.
@@ -37,28 +35,31 @@ public class RushHourView {
     public RushHourView(RushHourGame game) {
         this.game = game;
 
+        ObjectMapper mapper = new ObjectMapper();
         //Set default language: English.
-        JsonObject langObject = null;
+        JsonNode langRootNode = null;
         try {
-            JsonReader langReader = Json.createReader(new FileReader("src/g42116/rushhour/lang/TextsEnglish.json"));
-//            Reader file = new FileReader("src/g42116/rushhour/lang/TextsEnglish.json");
-//            JsonReader langReader = new JsonReader(file);
-            langObject = langReader.readObject();
-            langReader.close();
+            File langFile = new File("src/g42116/rushhour/lang/TextsEnglish.json");
+            langRootNode = mapper.readValue(langFile, JsonNode.class);
         } catch (FileNotFoundException ex) {
             System.out.println("Default language file not found.");
+        } catch (IOException ex) {
+            System.out.println("Problem opening default language file.");
         }
-        this.language = langObject;
+        this.language = langRootNode;
 
-        //Ask for player's prefered language:
-        try { 
-            JsonReader langReader = Json.createReader(new FileReader(askLanguage()));
-            langObject = langReader.readObject();
+
+        //Ask player for his prefered language:
+        try {
+//        JsonReader langReader = Json.createReader(new FileReader(askLanguage()));
+//        langRootNode = langReader.readObject();
+            langRootNode = mapper.readValue(askLanguage(), JsonNode.class);
         } catch (FileNotFoundException ex) {
-            System.out.println("Desired language file not found.");
+            System.out.println("Selected language file not found.");
+        } catch (IOException ex) {
+            System.out.println("Problem opening selected language file.");
         }
-        
-        this.language = langObject;
+        this.language = langRootNode;
     }
     
     /**
@@ -87,7 +88,8 @@ public class RushHourView {
                 index++;
             }
 
-            selected = Character.getNumericValue(askChar(language.getString("queryLanguage"), "not valid. "));
+//            System.out.println(rootNode.path("queryCarId").asText());
+            selected = Character.getNumericValue(askChar(language.path("queryCarId").asText(), "not valid. "));
             selected--;
         } while (selected < 0 || selected > folderContent.size() - 1);
 
@@ -119,12 +121,12 @@ public class RushHourView {
             str1 = str1.toUpperCase();
 
             if (str1.equals("")) {
-                System.out.print(this.language.getString("errBlankCharsOnly")
+                System.out.print(this.language.path("errBlankCharsOnly").asText()
                     + error);
             }
 
             if (str1.length() > 1) {
-                System.out.print(this.language.getString("errTooManyChars") 
+                System.out.print(this.language.path("errTooManyChars").asText() 
                                                                        + error);
             }
 
@@ -139,12 +141,12 @@ public class RushHourView {
      * if possible ; then prints the game board to screen.
      */
     public void play() {        
-        String query1 = this.language.getString("queryCarId");
-        String error1A = this.language.getString("wasInvalidId");
-        String error1B = this.language.getString("noSuchCar");
-        String query2 = this.language.getString("queryDirection");
-        String error2 = this.language.getString("wasInvalidDir");
-        String query3 = this.language.getString("queryDifferentMove");
+        String query1 = this.language.path("queryCarId").asText();
+        String error1A = this.language.path("wasInvalidId").asText();
+        String error1B = this.language.path("noSuchCar").asText();
+        String query2 = this.language.path("queryDirection").asText();
+        String error2 = this.language.path("wasInvalidDir").asText();
+        String query3 = this.language.path("queryDifferentMove").asText();
 
         char carID;
         Direction direction;
@@ -168,7 +170,7 @@ public class RushHourView {
 
         } while (!this.game.isOver());
 
-        System.out.println(this.language.getString("endOfGame"));
+        System.out.println(this.language.path("endOfGame").asText());
     }
 
     /**
@@ -211,7 +213,7 @@ public class RushHourView {
      */
     private Direction requestDir(String query, String error) {
         char keyedIn;
-        query = query.concat("\n" + this.language.getString("moveDirections"));
+        query = query.concat("\n" + this.language.path("moveDirections").asText());
         do {
             keyedIn = askChar(query, error);
             switch (keyedIn) {
@@ -221,7 +223,7 @@ public class RushHourView {
                 case 'R': return RIGHT;
                 default:
                     System.out.print(keyedIn 
-                                            + this.language.getInt("isNotDir"));
+                                            + this.language.path("isNotDir").asText());
                     break;
             }
         } while (true);

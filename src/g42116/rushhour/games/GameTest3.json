@@ -1,0 +1,19 @@
+{
+	"otherCars": [{
+		"id": "w",
+		"size": 4,
+		"orientation": "VERTICAL",
+		"currentPosition": {
+			"row": 7,
+			"column": 2
+		}
+	}, {
+		"id": "k",
+		"size": 7,
+		"orientation": "HORIZONTAL",
+		"currentPosition": {
+			"row": 0,
+			"column": -2
+		}
+	}]
+}

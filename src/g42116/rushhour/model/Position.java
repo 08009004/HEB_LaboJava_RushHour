@@ -24,6 +24,15 @@ public class Position {
     }
 
     /**
+     * DO NOT USE - required for 
+     * com.fasterxml.jackson.databind.ObjectMapper.readValue(file, Position.class)
+     * to work.
+     */
+    private Position() {
+        this.row = 0;
+        this.column = 0;
+    }
+    /**
      * Returns the row of the position.
      * 
      * @return  the row number of the position

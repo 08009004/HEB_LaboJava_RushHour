@@ -1,5 +1,6 @@
 package g42116.rushhour.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import static g42116.rushhour.model.Orientation.*;
@@ -15,7 +16,16 @@ public class Car {
 
     // Class attributes:
     private final char id;
-    private final int size;
+    public final int size;  
+    /*NOTE:
+
+    Apres lecture de "1 minute tutorial: POJOs to JSON and back" sur la page
+    citee, j'ai rendu l'attribut 'size' public pour que
+    com.fasterxml.jackson.databind.ObjectMapper.readValue(file, Car.class)
+    fonctionne correctement.
+
+    https://github.com/FasterXML/jackson-databind
+    */
     private final Orientation orientation;
     private Position currentPosition;
 
@@ -42,6 +52,18 @@ public class Car {
         this.size = size;
         this.orientation = orientation;
         this.currentPosition = initPos;
+    }
+
+    /**
+     * DO NOT USE - required for 
+     * com.fasterxml.jackson.databind.ObjectMapper.readValue(file, Car.class) to
+     * work.
+     */
+    private Car() {
+        this.id = 'x';
+        this.size = 0;
+        this.orientation = null;
+        this.currentPosition = null;
     }
 
     /**

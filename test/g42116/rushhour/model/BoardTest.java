@@ -18,7 +18,7 @@ public class BoardTest {
     public void testBoard1() {
         new Board();
     }
-    
+
     /**
      * Full constructor normal case.
      */
@@ -26,7 +26,7 @@ public class BoardTest {
     public void testBoard2() {
         new Board(6, 6, new Position(2,5));
     }
-    
+
     /**
      * height() normal case.
      */
@@ -37,7 +37,7 @@ public class BoardTest {
         int result = tested.height();
         assertEquals(expected, result);
     }
-    
+
     /**
      * width() normal case.
      */
@@ -56,7 +56,7 @@ public class BoardTest {
     public void testBoard3() {
         new Board(0, 6, null);
     }
-    
+
     /**
      * Full constructor, exception: height must be strictly greater than 0.
      */
@@ -64,7 +64,7 @@ public class BoardTest {
     public void testBoard4() {
         new Board(6, 0, null);
     }
-    
+
     /**
      * Full constructor, exception: exit must be on one of the board sides.
      */
@@ -72,7 +72,7 @@ public class BoardTest {
     public void testBoard5() {
         new Board(6, 6, new Position(2,4));
     }
-    
+
     /**
      * getExit() normal case.
      */
@@ -83,7 +83,7 @@ public class BoardTest {
         Position result = tested.getExit();
         assertEquals(expected, result);
     }
-    
+
     /**
      * equals() and hashCode() normal cases.
      */
@@ -108,7 +108,7 @@ public class BoardTest {
         assertTrue(board1.equals(board2) && board2.equals(board1));
         assertTrue(board1.hashCode() == board2.hashCode());
     }
-    
+
     /**
      * equals() 'false' case: different cars on grid.
      */
@@ -118,8 +118,8 @@ public class BoardTest {
         Board board2 = new Board();
         assertFalse(board1.equals(board2) || board2.equals(board1));
     }
-    
-        /**
+
+    /**
      * equals() 'false' case: different grid exit position.
      */
     @Test
@@ -142,7 +142,7 @@ public class BoardTest {
         
         assertEquals(expected, tested);
     }
-  
+
     /**
      * canPut(car) normal case.
      */
@@ -167,8 +167,8 @@ public class BoardTest {
     @Test (expected=NullPointerException.class)
     public void testCanPutCar3() {
         assertTrue(new Board().canPut(null));
-    }   
-    
+    }
+
     /**
      * canPut(car) returns false: car overlaps another.
      */
@@ -182,7 +182,7 @@ public class BoardTest {
         //testing that the initial car can't be added anymore:
         assertFalse(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
     }
-    
+
     /**
      * getCarAt() normal case.
      */
@@ -212,7 +212,7 @@ public class BoardTest {
         
         assertNull(result);
     }
-    
+
     /**
      * getCarAt(), exception : passed position is outside the board.
      */
@@ -221,7 +221,7 @@ public class BoardTest {
         Board tested = new Board();
         tested.getCarAt(new Position(6,4));
     }
-    
+
     /**
      * removeC(car) normal case.
      */
@@ -235,7 +235,7 @@ public class BoardTest {
         
         assertEquals(expected, tested);
     }
-    
+
     /**
      * getCar(id) normal case.
      */
@@ -249,7 +249,7 @@ public class BoardTest {
                 
         assertEquals(expected, result);
     }
-    
+
     /**
      * getCar(id) null case.
      */
@@ -258,7 +258,7 @@ public class BoardTest {
         Board tested = new Board();
         assertNull(tested.getCar('b'));
     }
-    
+
     /**
      * canMove(car, direction) normal case (move down).
      */
@@ -269,7 +269,7 @@ public class BoardTest {
         tested.put(testCar);
         assertTrue(tested.canMove(testCar, DOWN));
     }
-    
+
     /**
      * canMove(car, direction) normal case (move up).
      */
@@ -280,7 +280,7 @@ public class BoardTest {
         tested.put(testCar);
         assertTrue(tested.canMove(testCar, UP));
     }
-    
+
     /**
      * canMove(car, direction) normal case (move left).
      */
@@ -291,7 +291,7 @@ public class BoardTest {
         tested.put(testCar);
         assertTrue(tested.canMove(testCar, LEFT));
     }
-    
+
     /**
      * canMove(car, direction) normal case (move left).
      */
@@ -302,7 +302,7 @@ public class BoardTest {
         tested.put(testCar);
         assertTrue(tested.canMove(testCar, RIGHT));
     }
-    
+
     /**
      * canMove(car, direction) 'false' case: car moved over another.
      */
@@ -312,8 +312,8 @@ public class BoardTest {
         Board tested = createTestBoard();
         tested.put(testCar);
         assertFalse(tested.canMove(testCar, UP));
-    }    
-    
+    }
+
     /**
      * canMove(car, direction) 'false' case: car moved outside the board.
      */
@@ -324,7 +324,7 @@ public class BoardTest {
         tested.put(testCar);
         assertFalse(tested.canMove(testCar, DOWN));
     }  
-    
+
     /**
      * canMove(car, direction), exception: car == null.
      */
@@ -333,7 +333,7 @@ public class BoardTest {
         Board tested = new Board();
         tested.canMove(null, LEFT);
     }
-    
+
     /**
      * This method declares and instantiates a board for test purpose.
      * 
@@ -350,7 +350,7 @@ public class BoardTest {
             {null,    null,    null,    null,    null,    null},
             {null,    null,    null,    null,    null,    null},
             {null,    null,    null,    null,    null,    null}
-        };   
+        };
         return new Board(testGrid);
     }
 }

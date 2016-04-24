@@ -89,7 +89,7 @@ public class RushHourView {
             }
 
 //            System.out.println(rootNode.path("queryCarId").asText());
-            selected = Character.getNumericValue(askChar(language.path("queryCarId").asText(), "not valid. "));
+            selected = Character.getNumericValue(askChar(language.path("queryLanguage").asText(), "not valid. "));
             selected--;
         } while (selected < 0 || selected > folderContent.size() - 1);
 

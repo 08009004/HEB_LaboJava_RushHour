@@ -22,6 +22,11 @@ public class Position {
         this.row = row;
         this.column = column;
     }
+    
+    private Position() {
+        this.row = 0;
+        this.column = 0;
+    }
 
     /**
      * Returns the row of the position.

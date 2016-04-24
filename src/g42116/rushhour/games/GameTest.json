@@ -1,10 +1,20 @@
 {
-    "exit": { "row":2, "column":5 },
-
     "redCar": {
         "id": "R",
-        "length": 2,
+        "size": 2,
         "orientation": "HORIZONTAL",
-        "initPos": { "row":2, "column":0 }
+        "currentPosition": { "row": 2, "column": 0 }
+    },
+
+    "board":{
+        "grid": [
+            { "id": "R", "size": 2, "orientation": "HORIZONTAL", "currentPosition": { "row": 2, "column": 0 }}
+        ],
+
+        "exit": {
+            "row": 2,
+            "column": 5
+        },
+        "otherCars": null
     }
 }

@@ -44,6 +44,13 @@ public class Car {
         this.currentPosition = initPos;
     }
     
+    private Car() {
+        this.id = 0;
+        this.size = 0;
+        this.orientation = null;
+        this.currentPosition = null;
+    }
+    
     /**
      * Returns the car identifier.
      * 

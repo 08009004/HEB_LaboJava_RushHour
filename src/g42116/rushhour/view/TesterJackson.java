@@ -1,17 +1,11 @@
 package g42116.rushhour.view;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import g42116.rushhour.RushHour;
 import g42116.rushhour.model.Car;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -44,7 +38,7 @@ public class TesterJackson {
         System.out.println("\n -------3------- \n \n");
         File file3 = new File("src/g42116/rushhour/games/GameTest3.json");
         JsonNode gameInit = mapper.readValue(file3, JsonNode.class);
-        String otherCarsAsString = gameInit.path("otherCars").toString();
+        String otherCarsAsString = gameInit.path("otherCars").toString();   
 
         List<Car> otherCars2 = mapper.readValue(otherCarsAsString, 
                 mapper.getTypeFactory().constructCollectionType(List.class, Car.class));

@@ -1,0 +1,58 @@
+{
+    "boardHeight": 6,
+    "boardWidth": 6,
+    "exit": { "row": 2, "column": 5 },
+
+    "redCar": {
+        "id": "R",
+	"size": 2,
+	"orientation": "HORIZONTAL",
+	"currentPosition": {
+            "row": 2,
+            "column": 1
+            }
+    },
+
+    "otherCars": [{
+        "id": "1",
+	"size": 2,
+	"orientation": "VERTICAL",
+	"currentPosition": {
+            "row": 4,
+            "column": 1
+            }
+    }, {
+	"id": "2",
+	"size": 2,
+	"orientation": "HORIZONTAL",
+	"currentPosition": {
+            "row": 3,
+            "column": 1
+	}
+    }, {
+	"id": "3",
+	"size": 2,
+	"orientation": "HORIZONTAL",
+	"currentPosition": {
+            "row": 5,
+            "column": 2
+	}
+    }, {
+	"id": "4",
+	"size": 3,
+	"orientation": "VERTICAL",
+	"currentPosition": {
+            "row": 2,
+            "column": 3
+	}
+    }, {
+	"id": "5",
+	"size": 3,
+	"orientation": "VERTICAL",
+	"currentPosition": {
+            "row": 3,
+            "column": 5
+	}
+    }]
+
+}

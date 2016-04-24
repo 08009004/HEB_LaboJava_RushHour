@@ -4,7 +4,7 @@ import g42116.rushhour.model.RushHourException;
 import g42116.rushhour.model.RushHourGame;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
-import static g42116.rushhour.view.Display.*;
+import static g42116.rushhour.view.Display.displayBoard;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -13,8 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class manages the game visuals.
@@ -51,8 +49,6 @@ public class RushHourView {
 
         //Ask player for his prefered language:
         try {
-//        JsonReader langReader = Json.createReader(new FileReader(askLanguage()));
-//        langRootNode = langReader.readObject();
             langRootNode = mapper.readValue(askLanguage(), JsonNode.class);
         } catch (FileNotFoundException ex) {
             System.out.println("Selected language file not found.");
@@ -88,7 +84,6 @@ public class RushHourView {
                 index++;
             }
 
-//            System.out.println(rootNode.path("queryCarId").asText());
             selected = Character.getNumericValue(askChar(language.path("queryLanguage").asText(), "not valid. "));
             selected--;
         } while (selected < 0 || selected > folderContent.size() - 1);
@@ -165,7 +160,6 @@ public class RushHourView {
                         + query3);
             }
 
-            clearScreen();
             displayBoard(this.game.getBoard());
 
         } while (!this.game.isOver());

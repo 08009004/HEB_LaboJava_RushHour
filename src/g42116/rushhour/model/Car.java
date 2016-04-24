@@ -8,11 +8,11 @@ import java.util.Objects;
 
 /**
  * This class defines the Car object type.
- * 
+ *
  * @author g42116
  */
 public class Car {
-    
+
     // Class attributes:
     private final char id;
     private final int size;
@@ -21,19 +21,19 @@ public class Car {
 
     /**
      * Full constructor.
-     * 
+     *
      * @param   id              the car's identifier
      * @param   size            the number of boxes occupied by the car
      * @param   orientation     the car's orientation on the board
-     * @param   initPos the car's position on the board (leftmost 
-     *                          occupied board box for horizontal cars, topmost 
+     * @param   initPos the car's position on the board (leftmost
+     *                          occupied board box for horizontal cars, topmost
      *                          occupied box for vertical ones)
-     * @throws                  IllegalArgumentException if the car size passed 
+     * @throws                  IllegalArgumentException if the car size passed
      *                          is not 1 or more
      */
-    public Car(char id, int size, 
+    public Car(char id, int size,
                 Orientation orientation, Position initPos) {
-        
+
         if (size <= 0) {
             throw new IllegalArgumentException("Car size was: " + size 
                     + ". It must be strictly greater than 0.");
@@ -43,14 +43,7 @@ public class Car {
         this.orientation = orientation;
         this.currentPosition = initPos;
     }
-    
-    private Car() {
-        this.id = 0;
-        this.size = 0;
-        this.orientation = null;
-        this.currentPosition = null;
-    }
-    
+
     /**
      * Returns the car identifier.
      * 
@@ -77,7 +70,7 @@ public class Car {
     public Position getCurrentPosition() {
         return currentPosition;
     }
-    
+
     /**
      * Returns a textual representation of the car object.
      * 
@@ -86,7 +79,7 @@ public class Car {
      */
     @Override
     public String toString() {
-        return "Car '" + id + "' (size: " + size + ", orientation:" 
+        return "Car '" + id + "' (size: " + size + ", orientation:"
                 + orientation + ", position:" + currentPosition + ')';
     }
 
@@ -98,7 +91,7 @@ public class Car {
      * @param   other   the car against which the current car must be checked
      * @return          true if current board attributes equal those of the 
      *                  parameter board
-     */    
+     */
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -123,8 +116,8 @@ public class Car {
         hash = 79 * hash + Objects.hashCode(this.orientation);
         hash = 79 * hash + Objects.hashCode(this.currentPosition);
         return hash;
-    }    
-    
+    }
+
     /**
      * Checks the validity of a given move direction against the orientation of
      * the car.
@@ -139,7 +132,7 @@ public class Car {
             || (this.orientation == VERTICAL
                 &&  (direction == LEFT || direction == RIGHT));
     }
-    
+
     /**
      * Modifies current car position by moving it one square further in the 
      * direction received as a parameter.
@@ -155,15 +148,10 @@ public class Car {
                     + "(car orientation: " + this.orientation
                     + " ; move direction: " + direction + ").");
         }
-        
+
         currentPosition = currentPosition.getPosition(direction);
     }
 
-/*          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    
-    NullPointerException: judicieux? si non aussi retirer le test.
-*/
-    
     /**
      * Returns a list of all the positions occupied by the car.
      * 
@@ -185,10 +173,10 @@ public class Car {
                     + "be null.");
             }
         }
-        
+
         return occupied;
     }
-    
+
     /**
      * Simulates a translation of the car positions in the desired move 
      * direction (the actual car stays unchanged).
@@ -205,12 +193,12 @@ public class Car {
                     + "(car orientation: " + this.orientation
                     + " ; desired direction: " + desired + ").");
         }
-        
+
         List<Position> translation = getPositions();
-        
+
         for (int i = 0; i < translation.size(); i++)
                     translation.set(i, translation.get(i).getPosition(desired));  
-        
+
         return translation;
     }
 

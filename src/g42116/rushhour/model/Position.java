@@ -22,11 +22,6 @@ public class Position {
         this.row = row;
         this.column = column;
     }
-    
-    private Position() {
-        this.row = 0;
-        this.column = 0;
-    }
 
     /**
      * Returns the row of the position.
@@ -36,7 +31,7 @@ public class Position {
     public int getRow() {
         return row;
     }
-    
+
     /**
      * Returns the column of the position.
      * 
@@ -45,7 +40,7 @@ public class Position {
     public int getColumn() {
         return column;
     }
-    
+
     /**
      * Returns a textual representation of the position object.
      * 
@@ -55,7 +50,7 @@ public class Position {
     public String toString() {
         return "(" + row + "," + column + ')';
     }
-    
+
     /**
      * Checks if the current position has the same attributes values as the 
      * parameter position.
@@ -85,7 +80,7 @@ public class Position {
         hash = 47 * hash + this.column;
         return hash;
     }
-    
+
     /**
      * Returns a new position representing the adjacent position to current 
      * position, according to passed direction parameter.
@@ -115,5 +110,5 @@ public class Position {
         }
         return newPosition;
     }
-  
+
 }

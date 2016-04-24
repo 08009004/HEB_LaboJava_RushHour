@@ -56,11 +56,6 @@ public class RushHourGame {
             }
         }
     }
-    
-    private RushHourGame() {
-        this.redCar = null;
-        this.board = null;
-    }
 
     /**
      * Controls if a given red car is on the same line as a given exit position.

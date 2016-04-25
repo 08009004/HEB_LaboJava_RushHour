@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>RushHour.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;RushHour&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">g42116.rushhour</a> &gt; <span class="el_source">RushHour.java</span></div><h1>RushHour.java</h1><pre class="source lang-java linenums">package g42116.rushhour;
+
+import g42116.rushhour.model.Car;
+import g42116.rushhour.model.Position;
+import g42116.rushhour.model.RushHourException;
+import g42116.rushhour.model.RushHourGame;
+import g42116.rushhour.view.RushHourView;
+import static g42116.rushhour.view.Display.displayBoard;
+import java.io.File;
+import java.util.List;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Scanner;
+
+/**
+ *
+ * @author john
+ */
+<span class="nc" id="L21">public class RushHour {</span>
+    
+    /**
+     * Main method: run to start playing.
+     * 
+     * @param args unused
+     */
+    public static void main(String[] args) {
+<span class="nc" id="L29">        File initialBoard = askInitBoard();</span>
+<span class="nc" id="L30">        RushHourGame game = null;</span>
+        try {
+<span class="nc" id="L32">            game = initGame(initialBoard);</span>
+<span class="nc" id="L33">        } catch (IOException | RushHourException ioe) {</span>
+<span class="nc" id="L34">            System.out.println(&quot;Impossible to start the game. &quot; </span>
+<span class="nc" id="L35">                    + ioe.getMessage().replace(</span>
+                              &quot;g42116.rushhour.model.RushHourException: &quot;, &quot;&quot;));
+<span class="nc" id="L37">        }</span>
+<span class="nc" id="L38">        RushHourView view = new RushHourView(game);</span>
+
+<span class="nc" id="L40">        displayBoard(game.getBoard());</span>
+<span class="nc" id="L41">        view.play();</span>
+<span class="nc" id="L42">    }</span>
+
+    /**
+     * Initialises the game object with parameters recovered from a Json file.
+     * 
+     * @param   initialBoard    the Json file
+     * @return                  the game
+     * @throws                  java.io.IOException if 'initialBoard' refers to
+     *                          an invalid file or filepath.
+     * @throws                  g42116.rushhour.model.RushHourException if the
+     *                          game arguments are incorrect or illegal.
+     */
+    private static RushHourGame initGame(File initialBoard) 
+                                         throws IOException, RushHourException {
+
+<span class="nc" id="L57">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L58">        JsonNode rootNode = mapper.readValue(initialBoard, JsonNode.class);</span>
+
+<span class="nc" id="L60">        int boardHeight = rootNode.path(&quot;boardHeight&quot;).asInt();</span>
+<span class="nc" id="L61">        int boardWidth = rootNode.path(&quot;boardWidth&quot;).asInt();</span>
+
+<span class="nc" id="L63">        Position exit = mapper.readValue(</span>
+<span class="nc" id="L64">                              rootNode.path(&quot;exit&quot;).toString(), Position.class);</span>
+<span class="nc" id="L65">        Car redCar = mapper.readValue(</span>
+<span class="nc" id="L66">                                 rootNode.path(&quot;redCar&quot;).toString(), Car.class);</span>
+
+    /* NOTES:
+    http://www.leveluplunch.com/java/examples/convert-json-array-to-arraylist-of-objects-jackson/
+    https://github.com/FasterXML/jackson-databind
+    */
+<span class="nc" id="L72">        List&lt;Car&gt; otherCars = mapper.readValue(</span>
+<span class="nc" id="L73">                rootNode.path(&quot;otherCars&quot;).toString(), </span>
+<span class="nc" id="L74">                        mapper.getTypeFactory().constructCollectionType(</span>
+                                                        List.class, Car.class));
+
+<span class="nc" id="L77">        return new RushHourGame(</span>
+                              boardHeight, boardWidth, exit, redCar, otherCars);
+    }
+
+    /**
+     * Asks user to select the game he wants to play amongst the initial board
+     * files (a list of JSon objects).
+     * 
+     * @return the .json initial board absolute file path
+     */
+    private static File askInitBoard() {
+<span class="nc" id="L88">        System.out.println(&quot;Games available: &quot;);</span>
+<span class="nc" id="L89">        File folderPath = new File(&quot;src/g42116/rushhour/games/&quot;);</span>
+<span class="nc" id="L90">        List&lt;File&gt; folderContent = Arrays.asList(folderPath.listFiles());</span>
+
+<span class="nc" id="L92">        String printList = &quot;&quot;;</span>
+        int index;
+        int selected;
+
+        do {
+<span class="nc" id="L97">            index = 1;</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">            for (File file : folderContent) {</span>
+<span class="nc" id="L100">                printList = index + &quot; - &quot; + file.getName();</span>
+<span class="nc" id="L101">                printList = printList.replace(&quot;Texts&quot;, &quot;&quot;);</span>
+<span class="nc" id="L102">                printList = printList.replace(&quot;.json&quot;, &quot;&quot;);</span>
+<span class="nc" id="L103">                System.out.println(printList);</span>
+<span class="nc" id="L104">                index++;</span>
+<span class="nc" id="L105">            }</span>
+
+<span class="nc" id="L107">            selected = Character.getNumericValue(</span>
+<span class="nc" id="L108">                           askChar(&quot;Select one of the above: &quot;, &quot;not valid. &quot;));</span>
+<span class="nc" id="L109">            selected--;</span>
+<span class="nc bnc" id="L110" title="All 4 branches missed.">        } while (selected &lt; 0 || selected &gt; folderContent.size() - 1);</span>
+
+<span class="nc" id="L112">        return folderContent.get(selected).getAbsoluteFile();</span>
+    }
+    
+    /**
+     * Asks user to key in a character, until only a single character is keyed 
+     * in (blank characters are ignored).
+     * 
+     * @param   query   message printed to screen to prompt the user to key in a 
+     *                  character
+     * @param   error   message printed to screen to prompt for a new input if 
+     *                  user didn't key in a single non-blank character
+     * @return          user's entry (upper case)
+     */
+    private static char askChar(String query, String error) {
+<span class="nc" id="L126">        Scanner keyboard = new Scanner(System.in);</span>
+        String str1;
+<span class="nc" id="L128">        System.out.print(&quot;\n&quot; + query);</span>
+/* API: &quot;A Scanner breaks its input into tokens using a delimiter pattern, which 
+        by default matches whitespace.&quot;
+        nextLine() &quot;advances this scanner past the current line and returns the 
+        input that was skipped.&quot;
+*/
+        do {
+<span class="nc" id="L135">            str1 = keyboard.nextLine();</span>
+<span class="nc" id="L136">            str1 = str1.replace(&quot; &quot;, &quot;&quot;).replace(&quot;\t&quot;, &quot;&quot;);</span>
+<span class="nc" id="L137">            str1 = str1.toUpperCase();</span>
+
+<span class="nc bnc" id="L139" title="All 2 branches missed.">            if (str1.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L140">                System.out.print(error);</span>
+            }
+
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            if (str1.length() &gt; 1) {</span>
+<span class="nc" id="L144">                System.out.print(error);</span>
+            }
+
+<span class="nc bnc" id="L147" title="All 4 branches missed.">        } while (str1.length() &gt; 1 || str1.equals(&quot;&quot;));</span>
+
+<span class="nc" id="L149">        return str1.charAt(0);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

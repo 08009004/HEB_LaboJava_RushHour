@@ -47,7 +47,7 @@ public class RushHourGame {
                 + " partly outside of the board.");
         }
 
-        for (Car element : otherCars) {
+        for (Car element : otherCars) { //@srv méthode privée.
             if (this.board.canPut(element)) {
                 this.board.put(element);
             } else {

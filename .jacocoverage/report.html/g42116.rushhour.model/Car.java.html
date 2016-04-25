@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Car.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;RushHour&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">g42116.rushhour.model</a> &gt; <span class="el_source">Car.java</span></div><h1>Car.java</h1><pre class="source lang-java linenums">package g42116.rushhour.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.List;
+import static g42116.rushhour.model.Orientation.*;
+import static g42116.rushhour.model.Direction.*;
+import java.util.Objects;
+
+/**
+ * This class defines the Car object type.
+ *
+ * @author g42116
+ */
+public class Car {
+
+    // Class attributes:
+    private final char id;
+    public final int size;  
+    /*NOTE:
+
+    Apres lecture de &quot;1 minute tutorial: POJOs to JSON and back&quot; sur la page
+    citee, j'ai rendu l'attribut 'size' public pour que
+    com.fasterxml.jackson.databind.ObjectMapper.readValue(file, Car.class)
+    fonctionne correctement.
+
+    https://github.com/FasterXML/jackson-databind
+    */
+    private final Orientation orientation;
+    private Position currentPosition;
+
+    /**
+     * Full constructor.
+     *
+     * @param   id              the car's identifier
+     * @param   size            the number of boxes occupied by the car
+     * @param   orientation     the car's orientation on the board
+     * @param   initPos the car's position on the board (leftmost
+     *                          occupied board box for horizontal cars, topmost
+     *                          occupied box for vertical ones)
+     * @throws                  IllegalArgumentException if the car size passed
+     *                          is not 1 or more
+     */
+    public Car(char id, int size,
+<span class="fc" id="L45">                Orientation orientation, Position initPos) {</span>
+
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (size &lt;= 0) {</span>
+<span class="fc" id="L48">            throw new IllegalArgumentException(&quot;Car size was: &quot; + size </span>
+                    + &quot;. It must be strictly greater than 0.&quot;);
+        }
+<span class="fc" id="L51">        this.id = id;</span>
+<span class="fc" id="L52">        this.size = size;</span>
+<span class="fc" id="L53">        this.orientation = orientation;</span>
+<span class="fc" id="L54">        this.currentPosition = initPos;</span>
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * DO NOT USE - required for 
+     * com.fasterxml.jackson.databind.ObjectMapper.readValue(file, Car.class) to
+     * work.
+     */
+<span class="nc" id="L62">    private Car() {</span>
+<span class="nc" id="L63">        this.id = 'x';</span>
+<span class="nc" id="L64">        this.size = 0;</span>
+<span class="nc" id="L65">        this.orientation = null;</span>
+<span class="nc" id="L66">        this.currentPosition = null;</span>
+<span class="nc" id="L67">    }</span>
+
+    /**
+     * Returns the car identifier.
+     * 
+     * @return  the car's id
+     */
+    public char getId() {
+<span class="fc" id="L75">        return id;</span>
+    }
+
+    /**
+     * Returns the orientation of the car.
+     * 
+     * @return  the orientation of the car
+     */
+    public Orientation getOrientation() {
+<span class="fc" id="L84">        return orientation;</span>
+    }
+
+    /**
+     * Returns the current position of the car.
+     * 
+     * @return  the current position of the car
+     */
+    public Position getCurrentPosition() {
+<span class="fc" id="L93">        return currentPosition;</span>
+    }
+
+    /**
+     * Returns a textual representation of the car object.
+     * 
+     * @return  A string formated as follow: Car id (size: size, orientation:
+     *          orientation, position: currentPosition)
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L104">        return &quot;Car '&quot; + id + &quot;' (size: &quot; + size + &quot;, orientation:&quot;</span>
+                + orientation + &quot;, position:&quot; + currentPosition + ')';
+    }
+
+    /**
+     * Checks if the board has the same attributes values as the parameter 
+     * board. Performs a deep equality check on the board grid content (2 
+     * dimensional array).
+     * 
+     * @param   other   the car against which the current car must be checked
+     * @return          true if current board attributes equal those of the 
+     *                  parameter board
+     */
+    @Override
+    public boolean equals(Object other) {
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (this == other) return true;</span>
+<span class="pc bpc" id="L120" title="1 of 4 branches missed.">        if (other == null || getClass() != other.getClass()) return false;</span>
+<span class="fc" id="L121">        final Car otherCar = (Car) other;</span>
+
+<span class="fc bfc" id="L123" title="All 6 branches covered.">        return (this.id == otherCar.id) &amp;&amp; (this.size == otherCar.size)</span>
+                &amp;&amp; (this.orientation == otherCar.orientation)
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">                &amp;&amp; currentPosition.equals(otherCar.currentPosition);</span>
+    }
+
+    /**
+     * Returns a hash code value for the car.
+     * 
+     * @return  a hash code value for this car
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L135">        int hash = 5;</span>
+<span class="fc" id="L136">        hash = 79 * hash + this.id;</span>
+<span class="fc" id="L137">        hash = 79 * hash + this.size;</span>
+<span class="fc" id="L138">        hash = 79 * hash + Objects.hashCode(this.orientation);</span>
+<span class="fc" id="L139">        hash = 79 * hash + Objects.hashCode(this.currentPosition);</span>
+<span class="fc" id="L140">        return hash;</span>
+    }
+
+    /**
+     * Checks the validity of a given move direction against the orientation of
+     * the car.
+     * 
+     * @param   direction   the desired car move direction
+     * @return              true if the direction is incompatible with the 
+     *                      orientation of the car, false otherwise
+     */
+    public boolean isWrongOrientation(Direction direction) {
+<span class="fc bfc" id="L152" title="All 12 branches covered.">        return (this.orientation == HORIZONTAL</span>
+                &amp;&amp;  (direction == DOWN || direction == UP))
+            || (this.orientation == VERTICAL
+                &amp;&amp;  (direction == LEFT || direction == RIGHT));
+    }
+
+    /**
+     * Modifies current car position by moving it one square further in the 
+     * direction received as a parameter.
+     * 
+     * @param   direction   the desired car move direction
+     * @throws              IllegalArgumentException if the requested move 
+     *                      direction is not compatible with the orientation of 
+     *                      the car
+     */
+    public void move(Direction direction) {
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        if (isWrongOrientation(direction)) {</span>
+<span class="fc" id="L169">            throw new IllegalArgumentException(&quot;Incompatible move arguments &quot;</span>
+                    + &quot;(car orientation: &quot; + this.orientation
+                    + &quot; ; move direction: &quot; + direction + &quot;).&quot;);
+        }
+
+<span class="fc" id="L174">        currentPosition = currentPosition.getPosition(direction);</span>
+<span class="fc" id="L175">    }</span>
+
+    /**
+     * Returns a list of all the positions occupied by the car.
+     * 
+     * @return  the list of the positions occupied
+     * @throws  NullPointerException if car size is greater than 1 and its 
+     *          orientation of the car is not HORIZONTAL or VERTICAL.
+     */
+    public List&lt;Position&gt; getPositions() {
+<span class="fc" id="L185">        List&lt;Position&gt; occupied = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L186">        occupied.add(currentPosition);</span>
+        
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        for (int i = 1; i &lt; this.size; i++) {</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">            if (this.orientation == HORIZONTAL) {</span>
+<span class="fc" id="L190">                occupied.add(occupied.get(i-1).getPosition(RIGHT));</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">            } else if (this.orientation == VERTICAL) {</span>
+<span class="fc" id="L192">                occupied.add(occupied.get(i-1).getPosition(DOWN));</span>
+            } else {
+<span class="nc" id="L194">                throw new NullPointerException(&quot;Orientation of the car cannot &quot;</span>
+                    + &quot;be null.&quot;);
+            }
+        }
+
+<span class="fc" id="L199">        return occupied;</span>
+    }
+
+    /**
+     * Simulates a translation of the car positions in the desired move 
+     * direction (the actual car stays unchanged).
+     * @param   desired the desired move direction   
+     * @return          a list of the candidate positions that the car would
+     *                  occupy if Car.move(direction) was applied
+     * @throws          IllegalArgumentException if the requested move 
+     *                  direction is not compatible with the orientation of the 
+     *                  car
+     */
+    public List&lt;Position&gt; getTranslated(Direction desired) {
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        if (isWrongOrientation(desired)) {</span>
+<span class="fc" id="L214">            throw new IllegalArgumentException(&quot;Incompatible move arguments &quot;</span>
+                    + &quot;(car orientation: &quot; + this.orientation
+                    + &quot; ; desired direction: &quot; + desired + &quot;).&quot;);
+        }
+
+<span class="fc" id="L219">        List&lt;Position&gt; translation = getPositions();</span>
+
+<span class="fc bfc" id="L221" title="All 2 branches covered.">        for (int i = 0; i &lt; translation.size(); i++)</span>
+<span class="fc" id="L222">                    translation.set(i, translation.get(i).getPosition(desired));  </span>
+
+<span class="fc" id="L224">        return translation;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

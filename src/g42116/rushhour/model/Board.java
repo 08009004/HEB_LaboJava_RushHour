@@ -19,7 +19,7 @@ public class Board {
      * Minimal constructor: instantiates a 6 x 6 boxes game board, with the exit
      * on position (2,5).
      */
-    public Board() {
+    public Board() { //@srv this(xxx)
         this.grid = new Car[6][6];
         this.exit = new Position(2,5);
     }
@@ -42,10 +42,14 @@ public class Board {
             throw new IllegalArgumentException("Board length was: " + width
                     + ". It must be strictly greater than 0.");
         }
-        
+                if (!isOnBoardSide(exit)) {
+            throw new IllegalArgumentException("Exit position was: " + exit
+                    + "It must be on one of the board sides.");
+        }
+
         this.grid = new Car[height][width];
         
-        if (!isOnBoardSide(exit)) {
+        if (!isOnBoardSide(exit)) { //@srv ajouet run commentaire: pq après init grid.
             throw new IllegalArgumentException("Exit position was: " + exit
                     + "It must be on one of the board sides.");
         }
@@ -186,9 +190,7 @@ public class Board {
      *              otherwise false
      * @throws      NullPointerException if 'car' is null.
      */
-    public boolean canPut(Car car) { 
-        if (car == null) throw new NullPointerException("Car cannot be null.");
-        
+    public boolean canPut(Car car) {         
         List<Position> carPositions = car.getPositions();
         
         for (Position element : carPositions) {
@@ -210,8 +212,6 @@ public class Board {
      * @throws              NullPointerException if the car parameter is null
      */
     public boolean canMove(Car car, Direction direction) {
-        if (car == null) throw new NullPointerException("Car cannot be null.");
-              
         List<Position> candidate = car.getTranslated(direction);
         
         for (Position element : candidate) {
@@ -267,9 +267,9 @@ public class Board {
      * @param   car the car to delete
      */
     public void remove(Car car) {
-        List<Position> remove = car.getPositions();
-        for (Position element : remove) {
-            this.grid[element.getRow()][element.getColumn()] = null;          
+        List<Position> positions = car.getPositions();
+        for (Position position : positions) {
+            this.grid[position.getRow()][position.getColumn()] = null;          
         }
     }
 
@@ -282,9 +282,9 @@ public class Board {
     public Car getCar(char id) {
         
         for (Car[] row : grid) {
-            for (Car columnElement : row) {
-                if(columnElement != null && columnElement.getId()==id)
-                    return columnElement;
+            for (Car car : row) {
+                if(car != null && car.getId()==id)
+                    return car;
             }
         }
         

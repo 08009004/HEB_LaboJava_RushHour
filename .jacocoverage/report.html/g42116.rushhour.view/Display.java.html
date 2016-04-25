@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Display.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;RushHour&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">g42116.rushhour.view</a> &gt; <span class="el_source">Display.java</span></div><h1>Display.java</h1><pre class="source lang-java linenums">package g42116.rushhour.view;
+
+import g42116.rushhour.model.Board;
+import g42116.rushhour.model.Car;
+import g42116.rushhour.model.Position;
+import static g42116.rushhour.model.Orientation.*;
+import static g42116.rushhour.view.Colour.*;
+
+/**
+ * This class serves the purpose of displaying the game board to screen.
+ * 
+ * @author john
+ */
+<span class="nc" id="L14">public class Display {</span>
+    
+    /**
+     * Main method to test the display.
+     * 
+     * @param args unused
+     */
+    public static void main(String[] args) {
+<span class="nc" id="L22">        Board board = new Board();</span>
+<span class="nc" id="L23">        Car redCar = new Car('R', 2, HORIZONTAL, new Position(2,0));</span>
+<span class="nc" id="L24">        Car car1 = new Car('3', 3, VERTICAL, new Position(2,2));</span>
+<span class="nc" id="L25">        Car car2 = new Car('6', 3, VERTICAL, new Position(2,4));</span>
+        
+<span class="nc" id="L27">        board.put(redCar);</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        if (board.canPut(car1)) board.put(car1);</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (board.canPut(car2)) board.put(car2);</span>
+
+<span class="nc" id="L31">        displayBoard(board);</span>
+<span class="nc" id="L32">    }</span>
+    
+    /**
+     * Displays lines of characters representing the game board in the terminal.
+     * 
+     * @param   board   the board to display
+     */
+    public static void displayBoard(Board board) {
+<span class="nc" id="L40">        System.out.print(&quot;\n&quot;);</span>
+        
+<span class="nc" id="L42">        System.out.println(ColourString.to(</span>
+<span class="nc" id="L43">                                  lineOfDashes(3*board.width()), BLACK, WHITE));</span>
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        for (int i = 0; i &lt; board.height()  ; i++) {</span>
+<span class="nc" id="L46">            printRow(board, i);</span>
+        }
+        
+<span class="nc" id="L49">        System.out.println(ColourString.to(</span>
+<span class="nc" id="L50">                                  lineOfDashes(3*board.width()), BLACK, WHITE));</span>
+
+<span class="nc" id="L52">        System.out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L53">    }</span>
+    
+    /**
+     * Creates a  line of dash characters.
+     * 
+     * @param   number  the number of dashes printed
+     */
+    private static String lineOfDashes(int number) {
+<span class="nc" id="L61">        String line = &quot;\u0020&quot;;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        for (int i = 0; i &lt; number; i++) {</span>
+<span class="nc" id="L63">            line += &quot;-&quot;;</span>
+        }
+<span class="nc" id="L65">        line += &quot;\u0020&quot;;</span>
+//        line += &quot;\n&quot;;
+<span class="nc" id="L67">        return line;</span>
+    }
+    
+    /**
+     * Prints three lines in the terminal, representing a board row as follows:
+     * 
+     * 1 - first 3 pipe characters on top of each other (or a space character on
+     *     top of an X on top of another space if row's first box is the exit);
+     * 2 - followed by space characters filling empty boxes or the car's id in 
+     *     the center of the box if the it is occupied;
+     * 3 - then 3 pipe characters on top of each other (or a space character on
+     *    top of an X on top of another space if row's first box is the exit);
+     * 4 - finally a carriage return character.
+     * 
+     * @param   board       the board being printed
+     * @param   currentRow  the row being printed
+     */
+    private static void printRow(Board board, int currentRow) {
+<span class="nc" id="L85">        String boardRow = &quot;&quot;;</span>
+<span class="nc" id="L86">        int exitColumn = board.getExit().getColumn();</span>
+<span class="nc" id="L87">        int exitRow = board.getExit().getRow();</span>
+        Car carOnBox;
+        boolean isExit;
+        
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        for (int boxLine = 0; boxLine &lt; 3; boxLine++) {</span>
+            
+<span class="nc bnc" id="L93" title="All 4 branches missed.">            isExit = (exitColumn == 0) &amp;&amp; (exitRow == currentRow);</span>
+<span class="nc" id="L94">            boardRow += ColourString.to(</span>
+<span class="nc" id="L95">                                     sideBorder(isExit, boxLine), BLACK, WHITE);</span>
+
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            for (int box = 0; box &lt; board.width(); box++) {</span>
+                
+<span class="nc" id="L99">                carOnBox = board.getCarAt(new Position(currentRow, box));</span>
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                for (int boxColumn = 0; boxColumn &lt; 3; boxColumn++) { </span>
+
+<span class="nc bnc" id="L103" title="All 6 branches missed.">                    if((carOnBox != null) &amp;&amp; (boxLine==1) &amp;&amp; (boxColumn==1)) {</span>
+<span class="nc" id="L104">                            boardRow += ColourString.to(&quot;&quot; + carOnBox.getId(), </span>
+<span class="nc" id="L105">                                                    setCarColour(carOnBox), </span>
+<span class="nc" id="L106">                                                         setIdColour(carOnBox)); </span>
+                    } else {
+<span class="nc" id="L108">                            boardRow += ColourString.to(&quot;\u0020&quot;, </span>
+<span class="nc" id="L109">                                                    setCarColour(carOnBox), </span>
+<span class="nc" id="L110">                                                         setIdColour(carOnBox));</span>
+                    }
+                }
+            }
+
+<span class="nc bnc" id="L115" title="All 4 branches missed.">            isExit = (exitColumn == board.width()-1) &amp;&amp; (exitRow == currentRow);</span>
+<span class="nc" id="L116">            boardRow += ColourString.to(</span>
+<span class="nc" id="L117">                                     sideBorder(isExit, boxLine), BLACK, WHITE);</span>
+
+<span class="nc" id="L119">            boardRow += &quot;\n&quot;;</span>
+        }
+        
+<span class="nc" id="L122">        System.out.print(boardRow);</span>
+<span class="nc" id="L123">    }</span>
+    
+    /**
+     * Formats the vertical border boxes (for end and start of board rows).
+     * 
+     * @param   isExit  controls method behaviour
+     * @param   counter itration counter
+     * @return          'X' (if counter equals 1) or a space character when 
+     *                  isExit is true, otherwise a pipe character
+     */
+    private static String sideBorder(boolean isExit, int counter) {
+<span class="nc" id="L134">        String row = &quot;&quot;;</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if(isExit) {</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">            if (counter == 1) {</span>
+<span class="nc" id="L137">                row += &quot;X&quot;;</span>
+            } else {
+<span class="nc" id="L139">                row += &quot;\u0020&quot;;</span>
+            }
+        } else {
+<span class="nc" id="L142">            row += &quot;|&quot;;</span>
+        }
+<span class="nc" id="L144">        return row;</span>
+    }
+    
+    /**
+     * Sets the background colour of a car character on the board displayed
+     * according to its 'id' attribute.
+     * 
+     * @param   Car the car
+     * @return      a colour based on the 'id' UTF code number (red only if car 
+     *              id is 'R', and white only if car equals null)
+     */
+    private static Colour setCarColour(Car car) {
+        int colourIndex;
+        
+<span class="nc bnc" id="L158" title="All 2 branches missed.">        if (car == null) {</span>
+<span class="nc" id="L159">            colourIndex = 7;</span>
+        } else {
+<span class="nc" id="L161">            colourIndex = car.getId() % 6;</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">            if (colourIndex == 1) colourIndex = 6;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">            if (car.getId() == 'R') colourIndex = 1;</span>
+        }
+<span class="nc" id="L165">        return Colour.values()[colourIndex];</span>
+    }
+    
+    /**
+     * Sets a car's 'id' font display colour, based on the car's colour by 
+     * setCarColour(Car car).
+     * 
+     * @param   carID   the car
+     * @return          BLACK if the background should be of a light colour,
+     *                  otherwise WHITE
+     */
+    private static Colour setIdColour(Car car) {
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        switch (setCarColour(car)) {</span>
+            case BLACK:
+            case RED:
+            case BLUE:
+            case MAGENTA:
+<span class="nc" id="L182">                return WHITE;</span>
+        }
+<span class="nc" id="L184">        return BLACK;</span>
+    }
+    
+    /**
+     *  Clears the terminal screen by printing 100 empty lines.
+     */
+    public static void clearScreen() {
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        for (int i = 0; i &lt; 100; i++) {</span>
+<span class="nc" id="L192">            System.out.println(&quot;&quot;);</span>
+        }
+<span class="nc" id="L194">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

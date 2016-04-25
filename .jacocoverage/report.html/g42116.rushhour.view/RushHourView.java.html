@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>RushHourView.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;RushHour&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">g42116.rushhour.view</a> &gt; <span class="el_source">RushHourView.java</span></div><h1>RushHourView.java</h1><pre class="source lang-java linenums">package g42116.rushhour.view;
+
+import g42116.rushhour.model.RushHourException;
+import g42116.rushhour.model.RushHourGame;
+import g42116.rushhour.model.Direction;
+import static g42116.rushhour.model.Direction.*;
+import static g42116.rushhour.view.Display.displayBoard;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+/**
+ * This class manages the game visuals.
+ * 
+ * @author john
+ */
+public class RushHourView {
+
+    //Class attribute:
+    private final RushHourGame game;
+    private JsonNode language;
+
+    /**
+     * Full constructor.
+     * 
+     * @param   game    the game to show the user
+     */
+<span class="nc" id="L33">    public RushHourView(RushHourGame game) {</span>
+<span class="nc" id="L34">        this.game = game;</span>
+
+<span class="nc" id="L36">        ObjectMapper mapper = new ObjectMapper();</span>
+        //Set default language: English.
+<span class="nc" id="L38">        JsonNode langRootNode = null;</span>
+        try {
+<span class="nc" id="L40">            File langFile = new File(&quot;src/g42116/rushhour/lang/TextsEnglish.json&quot;);</span>
+<span class="nc" id="L41">            langRootNode = mapper.readValue(langFile, JsonNode.class);</span>
+<span class="nc" id="L42">        } catch (FileNotFoundException ex) {</span>
+<span class="nc" id="L43">            System.out.println(&quot;Default language file not found.&quot;);</span>
+<span class="nc" id="L44">        } catch (IOException ex) {</span>
+<span class="nc" id="L45">            System.out.println(&quot;Problem opening default language file.&quot;);</span>
+<span class="nc" id="L46">        }</span>
+<span class="nc" id="L47">        this.language = langRootNode;</span>
+
+
+        //Ask player for his prefered language:
+        try {
+<span class="nc" id="L52">            langRootNode = mapper.readValue(askLanguage(), JsonNode.class);</span>
+<span class="nc" id="L53">        } catch (FileNotFoundException ex) {</span>
+<span class="nc" id="L54">            System.out.println(&quot;Selected language file not found.&quot;);</span>
+<span class="nc" id="L55">        } catch (IOException ex) {</span>
+<span class="nc" id="L56">            System.out.println(&quot;Problem opening selected language file.&quot;);</span>
+<span class="nc" id="L57">        }</span>
+<span class="nc" id="L58">        this.language = langRootNode;</span>
+<span class="nc" id="L59">    }</span>
+    
+    /**
+     * Asks user to select the game language amongst the language files, from
+     * a list of JSon objects.
+     * 
+     * @return the .json language configuration absolute file path
+     */
+    private File askLanguage() {
+<span class="nc" id="L68">        System.out.println(&quot;Language choices: &quot;);</span>
+<span class="nc" id="L69">        File folderPath = new File(&quot;src/g42116/rushhour/lang/&quot;);</span>
+<span class="nc" id="L70">        List&lt;File&gt; folderContent = Arrays.asList(folderPath.listFiles());</span>
+
+<span class="nc" id="L72">        String printList = &quot;&quot;;</span>
+        int index;
+        int selected;
+
+        do {
+<span class="nc" id="L77">            index = 1;</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            for (File file : folderContent) {</span>
+<span class="nc" id="L80">                printList = index + &quot; - &quot; + file.getName();</span>
+<span class="nc" id="L81">                printList = printList.replace(&quot;Texts&quot;, &quot;&quot;);</span>
+<span class="nc" id="L82">                printList = printList.replace(&quot;.json&quot;, &quot;&quot;);</span>
+<span class="nc" id="L83">                System.out.println(printList);</span>
+<span class="nc" id="L84">                index++;</span>
+<span class="nc" id="L85">            }</span>
+
+<span class="nc" id="L87">            selected = Character.getNumericValue(askChar(language.path(&quot;queryLanguage&quot;).asText(), &quot;not valid. &quot;));</span>
+<span class="nc" id="L88">            selected--;</span>
+<span class="nc bnc" id="L89" title="All 4 branches missed.">        } while (selected &lt; 0 || selected &gt; folderContent.size() - 1);</span>
+
+<span class="nc" id="L91">        return folderContent.get(selected).getAbsoluteFile();</span>
+    }
+
+    /**
+     * Asks user to key in a character, until only a single character is keyed 
+     * in (blank characters are ignored).
+     * 
+     * @param   query   message printed to screen to prompt the user to key in a 
+     *                  character
+     * @param   error   message printed to screen to prompt for a new input if 
+     *                  user didn't key in a single non-blank character
+     * @return          user's entry (upper case)
+     */
+    private char askChar(String query, String error) {
+<span class="nc" id="L105">        Scanner keyboard = new Scanner(System.in);</span>
+        String str1;
+<span class="nc" id="L107">        System.out.print(&quot;\n&quot; + query);</span>
+/* API: &quot;A Scanner breaks its input into tokens using a delimiter pattern, which 
+        by default matches whitespace.&quot;
+        nextLine() &quot;advances this scanner past the current line and returns the 
+        input that was skipped.&quot;
+*/
+        do {
+<span class="nc" id="L114">            str1 = keyboard.nextLine();</span>
+<span class="nc" id="L115">            str1 = str1.replace(&quot; &quot;, &quot;&quot;).replace(&quot;\t&quot;, &quot;&quot;);</span>
+<span class="nc" id="L116">            str1 = str1.toUpperCase();</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">            if (str1.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L119">                System.out.print(this.language.path(&quot;errBlankCharsOnly&quot;).asText()</span>
+                    + error);
+            }
+
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            if (str1.length() &gt; 1) {</span>
+<span class="nc" id="L124">                System.out.print(this.language.path(&quot;errTooManyChars&quot;).asText() </span>
+                                                                       + error);
+            }
+
+<span class="nc bnc" id="L128" title="All 4 branches missed.">        } while (str1.length() &gt; 1 || str1.equals(&quot;&quot;));</span>
+
+<span class="nc" id="L130">        return str1.charAt(0);</span>
+    }
+
+    /**
+     * As long as the game is not over, this method prompts the player to key in
+     * a car ID and a direction, then moves this car in the desired direction
+     * if possible ; then prints the game board to screen.
+     */
+    public void play() {        
+<span class="nc" id="L139">        String query1 = this.language.path(&quot;queryCarId&quot;).asText();</span>
+<span class="nc" id="L140">        String error1A = this.language.path(&quot;wasInvalidId&quot;).asText();</span>
+<span class="nc" id="L141">        String error1B = this.language.path(&quot;noSuchCar&quot;).asText();</span>
+<span class="nc" id="L142">        String query2 = this.language.path(&quot;queryDirection&quot;).asText();</span>
+<span class="nc" id="L143">        String error2 = this.language.path(&quot;wasInvalidDir&quot;).asText();</span>
+<span class="nc" id="L144">        String query3 = this.language.path(&quot;queryDifferentMove&quot;).asText();</span>
+
+        char carID;
+        Direction direction;
+
+        do {
+<span class="nc" id="L150">            carID = requestID(query1, error1A, error1B);</span>
+<span class="nc" id="L151">            direction = requestDir(query2, error2);</span>
+
+            try {
+<span class="nc" id="L154">                this.game.move(carID, direction);</span>
+
+<span class="nc" id="L156">            } catch (RushHourException rhe) {</span>
+<span class="nc" id="L157">                System.out.println(rhe.getMessage().replace(</span>
+                                &quot;g42116.rushhour.model.RushHourException: &quot;, &quot;&quot;)
+                        + &quot;\n\n&quot;
+                        + query3);
+<span class="nc" id="L161">            }</span>
+
+<span class="nc" id="L163">            displayBoard(this.game.getBoard());</span>
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        } while (!this.game.isOver());</span>
+
+<span class="nc" id="L167">        System.out.println(this.language.path(&quot;endOfGame&quot;).asText());</span>
+<span class="nc" id="L168">    }</span>
+
+    /**
+     * Asks player to key in the ID of the car that he wants to move.
+     * 
+     * @param   query   message printed to screen to prompt the user to key in 
+     *                  the ID of the car that he wants to move
+     * @param   error1  message printed to screen to prompt for a new input if 
+     *                  user didn't key in a single non-blank character 
+     * @param   error2  message printed to screen to prompt for a new input if 
+     *                  the ID entered doesn't match that of one of the cars 
+     *                  present on the board
+     * @return          player's entry
+     */
+    private char requestID(String query, String error1, String error2) {
+        char carID;
+
+        do {
+<span class="nc" id="L186">            carID = askChar(query, error1);</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">            if (!this.game.isValidId(carID)) {</span>
+<span class="nc" id="L188">                    System.out.println(error2);</span>
+<span class="nc" id="L189">                    carID = askChar(query, error1);</span>
+            }
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        } while (!this.game.isValidId(carID));</span>
+
+<span class="nc" id="L193">        return carID;</span>
+    }
+
+    /**
+     * Asks user to key in a direction, until a valid key is pressed: U for Up, 
+     * D for Down, L for Left or R for Right. This method is not case sensitive.
+     * 
+     * @param   query   message printed to screen to prompt the user to key in a 
+     *                  direction, followed by a listing of the four choices 
+     *                  available
+     * @param   error   message printed to screen to prompt for a new input if 
+     *                  user didn't key in a valid entry
+     * @return          character representative of the user's choice (upper
+     *                  case)
+     */
+    private Direction requestDir(String query, String error) {
+        char keyedIn;
+<span class="nc" id="L210">        query = query.concat(&quot;\n&quot; + this.language.path(&quot;moveDirections&quot;).asText());</span>
+        do {
+<span class="nc" id="L212">            keyedIn = askChar(query, error);</span>
+<span class="nc bnc" id="L213" title="All 5 branches missed.">            switch (keyedIn) {</span>
+<span class="nc" id="L214">                case 'U': return UP;</span>
+<span class="nc" id="L215">                case 'D': return DOWN;</span>
+<span class="nc" id="L216">                case 'L': return LEFT;</span>
+<span class="nc" id="L217">                case 'R': return RIGHT;</span>
+                default:
+<span class="nc" id="L219">                    System.out.print(keyedIn </span>
+<span class="nc" id="L220">                                            + this.language.path(&quot;isNotDir&quot;).asText());</span>
+<span class="nc" id="L221">                    break;</span>
+            }
+        } while (true);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

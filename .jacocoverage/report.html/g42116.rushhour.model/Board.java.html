@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;RushHour&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">g42116.rushhour.model</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">package g42116.rushhour.model;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * This class defines the game board object.
+ * 
+ * @author g42116
+ */
+public class Board {
+    
+    //Class attributes:
+    private Car[][] grid;
+    private final Position exit;
+    
+    /**
+     * Minimal constructor: instantiates a 6 x 6 boxes game board, with the exit
+     * on position (2,5).
+     */
+<span class="fc" id="L22">    public Board() {</span>
+<span class="fc" id="L23">        this.grid = new Car[6][6];</span>
+<span class="fc" id="L24">        this.exit = new Position(2,5);</span>
+<span class="fc" id="L25">    }</span>
+    
+    /**
+     * Full constructor.
+     * 
+     * @param   width  the length of the game board
+     * @param   height  the height of the game board
+     * @param   exit    the exit position
+     * @throws          IllegalArgumentException if length or height are 
+     *                  strictly lesser than 1, or if exit is not on one of the 
+     *                  board sides
+     */
+<span class="fc" id="L37">    public Board(int height, int width, Position exit) {</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (height &lt; 1) {</span>
+<span class="fc" id="L39">            throw new IllegalArgumentException(&quot;Board height was: &quot; + height</span>
+                    + &quot;. It must be strictly greater than 0.&quot;);
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        } else if (width &lt; 1) {</span>
+<span class="fc" id="L42">            throw new IllegalArgumentException(&quot;Board length was: &quot; + width</span>
+                    + &quot;. It must be strictly greater than 0.&quot;);
+        }
+        
+<span class="fc" id="L46">        this.grid = new Car[height][width];</span>
+        
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (!isOnBoardSide(exit)) {</span>
+<span class="fc" id="L49">            throw new IllegalArgumentException(&quot;Exit position was: &quot; + exit</span>
+                    + &quot;It must be on one of the board sides.&quot;);
+        }
+
+<span class="fc" id="L53">        this.exit = exit;</span>
+<span class="fc" id="L54">    }</span>
+    
+    /**
+     * DO NOT USE - method for testing purpose only.
+     * @param   testGrid the board grid
+     */
+<span class="fc" id="L60">    Board(Car[][] testGrid) { </span>
+<span class="fc" id="L61">        this.grid = testGrid;</span>
+<span class="fc" id="L62">        this.exit = new  Position(2,5);</span>
+<span class="fc" id="L63">    }</span>
+    
+    /**
+     * Checks the validity of passed position as the exit position.
+     * 
+     * @param   candidate   the desired exit position
+     * @return              true if the candidate position is on one of the 
+     *                      board sides, false otherwise
+     */
+    private boolean isOnBoardSide(Position candidate){
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        return (candidate.getRow() == 0) </span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            || (candidate.getRow() == (height() - 1) )</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">            || (candidate.getColumn() == 0) </span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            || (candidate.getColumn() == (width() - 1) );</span>
+    }
+    
+    /**
+     * Returns the height of the game board.
+     * 
+     * @return the height of the board
+     */
+    public int height() {
+<span class="fc" id="L85">        return grid.length;</span>
+    }
+    
+    /**
+     * Returns the width of the game board.
+     * 
+     * @return  the width of the board
+     */
+    public int  width() {
+<span class="fc" id="L94">        return grid[0].length;</span>
+    }
+    
+    /**
+     * Returns the exit position on the game board.
+     * 
+     * @return  the exit position
+     */
+    public Position getExit() {
+<span class="fc" id="L103">        return this.exit;</span>
+    }
+
+    /**
+     * USE ONLY TO DEBUG - Returns a textual representation of the board object.
+     * 
+     * @return  a textual representation of the board grid content, line 
+     *          by line, where an empty board square is represented by an em 
+     *          dash
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L115">        String textualGrid = &quot;\n GAME BOARD\n&quot;;</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        for (Car[] row : grid) {</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            for (Car column : row) {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                if (column == null) {</span>
+<span class="nc" id="L119">                    textualGrid = textualGrid.concat(&quot;—\u0009&quot;);</span>
+                } else {
+<span class="nc" id="L121">                    textualGrid = textualGrid.concat(column.getId() + &quot;\u0009&quot;);</span>
+                }
+            }
+<span class="nc" id="L124">            textualGrid = textualGrid.concat(&quot;\n&quot;);</span>
+        }
+<span class="nc" id="L126">        return textualGrid;</span>
+    }
+    
+    /**
+     * Checks if the board has the same attributes values as the parameter 
+     * board. Performs a deep equality check on the board grid content (2 
+     * dimensional array).
+     * 
+     * @param   other   the board against which the current board must be
+     *                  checked
+     * @return          true if current board attributes equal those of the 
+     *                  parameter board
+     */
+    @Override
+    public boolean equals(Object other) {
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        if (this == other) return true;</span>
+<span class="pc bpc" id="L142" title="2 of 4 branches missed.">        if (other == null || getClass() != other.getClass()) return false;</span>
+<span class="fc" id="L143">        final Board otherBoard = (Board) other;</span>
+        
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        return Arrays.deepEquals(this.grid, otherBoard.grid) </span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">                &amp;&amp; this.exit.equals(otherBoard.exit);</span>
+    }
+
+    /**
+     * Returns a hash code value for the board.
+     * 
+     * @return  a hash code value for this board
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L156">        int hash = 5;</span>
+<span class="fc" id="L157">        hash = 43 * hash + Arrays.deepHashCode(this.grid);</span>
+<span class="fc" id="L158">        hash = 43 * hash + Objects.hashCode(this.exit);</span>
+<span class="fc" id="L159">        return hash;</span>
+    }
+    
+    /**
+     * Returns the car occupying the position passed as a parameter.
+     * 
+     * @param   position    the position to check
+     * @return              the car occupying the position, or null if the 
+     *                      position is empty
+     * @throws              IllegalArgumentException if position is outside the 
+     *                      board
+     */
+    public Car getCarAt(Position position) {
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (!isOntheBoard(position)) {</span>
+<span class="fc" id="L173">            throw new IllegalArgumentException(&quot;Position &quot; + position</span>
+                    + &quot; is outside the board. Passed position must be on the &quot;
+                    + &quot;board.&quot;);
+        }
+<span class="fc" id="L177">        return this.grid[position.getRow()][position.getColumn()];</span>
+    }
+
+    /**
+     * Checks that all of the positions of a given car are not off the board,  
+     * nor occupied by another car.
+     * 
+     * @param   car the car to check
+     * @return      true if all of the positions required for the car are free, 
+     *              otherwise false
+     * @throws      NullPointerException if 'car' is null.
+     */
+    public boolean canPut(Car car) { 
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (car == null) throw new NullPointerException(&quot;Car cannot be null.&quot;);</span>
+        
+<span class="fc" id="L192">        List&lt;Position&gt; carPositions = car.getPositions();</span>
+        
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        for (Position element : carPositions) {</span>
+<span class="fc bfc" id="L195" title="All 4 branches covered.">            if ( !isOntheBoard(element) || (getCarAt(element) != null) ) </span>
+<span class="fc" id="L196">                return false;</span>
+<span class="fc" id="L197">        }</span>
+        
+<span class="fc" id="L199">        return true;</span>
+    }
+    
+    /**
+     * Checks if a car can be moved in a given direction, that is:
+     *  - the car does not exit the board ;
+     *  - it is not blocked by another car in the given direction.
+     * 
+     * @param   car         the car to move
+     * @param   direction   the desired direction
+     * @return              true if the move is possible, otherwise false
+     * @throws              NullPointerException if the car parameter is null
+     */
+    public boolean canMove(Car car, Direction direction) {
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        if (car == null) throw new NullPointerException(&quot;Car cannot be null.&quot;);</span>
+              
+<span class="fc" id="L215">        List&lt;Position&gt; candidate = car.getTranslated(direction);</span>
+        
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        for (Position element : candidate) {</span>
+<span class="fc bfc" id="L218" title="All 4 branches covered.">            if ( !isOntheBoard(element) || (containsOther(element, car)) ) </span>
+<span class="fc" id="L219">                return false;</span>
+<span class="fc" id="L220">        }</span>
+        
+<span class="fc" id="L222">        return true;</span>
+    }
+        
+    /**
+     * Checks if a given position is on the game board.
+     * 
+     * @param   candidate    the position to check
+     * @return              true if the position is on the game board, otherwise
+     *                      false
+     */
+    private boolean isOntheBoard(Position candidate) {
+<span class="fc bfc" id="L233" title="All 2 branches covered.">        return (candidate.getRow() &lt; height() ) </span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">            &amp;&amp; (candidate.getRow() &gt;= 0)</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">            &amp;&amp; (candidate.getColumn() &lt; width() ) </span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">            &amp;&amp; (candidate.getColumn() &gt;= 0);</span>
+    }
+    
+    /**
+     * Checks if a given board square is occupied by another car than the one 
+     * passed as a parameter.
+     * 
+     * @param position  the board square to check
+     * @param car       the car checked
+     * @return          true if another car occupies the board square
+     */
+    private boolean containsOther(Position position, Car car) {
+<span class="fc bfc" id="L248" title="All 4 branches covered.">        return (getCarAt(position) != null &amp;&amp; getCarAt(position) != car);</span>
+    }
+    
+    /**
+     * Adds a car on the board.
+     * 
+     * @param   car the car to add
+     */
+    public void put(Car car) {
+<span class="fc" id="L257">        List&lt;Position&gt; occupy = car.getPositions();</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">        for (Position element : occupy) {</span>
+<span class="fc" id="L259">            this.grid[element.getRow()][element.getColumn()] = car;</span>
+<span class="fc" id="L260">        }</span>
+<span class="fc" id="L261">    }</span>
+    
+    /**
+     * Deletes a car from the board: fills all the grid squares occupied by null
+     * pointers.
+     * 
+     * @param   car the car to delete
+     */
+    public void remove(Car car) {
+<span class="fc" id="L270">        List&lt;Position&gt; remove = car.getPositions();</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        for (Position element : remove) {</span>
+<span class="fc" id="L272">            this.grid[element.getRow()][element.getColumn()] = null;          </span>
+<span class="fc" id="L273">        }</span>
+<span class="fc" id="L274">    }</span>
+
+    /**
+     * Scans the board grid to find a car whose id matches the parameter 'id'.
+     * 
+     * @param   id  the id of the car searched
+     * @return      the car if found, otherwise null
+     */
+    public Car getCar(char id) {
+        
+<span class="fc bfc" id="L284" title="All 2 branches covered.">        for (Car[] row : grid) {</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">            for (Car columnElement : row) {</span>
+<span class="fc bfc" id="L286" title="All 4 branches covered.">                if(columnElement != null &amp;&amp; columnElement.getId()==id)</span>
+<span class="fc" id="L287">                    return columnElement;</span>
+            }
+        }
+        
+<span class="fc" id="L291">        return null; </span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

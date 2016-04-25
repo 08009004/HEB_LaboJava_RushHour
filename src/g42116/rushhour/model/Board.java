@@ -41,14 +41,14 @@ public class Board {
             throw new IllegalArgumentException("Board length was: " + width
                     + ". It must be strictly greater than 0.");
         }
-                if (!isOnBoardSide(exit)) {
-            throw new IllegalArgumentException("Exit position was: " + exit
-                    + "It must be on one of the board sides.");
-        }
+
+        /* this.grid must be instantiated prior to calling isOnBoardSide(exit)
+        because that method calls height() and width() which both refer to 
+        this.grid                                                             */
 
         this.grid = new Car[height][width];
-        
-        if (!isOnBoardSide(exit)) { //@srv ajouet run commentaire: pq après init grid.
+
+        if (!isOnBoardSide(exit)) {
             throw new IllegalArgumentException("Exit position was: " + exit
                     + "It must be on one of the board sides.");
         }

@@ -28,8 +28,7 @@ public class RushHourGame {
      * @throws              RushHourException if the red car is not in alignment
      *                      with the exit position
      * @throws              IllegalArgumentException if the red car is not 
-     *                      completely on the game board, or if one of the cars 
-     *                      from argument 'carsList' cannot be added to it
+     *                      completely on the game board
      */
     public  RushHourGame(int boardHeight, int boardWidth, Position exit,
                     Car redCar, List<Car> otherCars) throws RushHourException {
@@ -47,14 +46,7 @@ public class RushHourGame {
                 + " partly outside of the board.");
         }
 
-        for (Car element : otherCars) { //@srv méthode privée.
-            if (this.board.canPut(element)) {
-                this.board.put(element);
-            } else {
-                throw new IllegalArgumentException("" + element + " could not "
-                        + "be added to the board.");
-            }
-        }
+        put(otherCars);
     }
 
     /**
@@ -69,6 +61,24 @@ public class RushHourGame {
             && (redCar.getCurrentPosition().getRow() == exit.getRow() )
             || (redCar.getOrientation() == VERTICAL)
             && (redCar.getCurrentPosition().getColumn() == exit.getColumn() );
+    }
+
+    /**
+     * Adds a list of car objects on the game board.
+     * 
+     * @param   cars    the list of cars to add
+     * @throws          IllegalArgumentException if one of the cars from list
+     *                  cannot be added to the board
+     */
+    private void put(List<Car> cars) {
+        for (Car element : cars) { //@srv méthode privée.
+            if (this.board.canPut(element)) {
+                this.board.put(element);
+            } else {
+                throw new IllegalArgumentException("" + element + " could not "
+                        + "be added to the board.");
+            }
+        }
     }
 
     /**

@@ -20,8 +20,7 @@ public class Board {
      * on position (2,5).
      */
     public Board() { //@srv this(xxx)
-        this.grid = new Car[6][6];
-        this.exit = new Position(2,5);
+        this(6, 6, new Position(2,5));
     }
     
     /**

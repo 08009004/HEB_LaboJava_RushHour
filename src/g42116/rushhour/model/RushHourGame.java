@@ -71,7 +71,7 @@ public class RushHourGame {
      *                  cannot be added to the board
      */
     private void put(List<Car> cars) {
-        for (Car element : cars) { //@srv méthode privée.
+        for (Car element : cars) {
             if (this.board.canPut(element)) {
                 this.board.put(element);
             } else {

@@ -10,19 +10,19 @@ import java.util.Objects;
  * @author g42116
  */
 public class Board {
-    
+
     //Class attributes:
     private Car[][] grid;
     private final Position exit;
-    
+
     /**
      * Minimal constructor: instantiates a 6 x 6 boxes game board, with the exit
      * on position (2,5).
      */
-    public Board() { //@srv this(xxx)
+    public Board() {
         this(6, 6, new Position(2,5));
     }
-    
+
     /**
      * Full constructor.
      * 
@@ -55,30 +55,30 @@ public class Board {
 
         this.exit = exit;
     }
-    
+
     /**
      * DO NOT USE - method for testing purpose only.
      * @param   testGrid the board grid
      */
-    Board(Car[][] testGrid) { 
+    Board(Car[][] testGrid) {
         this.grid = testGrid;
         this.exit = new  Position(2,5);
     }
-    
+
     /**
      * Checks the validity of passed position as the exit position.
      * 
      * @param   candidate   the desired exit position
-     * @return              true if the candidate position is on one of the 
+     * @return              true if the candidate position is on one of the
      *                      board sides, false otherwise
      */
     private boolean isOnBoardSide(Position candidate){
-        return (candidate.getRow() == 0) 
+        return (candidate.getRow() == 0)
             || (candidate.getRow() == (height() - 1) )
-            || (candidate.getColumn() == 0) 
+            || (candidate.getColumn() == 0)
             || (candidate.getColumn() == (width() - 1) );
     }
-    
+
     /**
      * Returns the height of the game board.
      * 
@@ -87,16 +87,16 @@ public class Board {
     public int height() {
         return grid.length;
     }
-    
+
     /**
      * Returns the width of the game board.
-     * 
+     *
      * @return  the width of the board
      */
     public int  width() {
         return grid[0].length;
     }
-    
+
     /**
      * Returns the exit position on the game board.
      * 
@@ -108,7 +108,7 @@ public class Board {
 
     /**
      * USE ONLY TO DEBUG - Returns a textual representation of the board object.
-     * 
+     *
      * @return  a textual representation of the board grid content, line 
      *          by line, where an empty board square is represented by an em 
      *          dash
@@ -128,12 +128,12 @@ public class Board {
         }
         return textualGrid;
     }
-    
+
     /**
-     * Checks if the board has the same attributes values as the parameter 
-     * board. Performs a deep equality check on the board grid content (2 
+     * Checks if the board has the same attributes values as the parameter
+     * board. Performs a deep equality check on the board grid content (2
      * dimensional array).
-     * 
+     *
      * @param   other   the board against which the current board must be
      *                  checked
      * @return          true if current board attributes equal those of the 
@@ -144,14 +144,14 @@ public class Board {
         if (this == other) return true;
         if (other == null || getClass() != other.getClass()) return false;
         final Board otherBoard = (Board) other;
-        
-        return Arrays.deepEquals(this.grid, otherBoard.grid) 
+
+        return Arrays.deepEquals(this.grid, otherBoard.grid)
                 && this.exit.equals(otherBoard.exit);
     }
 
     /**
      * Returns a hash code value for the board.
-     * 
+     *
      * @return  a hash code value for this board
      */
     @Override
@@ -161,14 +161,14 @@ public class Board {
         hash = 43 * hash + Objects.hashCode(this.exit);
         return hash;
     }
-    
+
     /**
      * Returns the car occupying the position passed as a parameter.
-     * 
+     *
      * @param   position    the position to check
-     * @return              the car occupying the position, or null if the 
+     * @return              the car occupying the position, or null if the
      *                      position is empty
-     * @throws              IllegalArgumentException if position is outside the 
+     * @throws              IllegalArgumentException if position is outside the
      *                      board
      */
     public Car getCarAt(Position position) {
@@ -181,25 +181,25 @@ public class Board {
     }
 
     /**
-     * Checks that all of the positions of a given car are not off the board,  
+     * Checks that all of the positions of a given car are not off the board, 
      * nor occupied by another car.
-     * 
+     *
      * @param   car the car to check
-     * @return      true if all of the positions required for the car are free, 
+     * @return      true if all of the positions required for the car are free,
      *              otherwise false
      * @throws      NullPointerException if 'car' is null.
      */
-    public boolean canPut(Car car) {         
+    public boolean canPut(Car car) {
         List<Position> carPositions = car.getPositions();
-        
+
         for (Position element : carPositions) {
-            if ( !isOntheBoard(element) || (getCarAt(element) != null) ) 
+            if ( !isOntheBoard(element) || (getCarAt(element) != null) )
                 return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * Checks if a car can be moved in a given direction, that is:
      *  - the car does not exit the board ;
@@ -212,15 +212,15 @@ public class Board {
      */
     public boolean canMove(Car car, Direction direction) {
         List<Position> candidate = car.getTranslated(direction);
-        
+
         for (Position element : candidate) {
-            if ( !isOntheBoard(element) || (containsOther(element, car)) ) 
+            if ( !isOntheBoard(element) || (containsOther(element, car)) )
                 return false;
         }
-        
+
         return true;
     }
-        
+
     /**
      * Checks if a given position is on the game board.
      * 
@@ -229,16 +229,16 @@ public class Board {
      *                      false
      */
     private boolean isOntheBoard(Position candidate) {
-        return (candidate.getRow() < height() ) 
+        return (candidate.getRow() < height() )
             && (candidate.getRow() >= 0)
-            && (candidate.getColumn() < width() ) 
+            && (candidate.getColumn() < width() )
             && (candidate.getColumn() >= 0);
     }
-    
+
     /**
-     * Checks if a given board square is occupied by another car than the one 
+     * Checks if a given board square is occupied by another car than the one
      * passed as a parameter.
-     * 
+     *
      * @param position  the board square to check
      * @param car       the car checked
      * @return          true if another car occupies the board square
@@ -246,7 +246,7 @@ public class Board {
     private boolean containsOther(Position position, Car car) {
         return (getCarAt(position) != null && getCarAt(position) != car);
     }
-    
+
     /**
      * Adds a car on the board.
      * 
@@ -258,7 +258,7 @@ public class Board {
             this.grid[element.getRow()][element.getColumn()] = car;
         }
     }
-    
+
     /**
      * Deletes a car from the board: fills all the grid squares occupied by null
      * pointers.
@@ -268,7 +268,7 @@ public class Board {
     public void remove(Car car) {
         List<Position> positions = car.getPositions();
         for (Position position : positions) {
-            this.grid[position.getRow()][position.getColumn()] = null;          
+            this.grid[position.getRow()][position.getColumn()] = null;
         }
     }
 
@@ -279,14 +279,14 @@ public class Board {
      * @return      the car if found, otherwise null
      */
     public Car getCar(char id) {
-        
+
         for (Car[] row : grid) {
             for (Car car : row) {
                 if(car != null && car.getId()==id)
                     return car;
             }
         }
-        
+
         return null; 
     }
 

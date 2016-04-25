@@ -11,7 +11,7 @@ import java.util.Scanner;
 /**
  * This static class interfaces the game for interaction with the player.
  * 
- * @author john
+ * @author g42116
  */
 public class UserInput {
 

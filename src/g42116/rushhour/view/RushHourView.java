@@ -62,7 +62,7 @@ public class RushHourView {
      * Asks user to select the game language amongst the language files, from
      * a list of JSon objects.
      * 
-     * @return the .json language configuration file
+     * @return the .json language configuration absolute file path
      */
     private File askLanguage() {
         System.out.println("Language choices: ");
@@ -88,7 +88,7 @@ public class RushHourView {
             selected--;
         } while (selected < 0 || selected > folderContent.size() - 1);
 
-        return folderContent.get(selected);
+        return folderContent.get(selected).getAbsoluteFile();
     }
 
     /**

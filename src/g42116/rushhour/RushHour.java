@@ -82,7 +82,7 @@ public class RushHour {
      * Asks user to select the game he wants to play amongst the initial board
      * files (a list of JSon objects).
      * 
-     * @return the .json initial board file
+     * @return the .json initial board absolute file path
      */
     private static File askInitBoard() {
         System.out.println("Games available: ");
@@ -109,7 +109,7 @@ public class RushHour {
             selected--;
         } while (selected < 0 || selected > folderContent.size() - 1);
 
-        return folderContent.get(selected);
+        return folderContent.get(selected).getAbsoluteFile();
     }
     
     /**

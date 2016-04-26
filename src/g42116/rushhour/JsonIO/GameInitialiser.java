@@ -23,11 +23,11 @@ import static java.lang.Math.toIntExact;
  */
 public class GameInitialiser {
 
-    public final int height;
-    public final int width;
-    public final Position exit;
-    public final Car redCar;
-    public final List<Car> otherCars;
+    private final int height;
+    private final int width;
+    private final Position exit;
+    private final Car redCar;
+    private final List<Car> otherCars;
     
     
     /**

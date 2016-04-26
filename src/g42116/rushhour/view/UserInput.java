@@ -1,5 +1,6 @@
 package g42116.rushhour.view;
 
+import g42116.rushhour.JsonIO.Language;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
 import g42116.rushhour.model.RushHourGame;
@@ -25,7 +26,7 @@ public class UserInput {
      *                  user didn't key in a single non-blank character
      * @return          user's entry (upper case)
      */
-    private static char askChar(String query, String error) {
+    private static char askChar(String query, String error, Language language) {
         Scanner keyboard = new Scanner(System.in);
         String str1;
         System.out.print("\n" + query);
@@ -36,39 +37,74 @@ public class UserInput {
 */
         do {
             str1 = keyboard.nextLine();
-            str1 = str1.replace(" ", "").replace("\t", "");
+            str1 = str1.replace(" ", "").replace("\t", "");  // \t == tabulation
             str1 = str1.toUpperCase();
 
             if (str1.equals("")) {
-//                System.out.print(this.language.path("errBlankCharsOnly").asText()
-//                    + error);
-                System.out.println("blank chars only"+ error);
+                System.out.println(language.errCharsOnlyBlank + error);
             }
 
             if (str1.length() > 1) {
-//                System.out.print(this.language.path("errTooManyChars").asText() 
-//                                                                       + error);
-                System.out.println("several chars" + error);
+                System.out.println(language.errCharsSeveral + error);
             }
 
         } while (str1.length() > 1 || str1.equals(""));
 
         return str1.charAt(0);
     }
-    
+
+    /**
+     * Asks user to select the game language amongst the language init files,
+     * from a folder content list.
+     * 
+     * @param   folderPath  the folder where the language files are stored
+     * @param   language    the current language
+     * @return              the selected language configuration absolute file 
+     *                      path
+     */
+    public static File askLanguage(String folderPath, Language language) {
+        System.out.println(language.listLangFiles);
+        List<File> folderContent = Arrays.asList(
+                                              new File(folderPath).listFiles());
+
+        String printListItem = "";
+        int index;
+        int selected;
+
+        do {
+            index = 1;
+
+            for (File file : folderContent) {
+                printListItem = index + " - " + file.getName();
+                printListItem = printListItem.replace(".json", "");
+                System.out.println(printListItem);
+                index++;
+            }
+
+            selected = Character.getNumericValue(
+                  askChar(language.queryLang, language.reQueryLang, language));
+            selected--;
+     
+        } while (selected < 0 || selected > folderContent.size() - 1);
+
+        return folderContent.get(selected).getAbsoluteFile();
+    }
+
     /**
      * Asks user to select the game he wants to play amongst the initial board
      * files (a list of JSon objects which is the content of a folder).
      * 
      * @param   folderPath  the path to the folder containing the initial board
      *                      files
+     * @param   language    the current language
      * @return              the .json initial board absolute file path
      */
-    public static File askInitBoard(String folderPath) {
-        System.out.println("Games available: ");
-        List<File> folderContent = Arrays.asList(new File(folderPath).listFiles());
+    public static File askInitBoard(String folderPath, Language language) {
+        System.out.println(language.listGameInitFiles);
+        List<File> folderContent = Arrays.asList(
+                                              new File(folderPath).listFiles());
 
-        String printList = "";
+        String printListItem = "";
         int index;
         int selected;
 
@@ -76,76 +112,44 @@ public class UserInput {
             index = 1;
 
             for (File file : folderContent) {
-                printList = index + " - " + file.getName();
-                printList = printList.replace("Texts", "");
-                printList = printList.replace(".json", "");
-                System.out.println(printList);
+                printListItem = index + " - " + file.getName();
+                printListItem = printListItem.replace(".json", "");
+                System.out.println(printListItem);
                 index++;
             }
 
-            selected = Character.getNumericValue(
-                           askChar("Select one of the above: ", "not valid. "));
+            selected = Character.getNumericValue(askChar(
+                   language.queryGameInit, language.reQueryGameInit, language));
             selected--;
         } while (selected < 0 || selected > folderContent.size() - 1);
 
         return folderContent.get(selected).getAbsoluteFile();
     }
 
-    /**
-     * Asks user to select the game language amongst the language init files,
-     * from a folder content list.
-     * 
-     * @return the .json language configuration absolute file path
-     */
-    public static File askLanguage() {
-        System.out.println("Language choices: ");
-        File folderPath = new File("src/g42116/rushhour/lang/");
-        List<File> folderContent = Arrays.asList(folderPath.listFiles());
-
-        String printList = "";
-        int index;
-        int selected;
-
-        do {
-            index = 1;
-
-            for (File file : folderContent) {
-                printList = index + " - " + file.getName();
-                printList = printList.replace("Texts", "");
-                printList = printList.replace(".json", "");
-                System.out.println(printList);
-                index++;
-            }
-
-//            selected = Character.getNumericValue(askChar(language.path("queryLanguage").asText(), "not valid. "));
-            selected = Character.getNumericValue(askChar("queryLanguage", "not valid. "));
-            selected--;
-        } while (selected < 0 || selected > folderContent.size() - 1);
-
-        return folderContent.get(selected).getAbsoluteFile();
-    }
-    
     /**
      * Asks player to key in the ID of the car that he wants to move.
      * 
-     * @param   query   message printed to screen to prompt the user to key in 
-     *                  the ID of the car that he wants to move
-     * @param   error1  message printed to screen to prompt for a new input if 
-     *                  user didn't key in a single non-blank character 
-     * @param   error2  message printed to screen to prompt for a new input if 
-     *                  the ID entered doesn't match that of one of the cars 
-     *                  present on the board
-     * @param   game    the current game
-     * @return          player's entry
+     * @param   query       message printed to screen to prompt the user to key 
+     *                      in the ID of the car that he wants to move
+     * @param   error1      message printed to screen to prompt for a new input 
+     *                      if user didn't key in a single non-blank character 
+     * @param   error2      message printed to screen to prompt for a new input 
+     *                      if the ID entered doesn't match that of one of the  
+     *                      cars present on the board
+     * @param   game        the current game
+     * @param   language    the current language
+     * @return              player's entry
      */
-    public static char requestID(String query, String error1, String error2, RushHourGame game) {
+    public static char askId(String query, String error1, 
+                          String error2, RushHourGame game, Language language) {
+
         char carID;
 
         do {
-            carID = askChar(query, error1);
+            carID = askChar(query, error1, language);
             if (!game.isValidId(carID)) {
                     System.out.println(error2);
-                    carID = askChar(query, error1);
+                    carID = askChar(query, error1, language);
             }
         } while (!game.isValidId(carID));
 
@@ -156,29 +160,30 @@ public class UserInput {
      * Asks user to key in a direction, until a valid key is pressed: U for Up, 
      * D for Down, L for Left or R for Right. This method is not case sensitive.
      * 
-     * @param   query   message printed to screen to prompt the user to key in a 
-     *                  direction, followed by a listing of the four choices 
-     *                  available
-     * @param   error   message printed to screen to prompt for a new input if 
-     *                  user didn't key in a valid entry
-     * @return          character representative of the user's choice (upper
-     *                  case)
+     * @param   query       message printed to screen to prompt the user to key 
+     *                      in a direction, followed by a listing of the four
+     *                      choices available
+     * @param   error       message printed to screen to prompt for a new input
+     *                      if user didn't key in a valid entry
+     * @param   language    the current language               
+     * @return              character representative of the user's choice (upper
+     *                      case)
      */
-    public static Direction requestDir(String query, String error) {
+    public static Direction askDir(String query, String error,
+                                                            Language language) {
+
         char keyedIn;
-//        query = query.concat("\n" + this.language.path("moveDirections").asText());
-        query = query.concat("\n" + "u, l, d, or r");
+        query = query.concat("\n" + language.listDirChoices);
+
         do {
-            keyedIn = askChar(query, error);
+            keyedIn = askChar(query, error, language);
             switch (keyedIn) {
                 case 'U': return UP;
                 case 'D': return DOWN;
                 case 'L': return LEFT;
                 case 'R': return RIGHT;
                 default:
-                    System.out.print(keyedIn 
-//                                            + this.language.path("isNotDir").asText());
-                                            + "is Not Dir");
+                    System.out.print(keyedIn + language.errIsNotDir);
                     break;
             }
         } while (true);

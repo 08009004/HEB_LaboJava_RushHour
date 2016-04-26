@@ -10,9 +10,12 @@ import java.io.File;
 import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import g42116.rushhour.JsonIO.GameInitialiser;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,17 +29,17 @@ public class RushHour {
      * @param args unused
      */
     public static void main(String[] args) {
-        File initialBoard = askInitBoard();
+//        File initialBoard = askInitBoard();
+        File initialBoard = new File("src/g42116/rushhour/JsonIO/resources/Game1Test.json");
+        
         RushHourGame game = null;
         try {
-            game = initGame(initialBoard);
-        } catch (IOException | RushHourException ioe) {
-            System.out.println("Impossible to start the game. " 
-                    + ioe.getMessage().replace(
-                              "g42116.rushhour.model.RushHourException: ", ""));
+            game = new GameInitialiser(initialBoard).initialise();
+        } catch (RushHourException ex) {
+            System.out.println("Problem loading game configuration file");
         }
-        RushHourView view = new RushHourView(game);
 
+        RushHourView view = new RushHourView(game);
         displayBoard(game.getBoard());
         view.play();
     }

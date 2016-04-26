@@ -55,10 +55,45 @@ public class UserInput {
 
         return str1.charAt(0);
     }
+    
+    /**
+     * Asks user to select the game he wants to play amongst the initial board
+     * files (a list of JSon objects which is the content of a folder).
+     * 
+     * @param   folderPath  the path to the folder containing the initial board
+     *                      files
+     * @return              the .json initial board absolute file path
+     */
+    public static File askInitBoard(String folderPath) {
+        System.out.println("Games available: ");
+        List<File> folderContent = Arrays.asList(new File(folderPath).listFiles());
+
+        String printList = "";
+        int index;
+        int selected;
+
+        do {
+            index = 1;
+
+            for (File file : folderContent) {
+                printList = index + " - " + file.getName();
+                printList = printList.replace("Texts", "");
+                printList = printList.replace(".json", "");
+                System.out.println(printList);
+                index++;
+            }
+
+            selected = Character.getNumericValue(
+                           askChar("Select one of the above: ", "not valid. "));
+            selected--;
+        } while (selected < 0 || selected > folderContent.size() - 1);
+
+        return folderContent.get(selected).getAbsoluteFile();
+    }
 
     /**
-     * Asks user to select the game language amongst the language files, from
-     * a folder content list.
+     * Asks user to select the game language amongst the language init files,
+     * from a folder content list.
      * 
      * @return the .json language configuration absolute file path
      */

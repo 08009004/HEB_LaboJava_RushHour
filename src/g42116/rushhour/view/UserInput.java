@@ -129,27 +129,19 @@ public class UserInput {
     /**
      * Asks player to key in the ID of the car that he wants to move.
      * 
-     * @param   query       message printed to screen to prompt the user to key 
-     *                      in the ID of the car that he wants to move
-     * @param   error1      message printed to screen to prompt for a new input 
-     *                      if user didn't key in a single non-blank character 
-     * @param   error2      message printed to screen to prompt for a new input 
-     *                      if the ID entered doesn't match that of one of the  
-     *                      cars present on the board
      * @param   game        the current game
      * @param   language    the current language
-     * @return              player's entry
+     * @return              player's entry (in upper case)
      */
-    public static char askId(String query, String error1, 
-                          String error2, RushHourGame game, Language language) {
-
+    public static char askId(RushHourGame game, Language language) {
         char carID;
 
         do {
-            carID = askChar(query, error1, language);
+            carID = askChar(language.queryCarId, language.errNotAnId, language);
             if (!game.isValidId(carID)) {
-                    System.out.println(error2);
-                    carID = askChar(query, error1, language);
+                    System.out.println(language.errNoSuchCar);
+                    carID = askChar(language.queryCarId, 
+                                                 language.errNotAnId, language);
             }
         } while (!game.isValidId(carID));
 
@@ -160,23 +152,17 @@ public class UserInput {
      * Asks user to key in a direction, until a valid key is pressed: U for Up, 
      * D for Down, L for Left or R for Right. This method is not case sensitive.
      * 
-     * @param   query       message printed to screen to prompt the user to key 
-     *                      in a direction, followed by a listing of the four
-     *                      choices available
-     * @param   error       message printed to screen to prompt for a new input
-     *                      if user didn't key in a valid entry
      * @param   language    the current language               
      * @return              character representative of the user's choice (upper
      *                      case)
      */
-    public static Direction askDir(String query, String error,
-                                                            Language language) {
+    public static Direction askDir(Language language) {
 
         char keyedIn;
-        query = query.concat("\n" + language.listDirChoices);
+        String query = language.queryDir.concat("\n" + language.listDirChoices);
 
         do {
-            keyedIn = askChar(query, error, language);
+            keyedIn = askChar(query, language.errInvalidDir, language);
             switch (keyedIn) {
                 case 'U': return UP;
                 case 'D': return DOWN;

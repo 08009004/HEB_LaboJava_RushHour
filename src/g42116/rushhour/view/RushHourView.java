@@ -5,6 +5,7 @@ import g42116.rushhour.model.RushHourGame;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.view.Display.displayBoard;
 import g42116.rushhour.JsonIO.Language;
+import static g42116.rushhour.view.Colour.*;
 
 /**
  * This class manages the game visuals.
@@ -37,27 +38,21 @@ public class RushHourView {
         Direction direction;
 
         do {
-            carID = UserInput.askId(
-                            this.language.queryCarId, 
-                                    this.language.errNotAnId, 
-                                            this.language.errNoSuchCar, 
-                                                      this.game, this.language);
-
-            direction = UserInput.askDir(this.language.queryDir, 
-                                                this.language.errInvalidDir, 
-                                                                 this.language);
+            carID = UserInput.askId(this.game, this.language);
+            direction = UserInput.askDir(this.language);
 
             try {
                 this.game.move(carID, direction);
             } catch (RushHourException rhe) {
                 printErrorToScreen(rhe);
+                System.out.println(this.language.queryDifferentMove);
             }
 
             displayBoard(this.game.getBoard());
 
         } while (!this.game.isOver());
 
-        System.out.println("\n" + ColourString.to(this.language.endOfGame, Colour.CYAN, Colour.BLACK));
+        System.out.println("\n" + ColourString.to(this.language.endOfGame, null, CYAN));
     }
 
     /**

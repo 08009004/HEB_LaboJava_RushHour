@@ -8,8 +8,6 @@ import java.io.File;
 import g42116.rushhour.JsonIO.GameInitialiser;
 import g42116.rushhour.JsonIO.Language;
 import g42116.rushhour.view.UserInput;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

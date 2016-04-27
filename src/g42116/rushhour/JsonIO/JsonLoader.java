@@ -19,6 +19,34 @@ public class JsonLoader {
 
     private JSONObject jsonObj;
 
+/*
+    @srv
+    Apres de longues recherches en ligne et de multiples lectures, j'en suis
+    arrive a la conclusion que la meilleur facon d'ouvrir les fichiers json,
+    idealement inclus dans le jar, est en passant par getResourceAsStream comme
+    l'explique bien l'article suivant:
+    http://www.javaworld.com/article/2077352/java-se/smartly-load-your-properties.html
+
+    J'aurais donc prefere utiliser le code ci-desous, que j'ai ecrit dans un
+    autre projet sans rencontrer de probleme, pour le constructeur. Mais pour
+    une raison qui m'echappe je n'arrive pas a le faire fonctionner dane le
+    projet RushHour.
+    Presse par le temps, j'ai du faire le choix d'un autre code que je sais
+    moins bon pour le constructeur.
+
+    public static void main(String[] args) {
+//      note:
+//      getResourceAsStream(String): "If you don’t have a lead /, you have a
+//      relative name and the name of the package will be prepended.
+//      http://mindprod.com/jgloss/getresourceasstream.html
+
+        String gameInitPath = "resources/games/Game1Test.json";
+
+        InputStream in = GameInitialiser.class.getResourceAsStream(gameInitPath);
+        System.out.println("in = " + in);
+    }
+*/
+
     /**
      * Loads the json language file.
      * 
@@ -47,6 +75,5 @@ public class JsonLoader {
     public JSONObject getJsonObj() {
         return jsonObj;
     }
-    
-    
+
 }

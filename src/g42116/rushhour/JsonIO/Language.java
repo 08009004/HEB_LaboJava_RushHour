@@ -37,6 +37,8 @@ public class Language {
     public final String errNotAnId;
     public final String errNoSuchCar;
     public final String errInvalidDir;
+    public final String errWrongOrientation;
+    public final String errIllegalMove;
 
     /**
      * Full constructor.
@@ -48,7 +50,7 @@ public class Language {
         // Display messages:
         this.listLangFiles = (String) "Languages available: ";
         this.listGameInitFiles = (String) "Games available: ";
-        this.listDirChoices = (String) "u, l, d, or r";
+        this.listDirChoices = (String) "u, l, d, or r ";
         this.endOfGame = (String) "endOfGame";
 
         // Query messages:
@@ -67,6 +69,8 @@ public class Language {
         this.errNoSuchCar = (String) "errNoSuchCar ";
         this.errNotAnId = (String) "errNotAnId ";
         this.errInvalidDir = (String) "errInvalidDir ";
+        this.errWrongOrientation = (String) "errWrongOrientation ";
+        this.errIllegalMove = (String) "errIllegalMove ";
     }
 
     /**

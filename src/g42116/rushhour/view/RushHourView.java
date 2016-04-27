@@ -50,9 +50,7 @@ public class RushHourView {
             try {
                 this.game.move(carID, direction);
             } catch (RushHourException rhe) {
-                System.out.println(rhe.getMessage().replace(
-                        "g42116.rushhour.model.RushHourException: ", "")
-                                   + "\n\n" + this.language.queryDifferentMove);
+                printErrorToScreen(rhe);
             }
 
             displayBoard(this.game.getBoard());
@@ -62,4 +60,19 @@ public class RushHourView {
         System.out.println(this.language.endOfGame);
     }
 
+    /**
+     * Prints the error message to screen, based on exception cause, after
+     * translating it in the current language.
+     * 
+     * @param   exception   the message of the exception recieved
+     */
+    private void printErrorToScreen(RushHourException exception) {
+        if (exception.getMessage().startsWith("Id")) {
+            System.out.println(this.language.errNoSuchCar);
+        } else if (exception.getMessage().startsWith("The orientation")) {
+            System.out.println(this.language.errWrongOrientation);
+        } else {
+            System.out.println(this.language.errIllegalMove);
+        }
+    }
 }

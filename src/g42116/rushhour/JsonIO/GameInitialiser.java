@@ -5,16 +5,11 @@ import g42116.rushhour.model.Orientation;
 import g42116.rushhour.model.Position;
 import g42116.rushhour.model.RushHourException;
 import g42116.rushhour.model.RushHourGame;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import static java.lang.Math.toIntExact;
 
 /**
@@ -38,7 +33,7 @@ public class GameInitialiser {
      *                      parsing the configuration file
      */
     public GameInitialiser(File gameInit) throws RushHourException {
-        JSONObject initialBoard = load(gameInit);
+        JSONObject initialBoard = (new JsonLoader(gameInit)).getJsonObj();
 
         this.height = toIntExact((long) initialBoard.get("boardHeight"));
         this.width = toIntExact((long) initialBoard.get("boardWidth"));
@@ -62,7 +57,7 @@ public class GameInitialiser {
     /**
      * Creates a list of Car objects based on data from a JSONArray.
      * 
-     * @param   carsArray   the JSONArray containing the Car objects attributes
+     * @param   carsData   the JSONArray containing the Car objects attributes
      * @return              an ArrayList of the Car objects
      */
     private List<Car> theOtherCars(JSONArray carsData) {
@@ -74,43 +69,20 @@ public class GameInitialiser {
         JSONArray singleCarData;
         List<Car> theCars = new ArrayList<>();
         
-        for (int i = 0; i < carsData.size(); i++) {
-            singleCarData = (JSONArray) carsData.get(i);
+        for (Object element : carsData) {
+            singleCarData = (JSONArray) element;
 
             id = ((String) singleCarData.get(0)).charAt(0);
-            size = toIntExact((long)singleCarData.get(1));
+            size = toIntExact((long) singleCarData.get(1));
             orientation = Orientation.valueOf((String) singleCarData.get(2));
-            row = toIntExact((long)singleCarData.get(3));
-            column = toIntExact((long)singleCarData.get(4));
+            row = toIntExact((long) singleCarData.get(3));
+            column = toIntExact((long) singleCarData.get(4));
 
             theCars.add(
                      new Car(id, size, orientation, new Position(row, column)));
         }
 
         return theCars;
-    }
-
-    /**
-     * Loads the json game file.
-     * 
-     * @param   gameInit    the game configuration file
-     * @return              a Json Object generated from the configuration file
-     * @throws              RushHourException if there is a problem opening or
-     *                      parsing the configuration file
-     */
-    private JSONObject load(File gameInit) throws RushHourException {
-        JSONObject jsonObj = null;
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(gameInit));
-            JSONParser parser = new JSONParser();
-            jsonObj = (JSONObject) parser.parse(in);
-        } catch (IOException e) {
-            throw new RushHourException("game config file access failure");
-        } catch (ParseException e) {
-            throw new RushHourException("game config parsing failure");
-        }
-        
-        return jsonObj;
     }
 
     /**

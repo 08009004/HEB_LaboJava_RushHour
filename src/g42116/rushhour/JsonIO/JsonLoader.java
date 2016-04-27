@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -21,19 +22,20 @@ public class JsonLoader {
 
 /*
     @srv
-    Apres de longues recherches en ligne et de multiples lectures, j'en suis
-    arrive a la conclusion que la meilleur facon d'ouvrir les fichiers json,
-    idealement inclus dans le jar, est en passant par getResourceAsStream comme
+    Après de longues recherches et de multiples lectures en ligne, je suis
+    arrivé à la conclusion que la meilleure manière d'ouvrir les fichiers json
+    (idéalement inclus dans le jar) est d'appeler getResourceAsStream comme
     l'explique bien l'article suivant:
     http://www.javaworld.com/article/2077352/java-se/smartly-load-your-properties.html
 
-    J'aurais donc prefere utiliser le code ci-desous, que j'ai ecrit dans un
-    autre projet sans rencontrer de probleme, pour le constructeur. Mais pour
-    une raison qui m'echappe je n'arrive pas a le faire fonctionner dane le
+    J'aurais donc préféré utiliser le code ci-dessous, que j'ai écrit dans un
+    autre projet sans rencontrer de problème, pour le constructeur. Mais pour
+    une raison qui m'échappe je n'arrive pas à le faire fonctionner dans mon
     projet RushHour.
-    Presse par le temps, j'ai du faire le choix d'un autre code que je sais
+    Pressé par le temps, j'ai dû écrire un autre code que je sais
     moins bon pour le constructeur.
-
+*/
+/*
     public static void main(String[] args) {
 //      note:
 //      getResourceAsStream(String): "If you don’t have a lead /, you have a
@@ -44,6 +46,8 @@ public class JsonLoader {
 
         InputStream in = GameInitialiser.class.getResourceAsStream(gameInitPath);
         System.out.println("in = " + in);
+//     retourne bien le fichier dans un autre projet (in = java.io.BufferedInputStream@7d4991ad)
+//     mais ici 'null'
     }
 */
 

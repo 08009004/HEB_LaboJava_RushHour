@@ -1,6 +1,5 @@
 package g42116.rushhour.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import static g42116.rushhour.model.Orientation.*;
@@ -52,18 +51,6 @@ public class Car {
         this.size = size;
         this.orientation = orientation;
         this.currentPosition = initPos;
-    }
-
-    /**
-     * DO NOT USE - required for 
-     * com.fasterxml.jackson.databind.ObjectMapper.readValue(file, Car.class) to
-     * work.
-     */
-    private Car() {
-        this.id = 'x';
-        this.size = 0;
-        this.orientation = null;
-        this.currentPosition = null;
     }
 
     /**

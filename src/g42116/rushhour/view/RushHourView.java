@@ -53,15 +53,14 @@ public class RushHourView {
 
         } while (!this.game.isOver());
 
-        System.out.println("\n" 
-                        + ColourString.to(this.language.endOfGame, null, CYAN));
+        printEndOfGame();
     }
 
     /**
-     * Prints the error message to screen, based on exception cause, after
-     * translating it in the current language.
+     * Translates the error message it in the current language and prints it to
+     * screen.
      * 
-     * @param   exception   the message of the exception recieved
+     * @param   exception   the exception
      */
     private void printErrorToScreen(RushHourException exception) {
         String errorMessage;
@@ -74,5 +73,13 @@ public class RushHourView {
         }
 
         System.out.println(ColourString.to(errorMessage, null, RED));
+    }
+
+    /**
+     * Prints the "end of game" message to screen.
+     */
+    private void printEndOfGame() {
+        System.out.println("\n" 
+                        + ColourString.to(this.language.endOfGame, null, CYAN));
     }
 }

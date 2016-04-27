@@ -64,12 +64,15 @@ public class RushHourView {
      * @param   exception   the message of the exception recieved
      */
     private void printErrorToScreen(RushHourException exception) {
+        String errorMessage;
         if (exception.getMessage().startsWith("Id")) {
-            System.out.println(this.language.errNoSuchCar);
+            errorMessage = this.language.errNoSuchCar;
         } else if (exception.getMessage().startsWith("The orientation")) {
-            System.out.println(this.language.errWrongOrientation);
+            errorMessage = this.language.errWrongOrientation;
         } else {
-            System.out.println(this.language.errIllegalMove);
+            errorMessage = this.language.errIllegalMove;
         }
+
+        System.out.println(ColourString.to(errorMessage, null, RED));
     }
 }

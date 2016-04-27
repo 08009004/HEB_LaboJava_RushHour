@@ -4,6 +4,7 @@ import g42116.rushhour.JsonIO.Language;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
 import g42116.rushhour.model.RushHourGame;
+import static g42116.rushhour.view.Colour.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +24,8 @@ public class UserInput {
      * @param   query   message printed to screen to prompt the user to key in a 
      *                  character
      * @param   error   message printed to screen to prompt for a new input if 
-     *                  user didn't key in a single non-blank character
+     *                  user didn't key in a single non-blank character 
+     *                  (coloured in red)
      * @return          user's entry (upper case)
      */
     private static char askChar(String query, String error, Language language) {
@@ -41,11 +43,15 @@ public class UserInput {
             str1 = str1.toUpperCase();
 
             if (str1.equals("")) {
-                System.out.println(language.errCharsOnlyBlank + error);
+                System.out.println(
+                        ColourString.to(
+                                language.errCharsOnlyBlank + error, null, RED));
             }
 
             if (str1.length() > 1) {
-                System.out.println(language.errCharsSeveral + error);
+                System.out.println(
+                        ColourString.to(
+                                language.errCharsSeveral + error, null, RED));
             }
 
         } while (str1.length() > 1 || str1.equals(""));
@@ -139,7 +145,8 @@ public class UserInput {
         do {
             carID = askChar(language.queryCarId, language.errNotAnId, language);
             if (!game.isValidId(carID)) {
-                    System.out.println(language.errNoSuchCar);
+                    System.out.println(
+                            ColourString.to(language.errNoSuchCar, null, RED));
                     carID = askChar(language.queryCarId, 
                                                  language.errNotAnId, language);
             }
@@ -169,7 +176,8 @@ public class UserInput {
                 case 'L': return LEFT;
                 case 'R': return RIGHT;
                 default:
-                    System.out.print(keyedIn + language.errIsNotDir);
+                    System.out.print(keyedIn + 
+                              ColourString.to(language.errIsNotDir, null, RED));
                     break;
             }
         } while (true);

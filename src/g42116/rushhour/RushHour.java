@@ -25,7 +25,7 @@ public class RushHour {
     public static void main(String[] args) {
 
         // Query and set language from file:
-        String langFolderPath = "src/g42116/rushhour/JsonIO/res1ources/languages";
+        String langFolderPath = "src/g42116/rushhour/JsonIO/resources/languages";
         String defaultLangPath = langFolderPath+ "/English.json";
 
         Language language = null;

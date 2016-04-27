@@ -21,7 +21,8 @@ public class RushHourView {
     /**
      * Full constructor.
      * 
-     * @param   game    the game to show the user
+     * @param   game        the game to show the user
+     * @param   language    the language for the game display
      */
     public RushHourView(RushHourGame game, Language language) {
         this.game = game;
@@ -52,7 +53,8 @@ public class RushHourView {
 
         } while (!this.game.isOver());
 
-        System.out.println("\n" + ColourString.to(this.language.endOfGame, null, CYAN));
+        System.out.println("\n" 
+                        + ColourString.to(this.language.endOfGame, null, CYAN));
     }
 
     /**

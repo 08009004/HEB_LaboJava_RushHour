@@ -7,6 +7,8 @@ import g42116.rushhour.view.Display;
 import java.io.File;
 import g42116.rushhour.JsonIO.GameInitialiser;
 import g42116.rushhour.JsonIO.Language;
+import static g42116.rushhour.view.Colour.*;
+import g42116.rushhour.view.ColourString;
 import g42116.rushhour.view.UserInput;
 
 /**
@@ -22,7 +24,8 @@ public class RushHour {
      */
     public static void main(String[] args) {
 
-        String langFolderPath = "src/g42116/rushhour/JsonIO/resources/languages";
+        // Query and set language from file:
+        String langFolderPath = "src/g42116/rushhour/JsonIO/res1ources/languages";
         String defaultLangPath = langFolderPath+ "/English.json";
 
         Language language = null;
@@ -31,10 +34,12 @@ public class RushHour {
             language = new Language(
                                UserInput.askLanguage(langFolderPath, language));
         } catch (RushHourException ex) {
-            System.out.println("Program was unable to "
-                                          + "load language configuration file");
+            String error = "Program was unable to "
+                                          + "load language configuration file";
+            System.out.println(ColourString.to(error, RED, WHITE));
         }
 
+        // Query board from file, then initialise RushHourGame object:
         String initBoardFolder = "src/g42116/rushhour/JsonIO/resources/games";
         File initBoard = UserInput.askInitBoard(initBoardFolder, language);
 
@@ -42,9 +47,11 @@ public class RushHour {
         try {
             game = new GameInitialiser(initBoard).initialise();
         } catch (RushHourException ex) {
-            System.out.println("Problem loading game configuration file");
+            String error = "Problem loading game configuration file";
+            System.out.println(ColourString.to(error, RED, WHITE));
         }
 
+        // Play:
         RushHourView view = new RushHourView(game, language);
         Display.displayBoard(game.getBoard());
         view.play();

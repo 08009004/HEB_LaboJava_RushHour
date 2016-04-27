@@ -57,7 +57,7 @@ public class RushHourView {
 
         } while (!this.game.isOver());
 
-        System.out.println(this.language.endOfGame);
+        System.out.println("\n" + ColourString.to(this.language.endOfGame, Colour.CYAN, Colour.BLACK));
     }
 
     /**

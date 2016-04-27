@@ -26,23 +26,36 @@ public class ColourString {
      * 
      * More info: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
      * 
-     * @param   string      the string to colour
-     * @param   background  the background colour
-     * @param   foreground  the foreground colour
-     * @return              the ANSI escape code for desired SGR parameters, 
-     *                      followed by the parameter string and finally the 
-     *                      ANSI escape code for default SGR parameters 
-     * @throws              NullPointerException if either of the colour fields
-     *                      is left at null
+     * @param   string  the string to colour
+     * @param   back    the background colour (default colour if null)
+     * @param   fore    the foreground colour (default colour if null)
+     * @return          the ANSI escape code for desired SGR parameters, 
+     *                  followed by the parameter string and finally the 
+     *                  ANSI escape code for default SGR parameters 
      */
-    public static String to(String string, Colour background, Colour foreground) {
-        if (background == null || foreground == null) {
-            throw new NullPointerException("Background and foreground " 
-                    + "parameters can't be null.");
+    public static String to(String string, Colour back,Colour fore) {
+        /* colouredString initialised with toDefault() to guaranty that 
+         * foreground and/or background are set to default if parameter is null.
+         */
+        String colourCoded = toDefault();
+
+        if (fore == null) {
+            if (back == null) {
+                colourCoded += string;
+            } else {
+                colourCoded += "\033[4" + back.ordinal() + "m" + string;
+            }
+        } else {
+            if (back == null) {
+                colourCoded += "\033[3" + fore.ordinal() + "m" + string;
+            } else {
+                colourCoded += "\033[3" + fore.ordinal() 
+                                + ";4" + back.ordinal() 
+                                + "m" + string;
+            }
         }
-        return "\033[3" + foreground.ordinal() 
-                + ";4" + background.ordinal() 
-                + "m" + string + toDefault();
+
+        return colourCoded + toDefault();
     }
     
     /**
@@ -51,8 +64,13 @@ public class ColourString {
      * @param args unused
      */
     public static void main(String[] args) {
-        String test = "hyia";
-        test = to(test, GREEN, RED);
+        String test = "test message";
         System.out.println(test);
+        String test1 = to(test, CYAN, YELLOW);
+        System.out.println(test1);
+        String test2 = to(test, null, BLUE);
+        System.out.println(test2);
+        String test3 = to(test, RED, null);
+        System.out.println(test3);
     }
 }

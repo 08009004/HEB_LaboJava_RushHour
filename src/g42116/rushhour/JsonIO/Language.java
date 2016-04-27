@@ -43,9 +43,12 @@ public class Language {
     /**
      * Full constructor.
      * 
-     * @param   langInit    the language configuration file 
+     * @param   langInit    the language configuration file
+     * @throws              RushHourException if there is a problem opening or
+     *                      parsing the language file
      */
-    public Language(File langInit) {
+    public Language(File langInit) throws RushHourException {
+        JSONObject lang = load(langInit);
 
         // Display messages:
         this.listLangFiles = (String) "Languages available: ";

@@ -8,28 +8,38 @@ import java.io.File;
 import g42116.rushhour.JsonIO.GameInitialiser;
 import g42116.rushhour.JsonIO.Language;
 import g42116.rushhour.view.UserInput;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author john
  */
 public class RushHour {
-    
+
     /**
      * Main method: run to play the game.
      * 
      * @param args unused
      */
     public static void main(String[] args) {
-        
+
         String langFolderPath = "src/g42116/rushhour/JsonIO/resources/languages";
         String defaultLangPath = langFolderPath+ "/English.json";
-        Language language = new Language(new File(defaultLangPath));
-        language = new Language(UserInput.askLanguage(langFolderPath, language));
-        
+
+        Language language = null;
+        try {
+            language = new Language(new File(defaultLangPath));
+            language = new Language(
+                               UserInput.askLanguage(langFolderPath, language));
+        } catch (RushHourException ex) {
+            System.out.println("Program was unable to "
+                                          + "load language configuration file");
+        }
+
         String initBoardFolder = "src/g42116/rushhour/JsonIO/resources/games";
         File initBoard = UserInput.askInitBoard(initBoardFolder, language);
-        
+
         RushHourGame game = null;
         try {
             game = new GameInitialiser(initBoard).initialise();

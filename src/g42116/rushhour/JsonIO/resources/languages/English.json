@@ -1,15 +1,23 @@
 {
-    "queryCarId": "Which car would you like to move: ",
-    "wasInvalidId": "Please enter a valid ID: ",
-    "noSuchCar": "No such car on the board. Please select a valid car.",
-    "queryDirection": "Which way would you like to move it? ",
-    "wasInvalidDir": "Please enter a valid direction: ",
-    "queryDifferentMove": "Please try another move: ",
-    "endOfGame": "\nGAME COMPLETED, CONGRATULATIONS!",
-    "errBlankCharsOnly": "You only keyed in blank characters. ",
-    "errTooManyChars": "You have keyed in more than one character. ",
-    "moveDirections":"press U for Up, D for Down, L for Left or R for Right: ",
-    "isNotDir": " is not a valid direction.",
-    
-    "queryLanguage": "Select your language: "
+    "listLangFiles": "Lang avail: ",
+    "listGameInitFiles": "Games avail: ",
+    "listDirChoices": "U, L, D, or R ",
+    "endOfGame": "end Of Game"
+
+    "queryLang" = "Which lang do you pre: ",
+    "reQueryLang": "re Query Lang ",
+    "queryGameInit": "Sel the game that you want to launch: ",
+    "reQueryGameInit": "re Query Game Init ",
+    "queryCarId": "query Car Id ",
+    "queryDir": "query Dir ",
+    "queryDifferentMove": "query Different Move ",
+
+    "errOnlyBlankChars": "err Only Blank Chars ",
+    "errSeveralChars": "err Several Chars ",
+    "isNotDir": "is Not Dir ",
+    "errNoSuchCar": "err No Such Car ",
+    "errNotAnId": "err Not An Id ",
+    "errInvalidDir": "err Invalid Dir ",
+    "errWrongOrientation": "err Wrong Orientation ",
+    "errIllegalMove": "err Illegal Move "
 }

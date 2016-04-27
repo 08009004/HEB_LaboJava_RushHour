@@ -51,29 +51,29 @@ public class Language {
         JSONObject lang = load(langInit);
 
         // Display messages:
-        this.listLangFiles = (String) "Languages available: ";
-        this.listGameInitFiles = (String) "Games available: ";
-        this.listDirChoices = (String) "u, l, d, or r ";
-        this.endOfGame = (String) "endOfGame";
+        this.listLangFiles = (String) lang.get("listLangFiles");
+        this.listGameInitFiles = (String) lang.get("listGameInitFiles");
+        this.listDirChoices = (String) lang.get("listDirChoices");
+        this.endOfGame = (String) lang.get("endOfGame");
 
         // Query messages:
-        this.queryLang = (String) "Which language do you prefer: ";
-        this.reQueryLang = (String) "reQueryLang ";
-        this.queryGameInit = (String) "Select the game that you want to launch: ";
-        this.reQueryGameInit = (String) "reQueryGameInit ";
-        this.queryCarId = (String) "queryCarId ";
-        this.queryDir = (String) "queryDir ";
-        this.queryDifferentMove = (String) "queryDifferentMove ";
+        this.queryLang = (String) lang.get("queryLang");
+        this.reQueryLang = (String) lang.get("reQueryLang");
+        this.queryGameInit = (String) lang.get("queryGameInit");
+        this.reQueryGameInit = (String) lang.get("reQueryGameInit");
+        this.queryCarId = (String) lang.get("queryCarId");
+        this.queryDir = (String) lang.get("queryDir");
+        this.queryDifferentMove = (String) lang.get("queryDifferentMove");
 
         // Error messages:
-        this.errCharsOnlyBlank = (String) "errOnlyBlankChars ";
-        this.errCharsSeveral = (String) "errSeveralChars ";
-        this.errIsNotDir = (String) "is Not Dir ";
-        this.errNoSuchCar = (String) "errNoSuchCar ";
-        this.errNotAnId = (String) "errNotAnId ";
-        this.errInvalidDir = (String) "errInvalidDir ";
-        this.errWrongOrientation = (String) "errWrongOrientation ";
-        this.errIllegalMove = (String) "errIllegalMove ";
+        this.errCharsOnlyBlank = (String) lang.get("errCharsOnlyBlank");
+        this.errCharsSeveral = (String) lang.get("errCharsSeveral");
+        this.errIsNotDir = (String) lang.get("errIsNotDir");
+        this.errNoSuchCar = (String) lang.get("errNoSuchCar");
+        this.errNotAnId = (String) lang.get("errNotAnId");
+        this.errInvalidDir = (String) lang.get("errInvalidDir");
+        this.errWrongOrientation = (String) lang.get("errWrongOrientation");
+        this.errIllegalMove = (String) lang.get("errIllegalMove");
     }
 
     /**

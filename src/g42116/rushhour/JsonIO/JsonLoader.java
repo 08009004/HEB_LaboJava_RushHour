@@ -10,8 +10,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /**
- * This class provides the mechanisms to instantiate a Json object from file to
- * other package classes.
+ * This class provides the methods required to instantiate a Json object from 
+ * file, to the attention of other methods of this package.
  * 
  * @author john
  */
@@ -22,7 +22,7 @@ public class JsonLoader {
     /**
      * Loads the Json file.
      * 
-     * @param   jsonFilePath    the filepathe to the Json file to load
+     * @param   jsonFilePath    the filepath to the Json file to load
      * @return                  a Json Object generated from the Json file
      * @throws                  RushHourException if there is a problem opening
      *                          or parsing the configuration file
@@ -33,16 +33,16 @@ public class JsonLoader {
         explained in the following atricle:
         http://www.javaworld.com/article/2077352/java-se/smartly-load-your-properties.html
 
-        More details on filepath given here: "If you don’t have a lead /, you
-        have a relative name and the name of the package will be prepended.
+        More details on filepath available here: "If you don’t have a lead /,
+        you have a relative name and the name of the package will be prepended. 
+        If you use a /, you must include the name of the package yourself, or 
+        whatever name the resource is filed under in the jar."
         http://mindprod.com/jgloss/getresourceasstream.html                   */
 
-//        String gameInitPath = "resources/games/Game1.json";
-
-        jsonFilePath = jsonFilePath.replace("src\\", "");
-        System.out.println("IN LOADER: jsonFilePath = " + jsonFilePath);
+//        String jsonPath = jsonFilePath.replace("src", "");
+//        System.out.println("IN LOADER: jsonPath = " + jsonPath);
         JSONParser parser = new JSONParser();
-        InputStream in = GameInitialiser.class.getResourceAsStream(jsonFilePath);
+        InputStream in = this.getClass().getResourceAsStream(jsonFilePath);
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         try {
             this.jsonObj = (JSONObject) parser.parse(reader);

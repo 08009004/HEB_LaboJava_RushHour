@@ -30,11 +30,10 @@ public class RushHour {
         String defaultLangPath = "resources/languages/English.json";
         String langFolderPath = "src/g42116/rushhour/JsonIO/resources/languages";
 
-        Language language = null;
+        Language lang = null;
         try {
-            language = new Language(defaultLangPath);
-            language = new Language(
-                               UserInput.askLanguage(langFolderPath, language));
+            lang = new Language(defaultLangPath);
+            lang = new Language(UserInput.askLang(langFolderPath, lang));
         } catch (RushHourException ex) {
             String error = "Program was unable to "
                                           + "load language configuration file";
@@ -43,7 +42,7 @@ public class RushHour {
 
         // Query board from file, then initialise RushHourGame object:
         String initBoardFolder = "src/g42116/rushhour/JsonIO/resources/games";
-        File initBoard = UserInput.askInitBoard(initBoardFolder, language);
+        File initBoard = UserInput.askInitBoard(initBoardFolder, lang);
 
         RushHourGame game = null;
         try {
@@ -54,7 +53,7 @@ public class RushHour {
         }
 
         // Play:
-        RushHourView view = new RushHourView(game, language);
+        RushHourView view = new RushHourView(game, lang);
         Display.displayBoard(game.getBoard());
         view.play();
     }

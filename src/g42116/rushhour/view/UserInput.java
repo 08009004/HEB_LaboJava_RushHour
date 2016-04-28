@@ -66,10 +66,11 @@ public class UserInput {
      * @param   folderPath  the folder where the language files are stored
      * @param   language    the current language
      * @return              the selected language configuration relative file 
-     *                      path, from 
+     *                      path, from project packages root
      */
-    public static String askLanguage(String folderPath, Language language) {
+    public static String askLang(String folderPath, Language language) {
         System.out.println(language.listLangFiles);
+        System.out.println("IN ASK_LANG: folderPath = " + folderPath);
         List<File> folderContent = Arrays.asList(
                                               new File(folderPath).listFiles());
 
@@ -93,7 +94,7 @@ public class UserInput {
      
         } while (selected < 0 || selected > folderContent.size() - 1);
 
-        return folderContent.get(selected).getPath();
+        return folderContent.get(selected).getPath().replace("src", "");
     }
 
     /**

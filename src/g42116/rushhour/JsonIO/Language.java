@@ -1,7 +1,6 @@
 package g42116.rushhour.JsonIO;
 
 import g42116.rushhour.model.RushHourException;
-import java.io.File;
 import org.json.simple.JSONObject;
 
 /**
@@ -9,6 +8,9 @@ import org.json.simple.JSONObject;
  * @author g42116
  */
 public class Language {
+
+    // relative path to folder containing language json files (from 
+    public final String folderPath = "resources/languages/";
     
     // Display messages:
     public final String listLangFiles;

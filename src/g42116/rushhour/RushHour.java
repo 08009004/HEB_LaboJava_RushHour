@@ -24,13 +24,15 @@ public class RushHour {
      */
     public static void main(String[] args) {
 
-        // Query and set language from file:
+        // Query and set language from file (Must be relative, from 
+        // JsonLoader.class location for default, and from project root for
+        // askLanguage() method):
+        String defaultLangPath = "resources/languages/English.json";
         String langFolderPath = "src/g42116/rushhour/JsonIO/resources/languages";
-        String defaultLangPath = langFolderPath+ "/English.json";
 
         Language language = null;
         try {
-            language = new Language(new File(defaultLangPath));
+            language = new Language(defaultLangPath);
             language = new Language(
                                UserInput.askLanguage(langFolderPath, language));
         } catch (RushHourException ex) {

@@ -42,7 +42,8 @@ public class Language {
      * @throws              RushHourException if there is a problem opening or
      *                      parsing the language file
      */
-    public Language(File langInit) throws RushHourException {
+    public Language(String langInit) throws RushHourException {
+        System.out.println("IN LANGUAGE: langInit = " + langInit);
         JSONObject lang = (new JsonLoader(langInit)).getJsonObj();
 
         // Display messages:

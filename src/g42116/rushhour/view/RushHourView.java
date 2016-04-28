@@ -40,7 +40,7 @@ public class RushHourView {
 
         do {
             carID = this.keyboard.askId(this.game);
-            direction = this.keyboard.askDir(this.keyboard.getLang());
+            direction = this.keyboard.askDir();
 
             try {
                 this.game.move(carID, direction);

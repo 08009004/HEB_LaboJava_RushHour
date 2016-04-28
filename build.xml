@@ -10,6 +10,9 @@
 <project name="RushHour" default="default" basedir=".">
     <description>Builds, tests, and runs the project RushHour.</description>
     <import file="nbproject/build-impl.xml"/>
+    <target name="-pre-jar">
+        <unjar src="lib/json-simple-1.1.1.jar" dest="${build.classes.dir}"/>
+    </target>
     <!--
 
     There exist several targets which are by default empty and which can be 

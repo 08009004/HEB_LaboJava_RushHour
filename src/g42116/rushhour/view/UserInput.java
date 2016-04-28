@@ -60,7 +60,7 @@ public class UserInput {
     private char askChar(String query, String error) {
         Scanner keyboard = new Scanner(System.in);
         String str1;
-        System.out.print("\n" + query);
+        System.out.println(query);
 /*      API: "A Scanner breaks its input into tokens using a delimiter pattern, 
         which by default matches whitespace."
         nextLine() "advances this scanner past the current line and returns the 
@@ -88,7 +88,7 @@ public class UserInput {
         return str1.charAt(0);
     }
 
-    private String askFilePath(String fldrPath, String msg1, String msg2) {
+    private String askFile(String fldrPath, String msg1, String msg2) {
         List<File> folderContent = Arrays.asList(
                                               new File(fldrPath).listFiles());
 
@@ -112,7 +112,7 @@ public class UserInput {
      
         } while (selected < 0 || selected > folderContent.size() - 1);
 
-        return folderContent.get(selected).getPath().replace("src", "");
+        return folderContent.get(selected).getPath().replace("build/classes", "");
     }
     /**
      * Asks user to select the game language amongst the language init files,
@@ -127,7 +127,7 @@ public class UserInput {
         System.out.println(lang.getListLangFiles());
         String query = lang.getQueryLang();
         String reQuery = lang.getReQueryLang();     // Upon incorrect user entry.
-        return askFilePath(folderPath, query, reQuery);
+        return askFile(folderPath, query, reQuery);
         
     }
 
@@ -144,7 +144,7 @@ public class UserInput {
         System.out.println(lang.getListGameInitFiles());
         String query = lang.getQueryGameInit();
         String reQuery = lang.getReQueryGameInit(); // Upon incorrect user entry.
-        return askFilePath(folderPath, query, reQuery);
+        return askFile(folderPath, query, reQuery);
     }
 
     /**
@@ -171,12 +171,10 @@ public class UserInput {
     /**
      * Asks user to key in a direction, until a valid key is pressed: U for Up, 
      * D for Down, L for Left or R for Right. This method is not case sensitive.
-     * 
-     * @param   lang    the current language               
-     * @return          character representative of the user's choice (upper
-     *                  case)
+     *             
+     * @return  character representative of the user's choice (upper case)
      */
-    public Direction askDir(Language lang) {
+    public Direction askDir() {
 
         char keyedIn;
         String query = lang.getQueryDir().concat("\n" + lang.getListDirChoices());

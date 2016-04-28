@@ -32,7 +32,7 @@ public class GameInitialiser {
      * @throws              RushHourException if there is a problem opening or
      *                      parsing the configuration file
      */
-    public GameInitialiser(File gameInit) throws RushHourException {
+    public GameInitialiser(String gameInit) throws RushHourException {
         JSONObject initialBoard = (new JsonLoader(gameInit)).getJsonObj();
 
         this.height = toIntExact((long) initialBoard.get("boardHeight"));

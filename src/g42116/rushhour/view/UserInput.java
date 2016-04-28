@@ -63,14 +63,15 @@ public class UserInput {
      * Asks user to select the game language amongst the language init files,
      * from a folder content list.
      * 
-     * @param   folderPath  the folder where the language files are stored
+     * @param   folderPath  the path to the folder where the language files are
+     *                      stored
      * @param   language    the current language
      * @return              the selected language configuration relative file 
-     *                      path, from project packages root
+     *                      path (from project root package, included)
      */
     public static String askLang(String folderPath, Language language) {
         System.out.println(language.listLangFiles);
-        System.out.println("IN ASK_LANG: folderPath = " + folderPath);
+
         List<File> folderContent = Arrays.asList(
                                               new File(folderPath).listFiles());
 
@@ -104,9 +105,10 @@ public class UserInput {
      * @param   folderPath  the path to the folder containing the initial board
      *                      files
      * @param   language    the current language
-     * @return              the .json initial board absolute file path
-     */
-    public static File askInitBoard(String folderPath, Language language) {
+     * @return              the selected initial board configuration relative  
+     *                      file path (from project root package, included)
+     */             
+    public static String askInitBoard(String folderPath, Language language) {
         System.out.println(language.listGameInitFiles);
         List<File> folderContent = Arrays.asList(
                                               new File(folderPath).listFiles());
@@ -130,7 +132,7 @@ public class UserInput {
             selected--;
         } while (selected < 0 || selected > folderContent.size() - 1);
 
-        return folderContent.get(selected).getAbsoluteFile();
+        return folderContent.get(selected).getPath().replace("src", "");
     }
 
     /**

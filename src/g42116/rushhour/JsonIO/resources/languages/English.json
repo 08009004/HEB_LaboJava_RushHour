@@ -2,7 +2,7 @@
     "listLangFiles": "Lang avail: ",
     "listGameInitFiles": "Games avail: ",
     "listDirChoices": "U, L, D, or R ",
-    "endOfGame": "end Of Game"
+    "endOfGame": "end Of Game",
 
     "queryLang": "Which lang do you pre: ",
     "reQueryLang": "re Query Lang ",

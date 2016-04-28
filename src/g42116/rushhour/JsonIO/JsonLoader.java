@@ -13,7 +13,7 @@ import org.json.simple.parser.ParseException;
  * This class provides the methods required to instantiate a Json object from 
  * file, to the attention of other methods of this package.
  * 
- * @author john
+ * @author g42116
  */
 public class JsonLoader {
 

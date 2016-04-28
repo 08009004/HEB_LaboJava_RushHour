@@ -11,7 +11,8 @@ import g42116.rushhour.view.ColourString;
 import g42116.rushhour.view.UserInput;
 
 /**
- *
+ * Main class of the projects, containing the 'main' method.
+ * 
  * @author john
  */
 public class RushHour {
@@ -29,10 +30,13 @@ public class RushHour {
         String defaultLangPath = "resources/languages/English.json";
         String langFolderPath = "src/g42116/rushhour/JsonIO/resources/languages";
 
-        Language lang = null;
+        UserInput keyboard = null;
+        Language lang;
         try {
             lang = new Language(defaultLangPath);
-            lang = new Language(UserInput.askLang(langFolderPath, lang));
+            keyboard = new UserInput(lang);
+            lang = new Language(keyboard.askLang(langFolderPath));
+            keyboard.setLang(lang);
         } catch (RushHourException ex) {
             String error = "Program was unable to "
                                           + "load language configuration file";
@@ -45,15 +49,15 @@ public class RushHour {
 
         RushHourGame game = null;
         try {
-            game = new GameInitialiser(UserInput.askBoard(
-                                              boardsFolder, lang)).initialise();
+            game = new GameInitialiser(keyboard.askBoard(
+                                                    boardsFolder)).initialise();
         } catch (RushHourException ex) {
             String error = "Problem loading game configuration file";
             System.out.println(ColourString.to(error, RED, WHITE));
         }
 
         // Play:
-        RushHourView view = new RushHourView(game, lang);
+        RushHourView view = new RushHourView(game, keyboard);
         Display.displayBoard(game.getBoard());
         view.play();
     }

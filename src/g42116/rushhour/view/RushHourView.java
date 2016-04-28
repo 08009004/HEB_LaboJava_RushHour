@@ -4,7 +4,6 @@ import g42116.rushhour.model.RushHourException;
 import g42116.rushhour.model.RushHourGame;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.view.Display.displayBoard;
-import g42116.rushhour.JsonIO.Language;
 import static g42116.rushhour.view.Colour.*;
 
 /**
@@ -16,17 +15,18 @@ public class RushHourView {
 
     //Class attribute:
     private final RushHourGame game;
-    private final Language language;
+//    private final Language language;
+    private final UserInput keyboard;
 
     /**
      * Full constructor.
      * 
      * @param   game        the game to show the user
-     * @param   language    the language for the game display
+     * @param   keyboard    the keyboard for player's entries
      */
-    public RushHourView(RushHourGame game, Language language) {
+    public RushHourView(RushHourGame game, UserInput keyboard) {
         this.game = game;
-        this.language = language;
+        this.keyboard = keyboard;
     }
 
     /**
@@ -39,14 +39,15 @@ public class RushHourView {
         Direction direction;
 
         do {
-            carID = UserInput.askId(this.game, this.language);
-            direction = UserInput.askDir(this.language);
+            carID = this.keyboard.askId(this.game);
+            direction = this.keyboard.askDir(this.keyboard.getLang());
 
             try {
                 this.game.move(carID, direction);
             } catch (RushHourException rhe) {
                 printErrorToScreen(rhe);
-                System.out.println(this.language.queryDifferentMove);
+                System.out.println(
+                               this.keyboard.getLang().getQueryDifferentMove());
             }
 
             displayBoard(this.game.getBoard());
@@ -65,11 +66,11 @@ public class RushHourView {
     private void printErrorToScreen(RushHourException exception) {
         String errorMessage;
         if (exception.getMessage().startsWith("Id")) {
-            errorMessage = this.language.errNoSuchCar;
+            errorMessage = this.keyboard.getLang().getErrNoSuchCar();
         } else if (exception.getMessage().startsWith("The orientation")) {
-            errorMessage = this.language.errWrongOrientation;
+            errorMessage = this.keyboard.getLang().getErrWrongOrientation();
         } else {
-            errorMessage = this.language.errIllegalMove;
+            errorMessage = this.keyboard.getLang().getErrIllegalMove();
         }
 
         System.out.println(ColourString.to(errorMessage, null, RED));
@@ -80,6 +81,7 @@ public class RushHourView {
      */
     private void printEndOfGame() {
         System.out.println("\n" 
-                        + ColourString.to(this.language.endOfGame, null, CYAN));
+                    + ColourString.to(this.keyboard.getLang().getEndOfGame(), 
+                                                                   null, CYAN));
     }
 }

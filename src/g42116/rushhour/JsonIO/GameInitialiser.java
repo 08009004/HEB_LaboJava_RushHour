@@ -13,7 +13,8 @@ import org.json.simple.JSONObject;
 import static java.lang.Math.toIntExact;
 
 /**
- *
+ * This class initialises RushHourGame objects from json files.
+ * 
  * @author g42116
  */
 public class GameInitialiser {

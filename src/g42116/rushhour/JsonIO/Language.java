@@ -4,7 +4,9 @@ import g42116.rushhour.model.RushHourException;
 import org.json.simple.JSONObject;
 
 /**
- *
+ * This class loads all textual output for the game from a language Json file
+ * chosen by the player.
+ * 
  * @author g42116
  */
 public class Language {
@@ -73,4 +75,85 @@ public class Language {
         this.errIllegalMove = (String) lang.get("errIllegalMove");
     }
 
+    public String getFolderPath() {
+        return folderPath;
+    }
+
+    public String getListLangFiles() {
+        return listLangFiles;
+    }
+
+    public String getListGameInitFiles() {
+        return listGameInitFiles;
+    }
+
+    public String getListDirChoices() {
+        return listDirChoices;
+    }
+
+    public String getEndOfGame() {
+        return endOfGame;
+    }
+
+    public String getQueryLang() {
+        return queryLang;
+    }
+
+    public String getReQueryLang() {
+        return reQueryLang;
+    }
+
+    public String getQueryGameInit() {
+        return queryGameInit;
+    }
+
+    public String getReQueryGameInit() {
+        return reQueryGameInit;
+    }
+
+    public String getQueryCarId() {
+        return queryCarId;
+    }
+
+    public String getQueryDir() {
+        return queryDir;
+    }
+
+    public String getQueryDifferentMove() {
+        return queryDifferentMove;
+    }
+
+    public String getErrCharsOnlyBlank() {
+        return errCharsOnlyBlank;
+    }
+
+    public String getErrCharsSeveral() {
+        return errCharsSeveral;
+    }
+
+    public String getErrIsNotDir() {
+        return errIsNotDir;
+    }
+
+    public String getErrNotAnId() {
+        return errNotAnId;
+    }
+
+    public String getErrNoSuchCar() {
+        return errNoSuchCar;
+    }
+
+    public String getErrInvalidDir() {
+        return errInvalidDir;
+    }
+
+    public String getErrWrongOrientation() {
+        return errWrongOrientation;
+    }
+
+    public String getErrIllegalMove() {
+        return errIllegalMove;
+    }
+
+    
 }

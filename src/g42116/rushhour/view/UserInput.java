@@ -108,7 +108,7 @@ public class UserInput {
      * @return              the selected initial board configuration relative  
      *                      file path (from project root package, included)
      */             
-    public static String askInitBoard(String folderPath, Language language) {
+    public static String askBoard(String folderPath, Language language) {
         System.out.println(language.listGameInitFiles);
         List<File> folderContent = Arrays.asList(
                                               new File(folderPath).listFiles());

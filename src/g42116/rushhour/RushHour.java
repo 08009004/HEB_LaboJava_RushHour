@@ -23,7 +23,7 @@ public class RushHour {
      */
     public static void main(String[] args) {
 
-        // Query and set language from file (Must be relative, from 
+        // Query and set language from file (folder path must be relative, from 
         // JsonLoader.class location for default, and from project root for
         // askLanguage() method):
         String defaultLangPath = "resources/languages/English.json";
@@ -39,14 +39,14 @@ public class RushHour {
             System.out.println(ColourString.to(error, RED, WHITE));
         }
 
-        // Query board from file, then initialise RushHourGame object:
-        String initBoardFolder = "src/g42116/rushhour/JsonIO/resources/games";
-//        File initBoard = UserInput.askInitBoard(initBoardFolder, lang);
+        // Query board from file, then initialise RushHourGame object (folder
+        // path must be relative, from project root):
+        String boardsFolder = "src/g42116/rushhour/JsonIO/resources/games";
 
         RushHourGame game = null;
         try {
-//            game = new GameInitialiser(initBoard).initialise();
-            game = new GameInitialiser(UserInput.askInitBoard(initBoardFolder, lang)).initialise();
+            game = new GameInitialiser(UserInput.askBoard(
+                                              boardsFolder, lang)).initialise();
         } catch (RushHourException ex) {
             String error = "Problem loading game configuration file";
             System.out.println(ColourString.to(error, RED, WHITE));

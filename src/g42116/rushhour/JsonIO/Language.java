@@ -12,32 +12,32 @@ import org.json.simple.JSONObject;
 public class Language {
 
     // relative path to folder containing language json files (from 
-    public final String folderPath = "resources/languages/";
+    private final String folderPath = "resources/languages/";
     
     // Display messages:
-    public final String listLangFiles;
-    public final String listGameInitFiles;
-    public final String listDirChoices;
-    public final String endOfGame;
+    private final String listLangFiles;
+    private final String listGameInitFiles;
+    private final String listDirChoices;
+    private final String endOfGame;
 
     // Query messages:
-    public final String queryLang;
-    public final String reQueryLang;
-    public final String queryGameInit;
-    public final String reQueryGameInit;
-    public final String queryCarId;
-    public final String queryDir;
-    public final String queryDifferentMove;
+    private final String queryLang;
+    private final String reQueryLang;
+    private final String queryGameInit;
+    private final String reQueryGameInit;
+    private final String queryCarId;
+    private final String queryDir;
+    private final String queryDifferentMove;
 
     // Error messages:
-    public final String errCharsOnlyBlank;
-    public final String errCharsSeveral;
-    public final String errIsNotDir;
-    public final String errNotAnId;
-    public final String errNoSuchCar;
-    public final String errInvalidDir;
-    public final String errWrongOrientation;
-    public final String errIllegalMove;
+    private final String errCharsOnlyBlank;
+    private final String errCharsSeveral;
+    private final String errIsNotDir;
+    private final String errNotAnId;
+    private final String errNoSuchCar;
+    private final String errInvalidDir;
+    private final String errWrongOrientation;
+    private final String errIllegalMove;
 
     /**
      * Full constructor.

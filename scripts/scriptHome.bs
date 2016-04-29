@@ -1,0 +1,152 @@
+#!/bin/bash
+
+#-----------------------------------------------------------------
+# Define confirm function (checks if last command was successful):
+
+function confirmLast {
+    if [ $? -eq 0 ]; then
+        echo -e "\e[32mok\e[0m"
+    else
+        echo -e "\e[31mfailed\e[0m"
+    fi
+}
+
+
+#-----------------------------------------------------------------
+# Print title:
+echo -e "\n\n\e[1;36mRUSH HOUR PROJECT COMPILATION ROUTINE\e[0m\n"
+
+
+#-----------------------------------------------------------------
+# deletes all content from ~/RushHourProject 
+echo -e "\n\e[36mclearing ~/RushHourProject...\e[0m"
+
+cd ~
+rm -rf RushHourProject/
+mkdir RushHourProject/
+
+confirmLast
+
+#-----------------------------------------------------------------
+# Clones git repository: 
+
+echo -e "\n\e[36mcloning git repository...\e[0m"
+
+cd ~/RushHourProject/
+git clone https://gitlab.com/esi-2015-16-b211/RushHour-Ruiz.git
+
+confirmLast
+
+#-----------------------------------------------------------------
+# CLASSPATH setup:
+
+mkdir build
+#CLASSPATH=$CLASSPATH:~/RushHourProject/build/
+CLASSPATH=$CLASSPATH:~/RushHourProject/RushHour-Ruiz/lib/json-simple-1.1.1.jar
+# on home machine:
+CLASSPATH=$CLASSPATH:/usr/share/java/junit4.jar:~/RushHourProject/tests
+# on linux1:
+#CLASSPATH=$CLASSPATH:/usr/share/java/junit4.jar
+
+
+#-----------------------------------------------------------------
+# compilation of all classes in a subdirectory of RushHourProject:
+
+echo -e "\n\e[36msource files compilation:\e[0m"
+
+cd ./RushHour-Ruiz/src/
+#javac -J-XX:-UseCompressedClassPointers -d ../../build $(find -name *.java)
+javac -d ../../build $(find -name *.java)
+confirmLast
+
+
+#-----------------------------------------------------------------
+# compile la Javadoc dans un sous répertoire ?JUDICIEUSEMENT CHOISI? de RushHourProject
+
+echo -e "\n\e[36mjavadoc generation:\e[0m"
+mkdir ../../doc
+#mkdir ../../doc/model
+#mkdir ../../doc/view
+
+
+#javadoc -J-XX:-UseCompressedClassPointers -d ../../build $(find -name *.java)
+javadoc -quiet -d ../../doc $(find -name *.java)
+confirmLast
+
+#-----------------------------------------------------------------
+# compile et exécute les tests unitaires, et sauve le résultat de l’exécution des
+# tests dans un fichier rushHourTestResults.txt de RushHourProject.
+
+echo -e "\n\e[36mjunit test routine:\e[0m"
+
+CLASSPATH=$CLASSPATH:~/RushHourProject/build/
+cd ../test
+mkdir ../../myTest
+echo "compilation..."
+#javac -J-XX:-UseCompressedClassPointers -d ../../myTest $(find -name *.java)
+javac -d ../../myTest $(find -name *.java)
+confirmLast
+
+cd ../../myTest
+
+CLASSPATH=$CLASSPATH:~/RushHourProject/build/myTest/
+
+echo "run g42116.rushhour.model.PositionTest..."
+echo -e "------------------- PositionTest.class -------------------\n"	> testLog.txt
+java org.junit.runner.JUnitCore g42116.rushhour.model.PositionTest	>> testLog.txt
+confirmLast
+
+echo "run g42116.rushhour.model.CarTest..."
+echo -e "---------------------- CarTest.class ---------------------\n"	>> testLog.txt
+#java org.junit.runner.JUnitCore g42116.rushhour.model.CarTest		>> testLog.txt
+java -XX:-UseCompressedClassPointers org.junit.runner.JUnitCore g42116.rushhour.model.CarTest		>> testLog.txt
+confirmLast
+
+echo "run g42116.rushhour.model.BoardTest..."
+echo -e "--------------------- BoardTest.class --------------------\n"	>> testLog.txt
+#java org.junit.runner.JUnitCore g42116.rushhour.model.BoardTest		>> testLog.txt
+java -XX:-UseCompressedClassPointers org.junit.runner.JUnitCore g42116.rushhour.model.BoardTest		>> testLog.txt
+confirmLast
+
+echo "run g42116.rushhour.model.RushHourGameTest..."
+echo -e "----------------- RushHourGameTest.class -----------------\n"	>> testLog.txt
+#java org.junit.runner.JUnitCore g42116.rushhour.model.RushHourGameTest	>> testLog.txt
+java -XX:-UseCompressedClassPointers org.junit.runner.JUnitCore g42116.rushhour.model.RushHourGameTest	>> testLog.txt
+confirmLast
+
+echo -e "\n\e[32m--> logged to ~/RushHourProject/myTest/testLog.txt\e[0m"
+
+#-----------------------------------------------------------------
+# Copies resources to build:
+echo -e "\n\e[36mcopying resources to build...\e[0m"
+mkdir ~/RushHourProject/build/g42116/rushhour/jsonIO/resources
+cp -r ~/RushHourProject/RushHour-Ruiz/src/g42116/rushhour/jsonIO/resources/* ~/RushHourProject/build/g42116/rushhour/jsonIO/resources/
+confirmLast
+
+
+#-----------------------------------------------------------------
+# Extracts library jar file:
+
+echo -e "\n\e[36mextrating library jar file...\e[0m"
+cd ~/RushHourProject/build/
+jar xf ~/RushHourProject/RushHour-Ruiz/lib/json-simple-1.1.1.jar
+confirmLast
+
+#-----------------------------------------------------------------
+# Generates ~/RushHourProject/RushHour.jar 
+
+# Warning: The text file from which you are creating the manifest must end with a new 
+# line or carriage return. The last line will not be parsed properly if it does not end 
+# with a new line or carriage return.
+
+echo -e "\n\e[36mcreating ~/RushHourProject/dist/RushHour.jar:\e[0m"
+echo "Manifest addition file..."
+confirmLast
+echo "Jar compressing..."
+echo "Main-Class: g42116.rushhour.RushHour" >> manifestAddition.txt
+jar cfm RushHour.jar manifestAddition.txt ./g42116/* ./org/* 
+confirmLast
+
+mkdir ~/RushHourProject/dist/
+mv RushHour.jar ~/RushHourProject/dist/
+

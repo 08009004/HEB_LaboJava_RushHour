@@ -177,24 +177,28 @@ public class UserInput {
 
         return tempFile;
     }
-    
+
+    /**
+     * Returns a list, for which each element is a line of the input file. (In 
+     * the same order they appear in the file.)
+     * 
+     * @param   file    the file being processed
+     * @return          a list of Strings, each one being a line from the file
+     * @throws          RushHourException if the file is not found
+     */
     private List<String> linesOf(File file) throws RushHourException {
-        
-        int numberOfLines = countLines(file);
-        
-        int j = 0;
-        String [] fileLines = new String[numberOfLines];
-        
+        int i = 0;
+        String[] fileLines = new String[countLines(file)];
         Scanner inputFile;
         try {
             inputFile = new Scanner(file);
         } catch (FileNotFoundException ex) {
             throw new RushHourException(
-                             "UserInput.linesOf(): Problem reading temp file.");
+                             "UserInput.linesOf(): File not found.");
         }
         while(inputFile.hasNext()) {
-            fileLines[j] = inputFile.nextLine();
-            j++;
+            fileLines[i] = inputFile.nextLine();
+            i++;
         }
         inputFile.close();
 
@@ -216,7 +220,7 @@ public class UserInput {
             inputFile = new Scanner(file);
         } catch (FileNotFoundException ex) {
             throw new RushHourException(
-                             "UserInput.linesOf(): Problem reading file.");
+                             "UserInput.countLines(): File not found.");
         }
 
         while(inputFile.hasNextLine()) {

@@ -108,11 +108,15 @@ public class UserInput {
      * @return 
      */
     private String askFile(String fldrPath, String msg1, String msg2) {
+        System.out.println("IN ASK_FILE: fldrPath = " + fldrPath);
+     
         List<String> folderContent = null;
         try {
-            folderContent = linesOf(createTempFile(fldrPath));
+            folderContent = linesOf(CreateTempFile(fldrPath));
         } catch (IOException | RushHourException ex) {
             System.out.println(" ex = " +  ex);
+//            throw new RushHourException("UserInput.askFile(): "
+//                                      + "Problem creating or reading temp.txt");
         }
         
         String printListItem;
@@ -134,80 +138,74 @@ public class UserInput {
      
         } while (selected < 0 || selected > folderContent.size() - 1);
 
+        System.out.println(" folderContent.get(selected) = " +  folderContent.get(selected));
         return folderContent.get(selected);
     }
 
     /**
-     * Creates a .txt copy at project root of any given file. Also works with 
-     * files nested inside of a jar archive, hence  allowing access without 
-     * needing to extract it.
-     * 
-     * @param   filePath    the file path of the file to copy.
-     * @return              the copied file
-     * @throws IOException 
-     */
-    public File createTempFile(String filePath) throws IOException {
+      * Creates a .txt copy at project root of any given file. Also works with 
+      * files nested inside of a jar archive, hence  allowing access without 
+      * needing to extract it.
+      * 
+      * @param   filePath    the file path of the file to copy.
+      * @return              the copied file
+      * @throws              IOException 
+      */
+    public File CreateTempFile(String filePath) throws IOException {
         File f=new File("temp.txt");
         InputStream input = this.getClass().getResourceAsStream(filePath);
         OutputStream output=new FileOutputStream(f);
+
         byte buf[]=new byte[1024];
         int len;
 
         /* Comme discuté au cours, la ligne suivante ne marche pas quand on
-         * exécute le programme depuis le jar -> getResourceAsStream (ligne 147)
-         * renvoie :
-         * - java.io.FilterInputStream.read() si le programme est exécuté sous
-         *   Netbeans. -> OK
-         * - null si le programme est exécuté avec 'java -jar' -> crash
-         *
-         * Une solution qui fonctionerait pour le jar mais plus sous NetBeans
-         * serait d'utiliser ZipInputStream et 
-         * ZipEntry.zgetNextEntry().getName() comme expliqué ici :
-         * http://stackoverflow.com/questions/1429172/how-do-i-list-the-files-inside-a-jar-file
-         *
-         * Nous nous sommes mis d'accord que le projet vous convenait en l'état.
-         */
+          * exécute le programme depuis le jar -> getResourceAsStream (ligne 147)
+          * renvoie :
+          * - java.io.FilterInputStream.read() si le programme est exécuté sous
+          *   Netbeans. -> OK
+          * - null si le programme est exécuté avec 'java -jar' -> crash
+          *
+          * Une solution qui fonctionerait pour le jar mais plus sous NetBeans
+          * serait d'utiliser ZipInputStream et 
+          * ZipEntry.zgetNextEntry().getName() comme expliqué ici :
+          * http://stackoverflow.com/questions/1429172/how-do-i-list-the-files-inside-a-jar-file
+          *
+          * Nous nous sommes mis d'accord que le projet vous convenait en l'état.
+          */
         while((len=input.read(buf))>0) output.write(buf,0,len);
-
         output.close();
         input.close();
+
         return f;
     }
-
-    /**
-     * 
-     * @param file
-     * @return
-     * @throws RushHourException 
-     */
+    
     private List<String> linesOf(File file) throws RushHourException {
         int i = 0;
         File temp = new File("temp.txt");
+
         Scanner inputFile;
-
-        try {
-            inputFile = new Scanner(temp);
-        } catch (FileNotFoundException ex) {
-            throw new RushHourException(
-                           "UserInput.linesOf(): Problem accessing temp file.");
-        }
-
-        while(inputFile.hasNextLine()) {
-            i++;
-            inputFile.nextLine();
-        }
-        inputFile.close();
-
-        String[] fileLines = new String[i];
-
-        int j = 0;
         try {
             inputFile = new Scanner(temp);
         } catch (FileNotFoundException ex) {
             throw new RushHourException(
                              "UserInput.linesOf(): Problem reading temp file.");
         }
-
+        int j = 0;
+        while(inputFile.hasNextLine()) {
+            i++;
+            inputFile.nextLine();
+        }
+        inputFile.close();
+        
+        String [] fileLines = new String[i];
+        
+        try {
+            inputFile = new Scanner(temp);
+        } catch (FileNotFoundException ex) {
+            throw new RushHourException(
+                             "UserInput.linesOf(): Problem reading temp file.");
+        }
         while(inputFile.hasNext()) {
             fileLines[j] = inputFile.nextLine();
             System.out.println(fileLines[j]);
@@ -227,13 +225,14 @@ public class UserInput {
      */
     public String askLang() {
         // Path to the folder where the language files are stored:
-        String folder = "/g42116/rushhour/jsonIO/resources/languages";
+        String folderPath = "/g42116/rushhour/jsonIO/resources/languages";
 
         System.out.println(lang.getListLangFiles());
         String query = lang.getQueryLang();
         String reQuery = lang.getReQueryLang();    // Upon incorrect user entry.
 
-        String filePath = folder + "/" + askFile(folder, query, reQuery);
+        String filePath = folderPath + "/" + askFile(folderPath, query, reQuery);
+        System.out.println("IN ASK_LANG: filePath = " +  filePath);
         return filePath;
         
     }
@@ -247,13 +246,13 @@ public class UserInput {
      */             
     public String askBoard() {
         // Path to the folder where the game files are stored:
-        String folder = "/g42116/rushhour/jsonIO/resources/games";
+        String folderPath = "/g42116/rushhour/jsonIO/resources/games";
 
         System.out.println(lang.getListGameInitFiles());
         String query = lang.getQueryGameInit();
         String reQuery = lang.getReQueryGameInit();// Upon incorrect user entry.
 
-        String filePath = folder + "/" + askFile(folder, query, reQuery);
+        String filePath = folderPath + "/" + askFile(folderPath, query, reQuery);
         System.out.println("IN ASK_BOARD: filePath = " +  filePath);
         return filePath;
     }

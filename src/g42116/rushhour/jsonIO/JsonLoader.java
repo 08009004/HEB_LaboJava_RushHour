@@ -41,11 +41,12 @@ public class JsonLoader {
 
         JSONParser parser = new JSONParser();
         InputStream stream = this.getClass().getResourceAsStream(jsonFilePath);
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        
+
         try {
             this.jsonObj = (JSONObject) parser.parse(reader);
-            stream.close();
+//            stream.close();
         } catch (IOException e) {
             throw new RushHourException("json config file access failure");
         } catch (ParseException e) {

@@ -108,7 +108,6 @@ public class UserInput {
      * @return 
      */
     private String askFile(String fldrPath, String msg1, String msg2) {
-        System.out.println("IN ASK_FILE: fldrPath = " + fldrPath);
      
         List<String> folderContent = null;
         try {
@@ -138,7 +137,6 @@ public class UserInput {
      
         } while (selected < 0 || selected > folderContent.size() - 1);
 
-        System.out.println(" folderContent.get(selected) = " +  folderContent.get(selected));
         return folderContent.get(selected);
     }
 
@@ -208,7 +206,6 @@ public class UserInput {
         }
         while(inputFile.hasNext()) {
             fileLines[j] = inputFile.nextLine();
-            System.out.println(fileLines[j]);
             j++;
         }
         inputFile.close();

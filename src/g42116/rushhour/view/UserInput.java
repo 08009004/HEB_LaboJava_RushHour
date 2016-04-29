@@ -134,16 +134,20 @@ public class UserInput {
      * Asks user to select the game language amongst the language init files,
      * from a folder content list.
      * 
-     * @param   folderPath  the path to the folder where the language files are
-     *                      stored
      * @return              the selected language configuration relative file 
      *                      path (from project root package, included)
      */
     public String askLang() {
-        String folderPath = "build/classes/g42116/rushhour/jsonIO/resources/languages/";
+        /* Path to the folder where the language files are stored (relative from
+         * project root folder, no leading slash):
+         */
+        String folderPath = "build/classes/g42116/rushhour/jsonIO/"
+                                                       + "resources/languages/";
+
         System.out.println(lang.getListLangFiles());
         String query = lang.getQueryLang();
         String reQuery = lang.getReQueryLang();    // Upon incorrect user entry.
+
         return askFile(folderPath, query, reQuery);
         
     }
@@ -157,10 +161,17 @@ public class UserInput {
      * @return              the selected initial board configuration relative  
      *                      file path (from project root package, included)
      */             
-    public String askBoard(String folderPath) {
+    public String askBoard() {
+        /* Path to the folder where the language files are stored (relative from
+         * project root folder, no leading slash):
+         */
+        String folderPath = "build/classes/g42116/rushhour/jsonIO/"
+                                                           + "resources/games/";
+
         System.out.println(lang.getListGameInitFiles());
         String query = lang.getQueryGameInit();
         String reQuery = lang.getReQueryGameInit();// Upon incorrect user entry.
+
         return askFile(folderPath, query, reQuery);
     }
 

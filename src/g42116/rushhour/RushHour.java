@@ -28,7 +28,6 @@ public class RushHour {
         // JsonLoader.class location for default, and from project root for
         // askLanguage() method):
         String defaultLangPath = "resources/languages/English.json";
-//        String langFolderPath = "build/classes/g42116/rushhour/jsonIO/resources/languages/";
 
         UserInput keyboard = null;
         Language lang;
@@ -49,8 +48,7 @@ public class RushHour {
 
         RushHourGame game = null;
         try {
-            game = new GameInitialiser(keyboard.askBoard(
-                                                    boardsFolder)).initialise();
+            game = new GameInitialiser(keyboard.askBoard()).initialise();
         } catch (RushHourException ex) {
             String error = "Problem loading game configuration file";
             System.out.println(ColourString.to(error, RED, WHITE));

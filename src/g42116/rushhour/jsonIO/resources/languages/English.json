@@ -12,12 +12,12 @@
     "queryDir": "Key in the direction you want to move it: ",
     "queryDifferentMove": "Please try a different move.",
 
-    "errOnlyBlankChars": "You only keyed in blank characters",
-    "errSeveralChars": "You keyed in several characters",
-    "isNotDir": "is not a direction.",
-    "errNoSuchCar": "No cars on the board has this ID",
-    "errNotAnId": "is not a car ID",
+    "errCharsOnlyBlank": "You only keyed in blank characters",
+    "errCharsSeveral": "You keyed in several characters",
+    "isNotDir": ", this is not a valid direction.",
+    "errNoSuchCar": "There is no car with that ID on the board.",
+    "errNotAnId": ", this is not a car ID.",
     "errInvalidDir": "is not a valid direction",
-    "errWrongOrientation": "The car you have selected can't move in that direction.",
+    "errWrongOrientation": "This car can't move in that direction.",
     "errIllegalMove": "You can't move a car outside of the board, nor over another one."
 }

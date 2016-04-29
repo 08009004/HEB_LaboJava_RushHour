@@ -67,7 +67,7 @@ public class UserInput {
      */
     private char askChar(String query, String error) {
         Scanner keyboard = new Scanner(System.in);
-        String str1;
+        String input;
         System.out.println("\n" + query);
 /*      API: "A Scanner breaks its input into tokens using a delimiter pattern, 
         which by default matches whitespace."
@@ -75,25 +75,25 @@ public class UserInput {
         input that was skipped."
 */
         do {
-            str1 = keyboard.nextLine();
-            str1 = str1.replace(" ", "").replace("\t", "");  // \t = tabulation
-            str1 = str1.toUpperCase();
+            input = keyboard.nextLine();
+            input = input.replace(" ", "").replace("\t", "");  // \t = tabulation
+            input = input.toUpperCase();
 
-            if (str1.equals("")) {
+            if (input.equals("")) {
                 System.out.println(
                         ColourString.to(
                                 lang.getErrCharsOnlyBlank() + error, null, RED));
             }
 
-            if (str1.length() > 1) {
+            if (input.length() > 1) {
                 System.out.println(
                         ColourString.to(
                                 lang.getErrCharsSeveral() + error, null, RED));
             }
 
-        } while (str1.length() > 1 || str1.equals(""));
+        } while (input.length() > 1 || input.equals(""));
 
-        return str1.charAt(0);
+        return input.charAt(0);
     }
 
     /**

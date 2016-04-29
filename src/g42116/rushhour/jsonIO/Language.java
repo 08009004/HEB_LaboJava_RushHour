@@ -75,6 +75,9 @@ public class Language {
         this.errIllegalMove = (String) lang.get("errIllegalMove");
     }
 
+
+    // Getters for all language fields:
+
     public String getFolderPath() {
         return folderPath;
     }

@@ -1,6 +1,6 @@
 package g42116.rushhour.view;
 
-import g42116.rushhour.JsonIO.Language;
+import g42116.rushhour.jsonIO.Language;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
 import g42116.rushhour.model.RushHourGame;
@@ -88,6 +88,17 @@ public class UserInput {
         return str1.charAt(0);
     }
 
+    /**
+     * Scans and displays a folder content (list of files), and asks player to 
+     * chose a file amongst those.
+     * 
+     * @param   fldrPath    the path of the folder
+     * @param   msg1        the message displayed to query user to select one of
+     *                      the files
+     * @param msg2          the message displayed to query for a new entry if
+     *                      previous one was not valid
+     * @return 
+     */
     private String askFile(String fldrPath, String msg1, String msg2) {
         List<File> folderContent = Arrays.asList(
                                               new File(fldrPath).listFiles());
@@ -106,8 +117,7 @@ public class UserInput {
                 index++;
             }
 
-            selected = Character.getNumericValue(
-                  askChar(msg1, msg2));
+            selected = Character.getNumericValue(askChar(msg1, msg2));
             selected--;
      
         } while (selected < 0 || selected > folderContent.size() - 1);
@@ -126,7 +136,7 @@ public class UserInput {
     public String askLang(String folderPath) {
         System.out.println(lang.getListLangFiles());
         String query = lang.getQueryLang();
-        String reQuery = lang.getReQueryLang();     // Upon incorrect user entry.
+        String reQuery = lang.getReQueryLang();    // Upon incorrect user entry.
         return askFile(folderPath, query, reQuery);
         
     }
@@ -143,7 +153,7 @@ public class UserInput {
     public String askBoard(String folderPath) {
         System.out.println(lang.getListGameInitFiles());
         String query = lang.getQueryGameInit();
-        String reQuery = lang.getReQueryGameInit(); // Upon incorrect user entry.
+        String reQuery = lang.getReQueryGameInit();// Upon incorrect user entry.
         return askFile(folderPath, query, reQuery);
     }
 

@@ -1,0 +1,23 @@
+{
+    "listLangFiles": "Lang avail: ",
+    "listGameInitFiles": "Games avail: ",
+    "listDirChoices": "U, L, D, or R ",
+    "endOfGame": "end Of Game",
+
+    "queryLang": "Which lang do you pre: ",
+    "reQueryLang": "re Query Lang ",
+    "queryGameInit": "Sel the game that you want to launch: ",
+    "reQueryGameInit": "re Query Game Init ",
+    "queryCarId": "query Car Id ",
+    "queryDir": "query Dir ",
+    "queryDifferentMove": "query Different Move ",
+
+    "errOnlyBlankChars": "err Only Blank Chars ",
+    "errSeveralChars": "err Several Chars ",
+    "isNotDir": "is Not Dir ",
+    "errNoSuchCar": "err No Such Car ",
+    "errNotAnId": "err Not An Id ",
+    "errInvalidDir": "err Invalid Dir ",
+    "errWrongOrientation": "err Wrong Orientation ",
+    "errIllegalMove": "err Illegal Move "
+}

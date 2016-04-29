@@ -1,4 +1,4 @@
-package g42116.rushhour.JsonIO;
+package g42116.rushhour.jsonIO;
 
 import g42116.rushhour.model.RushHourException;
 import java.io.BufferedReader;
@@ -42,14 +42,16 @@ public class JsonLoader {
 //        String jsonPath = jsonFilePath.replace("src", "");
 //        System.out.println("IN LOADER: jsonPath = " + jsonPath);
         JSONParser parser = new JSONParser();
-        InputStream in = this.getClass().getResourceAsStream(jsonFilePath);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        InputStream stream = this.getClass().getResourceAsStream(jsonFilePath);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        
         try {
+            stream.close();
             this.jsonObj = (JSONObject) parser.parse(reader);
         } catch (IOException e) {
-            throw new RushHourException("language config file access failure");
+            throw new RushHourException("json config file access failure");
         } catch (ParseException e) {
-            throw new RushHourException("language config parsing failure");
+            throw new RushHourException("json config file parsing failure");
         }
     }
 

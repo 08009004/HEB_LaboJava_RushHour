@@ -1,4 +1,4 @@
-package g42116.rushhour.JsonIO;
+package g42116.rushhour.jsonIO;
 
 import g42116.rushhour.model.Car;
 import g42116.rushhour.model.Orientation;

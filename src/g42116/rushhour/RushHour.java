@@ -4,8 +4,8 @@ import g42116.rushhour.model.RushHourException;
 import g42116.rushhour.model.RushHourGame;
 import g42116.rushhour.view.RushHourView;
 import g42116.rushhour.view.Display;
-import g42116.rushhour.JsonIO.GameInitialiser;
-import g42116.rushhour.JsonIO.Language;
+import g42116.rushhour.jsonIO.GameInitialiser;
+import g42116.rushhour.jsonIO.Language;
 import static g42116.rushhour.view.Colour.*;
 import g42116.rushhour.view.ColourString;
 import g42116.rushhour.view.UserInput;
@@ -28,7 +28,7 @@ public class RushHour {
         // JsonLoader.class location for default, and from project root for
         // askLanguage() method):
         String defaultLangPath = "resources/languages/English.json";
-        String langFolderPath = "build/classes/g42116/rushhour/JsonIO/resources/languages";
+        String langFolderPath = "g42116/rushhour/JsonIO/resources/languages";
 
         UserInput keyboard = null;
         Language lang;
@@ -45,7 +45,7 @@ public class RushHour {
 
         // Query board from file, then initialise RushHourGame object (folder
         // path must be relative, from project root):
-        String boardsFolder = "build/classes/g42116/rushhour/JsonIO/resources/games";
+        String boardsFolder = "g42116/rushhour/JsonIO/resources/games";
 
         RushHourGame game = null;
         try {

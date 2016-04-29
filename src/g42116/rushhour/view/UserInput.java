@@ -68,7 +68,7 @@ public class UserInput {
     private char askChar(String query, String error) {
         Scanner keyboard = new Scanner(System.in);
         String str1;
-        System.out.println(query);
+        System.out.println("\n" + query);
 /*      API: "A Scanner breaks its input into tokens using a delimiter pattern, 
         which by default matches whitespace."
         nextLine() "advances this scanner past the current line and returns the 
@@ -76,7 +76,7 @@ public class UserInput {
 */
         do {
             str1 = keyboard.nextLine();
-            str1 = str1.replace(" ", "").replace("\t", "");  // \t == tabulation
+            str1 = str1.replace(" ", "").replace("\t", "");  // \t = tabulation
             str1 = str1.toUpperCase();
 
             if (str1.equals("")) {
@@ -150,11 +150,11 @@ public class UserInput {
       * @throws              IOException 
       */
     public File CreateTempFile(String filePath) throws IOException {
-        File f=new File("temp.txt");
+        File tempFile = new File("temp.txt");
         InputStream input = this.getClass().getResourceAsStream(filePath);
-        OutputStream output=new FileOutputStream(f);
+        OutputStream output = new FileOutputStream(tempFile);
 
-        byte buf[]=new byte[1024];
+        byte buf[] = new byte[1024];
         int len;
 
         /* Comme discuté au cours, la ligne suivante ne marche pas quand on
@@ -175,31 +175,19 @@ public class UserInput {
         output.close();
         input.close();
 
-        return f;
+        return tempFile;
     }
     
     private List<String> linesOf(File file) throws RushHourException {
-        int i = 0;
-        File temp = new File("temp.txt");
-
+        
+        int numberOfLines = countLines(file);
+        
+        int j = 0;
+        String [] fileLines = new String[numberOfLines];
+        
         Scanner inputFile;
         try {
-            inputFile = new Scanner(temp);
-        } catch (FileNotFoundException ex) {
-            throw new RushHourException(
-                             "UserInput.linesOf(): Problem reading temp file.");
-        }
-        int j = 0;
-        while(inputFile.hasNextLine()) {
-            i++;
-            inputFile.nextLine();
-        }
-        inputFile.close();
-        
-        String [] fileLines = new String[i];
-        
-        try {
-            inputFile = new Scanner(temp);
+            inputFile = new Scanner(file);
         } catch (FileNotFoundException ex) {
             throw new RushHourException(
                              "UserInput.linesOf(): Problem reading temp file.");
@@ -211,6 +199,33 @@ public class UserInput {
         inputFile.close();
 
         return Arrays.asList(fileLines);
+    }
+
+    /**
+     * Counts how many lines there is in a file.
+     * 
+     * @param   file    the file analised
+     * @return          the number of lines in the file
+     * @throws          RushHourException if there is a probleme reading the
+     *                  file
+     */
+    private int countLines(File file) throws RushHourException {
+        int i = 0;
+        Scanner inputFile;
+        try {
+            inputFile = new Scanner(file);
+        } catch (FileNotFoundException ex) {
+            throw new RushHourException(
+                             "UserInput.linesOf(): Problem reading file.");
+        }
+
+        while(inputFile.hasNextLine()) {
+            i++;
+            inputFile.nextLine();
+        }
+        inputFile.close();
+        
+        return i;
     }
 
     /**
@@ -229,7 +244,6 @@ public class UserInput {
         String reQuery = lang.getReQueryLang();    // Upon incorrect user entry.
 
         String filePath = folderPath + "/" + askFile(folderPath, query, reQuery);
-        System.out.println("IN ASK_LANG: filePath = " +  filePath);
         return filePath;
         
     }

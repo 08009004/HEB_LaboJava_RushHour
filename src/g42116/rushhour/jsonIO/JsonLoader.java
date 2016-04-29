@@ -40,13 +40,15 @@ public class JsonLoader {
         http://mindprod.com/jgloss/getresourceasstream.html                   */
 
 //        String jsonPath = jsonFilePath.replace("src", "");
-//        System.out.println("IN LOADER: jsonPath = " + jsonPath);
+        System.out.println("IN LOADER: jsonFilePath = " + jsonFilePath);
         JSONParser parser = new JSONParser();
         InputStream stream = this.getClass().getResourceAsStream(jsonFilePath);
+        System.out.println("IN LOADER: stream = " + stream);
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         
         try {
-            stream.close();
+            
+//            stream.close();
             this.jsonObj = (JSONObject) parser.parse(reader);
         } catch (IOException e) {
             throw new RushHourException("json config file access failure");

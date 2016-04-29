@@ -13,6 +13,8 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This static class interfaces the game for player keyboard entries.
@@ -105,7 +107,15 @@ public class UserInput {
      */
     private String askFile(String fldrPath, String msg1, String msg2) {
         System.out.println("IN ASK_FILE: fldrPath = " + fldrPath);
-        File folder = new File(fldrPath);
+        
+        try {
+            CreateTempFile(fldrPath);
+        } catch (IOException ex) {
+            Logger.getLogger(UserInput.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+//        File folder = new File(fldrPath);
+        File folder = new File("/temp.txt");
         System.out.println("IN ASK_FILE: folder = " + folder);
         System.out.println("folder.getAbsolutePath() = " + folder.getAbsolutePath());
         String[] arr0 = folder.list();
@@ -160,8 +170,9 @@ public class UserInput {
         /* Path to the folder where the language files are stored (relative from
          * project root folder, no leading slash):
          */
-        String folderPath = "build/classes/g42116/rushhour/jsonIO/"
-                                                       + "resources/languages/";
+//        String folderPath = "build/classes/g42116/rushhour/jsonIO/"
+//                                                       + "resources/languages/";
+        String folderPath = "/g42116/rushhour/jsonIO/resources/languages";
 
         System.out.println(lang.getListLangFiles());
         String query = lang.getQueryLang();

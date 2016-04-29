@@ -1,13 +1,3 @@
-/*
-Sauf mention explicite du contraire, toutes les méthodes non triviales du modèle 
-devront être testées mais aucune méthode de la vue ne devra l’être.
-
-Les accesseurs peuvent être considérés comme triviaux.
--> c'est quand meme mieux de les tester
-
-*/
-
-
 package g42116.rushhour.model;
 
 import static g42116.rushhour.model.Direction.*;

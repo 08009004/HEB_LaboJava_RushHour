@@ -5,7 +5,6 @@ import g42116.rushhour.model.Orientation;
 import g42116.rushhour.model.Position;
 import g42116.rushhour.model.RushHourException;
 import g42116.rushhour.model.RushHourGame;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.JSONArray;

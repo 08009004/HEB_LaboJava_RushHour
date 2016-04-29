@@ -15,16 +15,7 @@ public class Car {
 
     // Class attributes:
     private final char id;
-    public final int size;  
-    /*NOTE:
-
-    Apres lecture de "1 minute tutorial: POJOs to JSON and back" sur la page
-    citee, j'ai rendu l'attribut 'size' public pour que
-    com.fasterxml.jackson.databind.ObjectMapper.readValue(file, Car.class)
-    fonctionne correctement.
-
-    https://github.com/FasterXML/jackson-databind
-    */
+    private final int size;  
     private final Orientation orientation;
     private Position currentPosition;
 

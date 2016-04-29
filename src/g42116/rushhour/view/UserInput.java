@@ -109,7 +109,7 @@ public class UserInput {
      
         List<String> folderContent = null;
         try {
-            folderContent = linesOf(CreateTempFile(fldrPath));
+            folderContent = linesOf(createTempFile(fldrPath));
         } catch (IOException | RushHourException ex) {
             System.out.println(" ex = " +  ex);
 //            throw new RushHourException("UserInput.askFile(): "
@@ -151,7 +151,7 @@ public class UserInput {
       * @return              the copied file
       * @throws              IOException 
       */
-    public File CreateTempFile(String filePath) throws IOException {
+    private File createTempFile(String filePath) throws IOException {
         File tempFile = new File("temp.txt");
         InputStream input = this.getClass().getResourceAsStream(filePath);
         OutputStream output = new FileOutputStream(tempFile);

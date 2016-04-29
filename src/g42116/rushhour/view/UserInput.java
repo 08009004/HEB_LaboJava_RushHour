@@ -139,7 +139,8 @@ public class UserInput {
      * @return              the selected language configuration relative file 
      *                      path (from project root package, included)
      */
-    public String askLang(String folderPath) {
+    public String askLang() {
+        String folderPath = "build/classes/g42116/rushhour/jsonIO/resources/languages/";
         System.out.println(lang.getListLangFiles());
         String query = lang.getQueryLang();
         String reQuery = lang.getReQueryLang();    // Upon incorrect user entry.

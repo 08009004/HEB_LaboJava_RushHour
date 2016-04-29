@@ -6,6 +6,10 @@ import static g42116.rushhour.model.Direction.*;
 import g42116.rushhour.model.RushHourGame;
 import static g42116.rushhour.view.Colour.*;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -130,6 +134,21 @@ public class UserInput {
 
         return folderContent.get(selected).getPath().replace("build/classes", "");
     }
+
+    public void CreateTempFile(String path) throws IOException {
+        File f=new File("temp.txt");
+        InputStream input = this.getClass().getResourceAsStream(path);
+        System.out.println("IN CREATE: input = " + input);
+        OutputStream output=new FileOutputStream(f);
+        System.out.println("IN CREATE: output = " + output);
+        byte buf[]=new byte[1024];
+        int len;
+        while((len=input.read(buf))>0) output.write(buf,0,len);
+        output.close();
+        input.close();
+        System.out.println("\nFile is created.....");
+    }
+
     /**
      * Asks user to select the game language amongst the language init files,
      * from a folder content list.

@@ -51,6 +51,7 @@ public class RushHourGame {
 
     /**
      * Controls if a given red car is on the same line as a given exit position.
+     * 
      * @param   redCar  the red car candidate car
      * @param   exit    the exit candidate position
      * @return          true if the red car is aligned with the exit, 

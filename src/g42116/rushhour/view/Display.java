@@ -69,14 +69,14 @@ public class Display {
     
     /**
      * Prints three lines in the terminal, representing a board row as follows:
-     * 
+     * <br> 
      * 1 - first 3 pipe characters on top of each other (or a space character on
-     *     top of an X on top of another space if row's first box is the exit);
+     *     top of an X on top of another space if row's first box is the exit);<br> 
      * 2 - followed by space characters filling empty boxes or the car's id in 
-     *     the center of the box if the it is occupied;
+     *     the center of the box if the it is occupied;<br> 
      * 3 - then 3 pipe characters on top of each other (or a space character on
      *    top of an X on top of another space if row's first box is the exit);
-     * 4 - finally a carriage return character.
+     * 4 - finally a carriage return character.<br> 
      * 
      * @param   board       the board being printed
      * @param   currentRow  the row being printed

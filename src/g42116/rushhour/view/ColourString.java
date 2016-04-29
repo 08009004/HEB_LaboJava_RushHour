@@ -22,8 +22,8 @@ public class ColourString {
     /**
      * Returns the desired message with embedded colour information, following
      * the ANSI escape code SGR specification. (some terminals might render 
-     * this information differently.)
-     * 
+     * this information differently.)<br> 
+     * <br> 
      * More info: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
      * 
      * @param   string  the string to colour

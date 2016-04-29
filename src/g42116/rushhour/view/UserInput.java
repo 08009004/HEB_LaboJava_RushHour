@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * This static class interfaces the game for player keyboard entries.
+ * This class interfaces the game with player for keyboard entries.
  * 
  * @author g42116
  */
@@ -112,8 +112,6 @@ public class UserInput {
             folderContent = linesOf(createTempFile(fldrPath));
         } catch (IOException | RushHourException ex) {
             System.out.println(" ex = " +  ex);
-//            throw new RushHourException("UserInput.askFile(): "
-//                                      + "Problem creating or reading temp.txt");
         }
         
         String printListItem;
@@ -248,8 +246,8 @@ public class UserInput {
      * Asks user to select the game language amongst the language init files,
      * from a folder content list.
      * 
-     * @return              the selected language configuration relative file 
-     *                      path (from project root package, included)
+     * @return  the selected language configuration relative file path (from 
+     *          project root package, included)
      */
     public String askLang() {
         // Path to the folder where the language files are stored:

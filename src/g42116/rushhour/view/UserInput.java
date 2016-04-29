@@ -3,9 +3,11 @@ package g42116.rushhour.view;
 import g42116.rushhour.jsonIO.Language;
 import g42116.rushhour.model.Direction;
 import static g42116.rushhour.model.Direction.*;
+import g42116.rushhour.model.RushHourException;
 import g42116.rushhour.model.RushHourGame;
 import static g42116.rushhour.view.Colour.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -107,22 +109,16 @@ public class UserInput {
      */
     private String askFile(String fldrPath, String msg1, String msg2) {
         System.out.println("IN ASK_FILE: fldrPath = " + fldrPath);
-        
+     
+        List<String> folderContent = null;
         try {
-            CreateTempFile(fldrPath);
-        } catch (IOException ex) {
-            Logger.getLogger(UserInput.class.getName()).log(Level.SEVERE, null, ex);
+            folderContent = linesOf(CreateTempFile(fldrPath));
+        } catch (IOException | RushHourException ex) {
+            System.out.println(" ex = " +  ex);
+//            throw new RushHourException("UserInput.askFile(): "
+//                                      + "Problem creating or reading temp.txt");
         }
         
-//        File folder = new File(fldrPath);
-        File folder = new File("/temp.txt");
-        System.out.println("IN ASK_FILE: folder = " + folder);
-        System.out.println("folder.getAbsolutePath() = " + folder.getAbsolutePath());
-        String[] arr0 = folder.list();
-        File[] arr = folder.listFiles();
-        List<File> folderContent = Arrays.asList(
-                                              folder.listFiles());
-
         String printListItem;
         int index;
         int selected;
@@ -130,8 +126,8 @@ public class UserInput {
         do {
             index = 1;
 
-            for (File file : folderContent) {
-                printListItem = index + " - " + file.getName();
+            for (String fileName : folderContent) {
+                printListItem = index + " - " + fileName;
                 printListItem = printListItem.replace(".json", "");
                 System.out.println(printListItem);
                 index++;
@@ -142,10 +138,11 @@ public class UserInput {
      
         } while (selected < 0 || selected > folderContent.size() - 1);
 
-        return folderContent.get(selected).getPath().replace("build/classes", "");
+        System.out.println(" folderContent.get(selected) = " +  folderContent.get(selected));
+        return folderContent.get(selected);
     }
 
-    public void CreateTempFile(String path) throws IOException {
+    public File CreateTempFile(String path) throws IOException {
         File f=new File("temp.txt");
         InputStream input = this.getClass().getResourceAsStream(path);
         System.out.println("IN CREATE: input = " + input);
@@ -157,6 +154,51 @@ public class UserInput {
         output.close();
         input.close();
         System.out.println("\nFile is created.....");
+        return f;
+    }
+    
+    private List<String> linesOf(File file) throws RushHourException {
+        int i = 0;
+        File temp = new File("temp.txt");
+        System.out.println("temp = " + temp);
+        Scanner inputFile;
+        
+        try {
+            inputFile = new Scanner(temp);
+        } catch (FileNotFoundException ex) {
+            throw new RushHourException(
+                             "UserInput.linesOf(): Problem reading temp file.");
+        }
+        int j = 0;
+        while(inputFile.hasNextLine())
+        {
+            i++;
+            inputFile.nextLine();
+        }
+        inputFile.close();
+        
+        String [] fileLines = new String[i];
+        
+        try {
+            inputFile = new Scanner(temp);
+        } catch (FileNotFoundException ex) {
+            throw new RushHourException(
+                             "UserInput.linesOf(): Problem reading temp file.");
+        }
+        while(inputFile.hasNext())
+        {
+            fileLines[j] = inputFile.nextLine();
+            System.out.println(fileLines[j]);
+            j++;
+        }
+        inputFile.close();
+        
+        
+        for (String elem : fileLines) {
+            System.out.println("elem = " + elem);
+        }
+        
+        return Arrays.asList(fileLines);
     }
 
     /**
@@ -178,7 +220,9 @@ public class UserInput {
         String query = lang.getQueryLang();
         String reQuery = lang.getReQueryLang();    // Upon incorrect user entry.
 
-        return askFile(folderPath, query, reQuery);
+        String filePath = folderPath + "/" + askFile(folderPath, query, reQuery);
+        System.out.println("IN ASK_LANG: filePath = " +  filePath);
+        return filePath;
         
     }
 
@@ -193,14 +237,17 @@ public class UserInput {
         /* Path to the folder where the game files are stored (relative from
          * project root folder, no leading slash):
          */
-        String folderPath = "build/classes/g42116/rushhour/jsonIO/"
-                                                           + "resources/games/";
+//        String folderPath = "build/classes/g42116/rushhour/jsonIO/"
+//                                                           + "resources/games/";
+        String folderPath = "/g42116/rushhour/jsonIO/resources/games";
 
         System.out.println(lang.getListGameInitFiles());
         String query = lang.getQueryGameInit();
         String reQuery = lang.getReQueryGameInit();// Upon incorrect user entry.
 
-        return askFile(folderPath, query, reQuery);
+        String filePath = folderPath + "/" + askFile(folderPath, query, reQuery);
+        System.out.println("IN ASK_BOARD: filePath = " +  filePath);
+        return filePath;
     }
 
     /**

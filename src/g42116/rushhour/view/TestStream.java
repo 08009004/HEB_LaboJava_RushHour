@@ -24,26 +24,26 @@ public class TestStream {
         UserInput i = new UserInput(null);
         i.CreateTempFile("/g42116/rushhour/jsonIO/resources/languages");
         */      
-        int count = 0;
+        int i = 0;
         File temp = new File("temp.txt");
         System.out.println("temp = " + temp);
         Scanner inputFile = new Scanner(temp);
-        int i = 0;
+        int j = 0;
         while(inputFile.hasNextLine())
         {
-            count++;
+            i++;
             inputFile.nextLine();
         }
         inputFile.close();
         
-        String [] fileLines = new String[count];
+        String [] fileLines = new String[i];
         
         inputFile = new Scanner(temp);
         while(inputFile.hasNext())
         {
-            fileLines[i] = inputFile.nextLine();
-            System.out.println(fileLines[i]);
-            i++;
+            fileLines[j] = inputFile.nextLine();
+            System.out.println(fileLines[j]);
+            j++;
         }
         inputFile.close();
         
@@ -51,9 +51,7 @@ public class TestStream {
         for (String elem : fileLines) {
             System.out.println("elem = " + elem);
         }
-        
-        
-        
+
     }
     
 }

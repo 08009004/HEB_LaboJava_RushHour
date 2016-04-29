@@ -46,7 +46,7 @@ public class JsonLoader {
 
         try {
             this.jsonObj = (JSONObject) parser.parse(reader);
-//            stream.close();
+            stream.close();
         } catch (IOException e) {
             throw new RushHourException("json config file access failure");
         } catch (ParseException e) {

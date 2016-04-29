@@ -15,8 +15,6 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This static class interfaces the game for player keyboard entries.
@@ -158,7 +156,19 @@ public class UserInput {
         InputStream input = this.getClass().getResourceAsStream(filePath);
         OutputStream output = new FileOutputStream(tempFile);
 
-        byte buf[] = new byte[1024];
+        /* javadoc -> OutputStream.write(byte[] b, int off, int len):
+         * Writes len bytes from the specified byte array starting at offset off 
+         * to this output stream.
+         *
+         * javadoc -> InputStream.read():
+         * Reads the next byte of data from the input stream. The value byte is 
+         * returned as an int in the range 0 to 255. If no byte is available 
+         * because the end of the stream has been reached, the value -1 is 
+         * returned.
+         */
+        
+        
+        byte buffer[] = new byte[1024];
         int len;
 
         /* Comme discuté au cours, la ligne suivante ne marche pas quand on
@@ -175,7 +185,7 @@ public class UserInput {
           *
           * Nous nous sommes mis d'accord que le projet vous convenait en l'état.
           */
-        while((len=input.read(buf))>0) output.write(buf,0,len);
+        while((len = input.read(buffer)) > 0) output.write(buffer,0,len);
         output.close();
         input.close();
 

@@ -156,13 +156,11 @@ public class UserInput {
      * Asks user to select the game he wants to play amongst the initial board
      * files (a list of JSon objects which is the content of a folder).
      * 
-     * @param   folderPath  the path to the folder containing the initial board
-     *                      files
      * @return              the selected initial board configuration relative  
      *                      file path (from project root package, included)
      */             
     public String askBoard() {
-        /* Path to the folder where the language files are stored (relative from
+        /* Path to the folder where the game files are stored (relative from
          * project root folder, no leading slash):
          */
         String folderPath = "build/classes/g42116/rushhour/jsonIO/"

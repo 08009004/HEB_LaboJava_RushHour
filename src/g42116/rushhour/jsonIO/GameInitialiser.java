@@ -58,7 +58,7 @@ public class GameInitialiser {
      * Creates a list of Car objects based on data from a JSONArray.
      * 
      * @param   carsData   the JSONArray containing the Car objects attributes
-     * @return              an ArrayList of the Car objects
+     * @return             an ArrayList of the Car objects
      */
     private List<Car> theOtherCars(JSONArray carsData) {
         char id;

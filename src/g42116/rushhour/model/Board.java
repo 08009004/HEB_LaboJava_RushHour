@@ -26,7 +26,7 @@ public class Board {
     /**
      * Full constructor.
      * 
-     * @param   width  the length of the game board
+     * @param   width   the length of the game board
      * @param   height  the height of the game board
      * @param   exit    the exit position
      * @throws          IllegalArgumentException if length or height are 
@@ -58,6 +58,7 @@ public class Board {
 
     /**
      * DO NOT USE - method for testing purpose only.
+     * 
      * @param   testGrid the board grid
      */
     Board(Car[][] testGrid) {
@@ -201,8 +202,8 @@ public class Board {
     }
 
     /**
-     * Checks if a car can be moved in a given direction, that is:
-     *  - the car does not exit the board ;
+     * Checks if a car can be moved in a given direction, that is:<br> 
+     *  - the car does not exit the board ;<br> 
      *  - it is not blocked by another car in the given direction.
      * 
      * @param   car         the car to move

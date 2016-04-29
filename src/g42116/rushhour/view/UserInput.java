@@ -243,7 +243,7 @@ public class UserInput {
         // Path to the folder where the language files are stored:
         String folderPath = "/g42116/rushhour/jsonIO/resources/languages";
 
-        System.out.println(lang.getListLangFiles());
+        System.out.println("\n" + lang.getListLangFiles());
         String query = lang.getQueryLang();
         String reQuery = lang.getReQueryLang();    // Upon incorrect user entry.
 
@@ -263,12 +263,11 @@ public class UserInput {
         // Path to the folder where the game files are stored:
         String folderPath = "/g42116/rushhour/jsonIO/resources/games";
 
-        System.out.println(lang.getListGameInitFiles());
+        System.out.println("\n" + lang.getListGameInitFiles());
         String query = lang.getQueryGameInit();
         String reQuery = lang.getReQueryGameInit();// Upon incorrect user entry.
 
         String filePath = folderPath + "/" + askFile(folderPath, query, reQuery);
-        System.out.println("IN ASK_BOARD: filePath = " +  filePath);
         return filePath;
     }
 

@@ -44,14 +44,13 @@ public class RushHourView {
 
             try {
                 this.game.move(carID, direction);
+                displayBoard(this.game.getBoard());
             } catch (RushHourException rhe) {
                 printErrorToScreen(rhe);
+                displayBoard(this.game.getBoard());
                 System.out.println(
                                this.keyboard.getLang().getQueryDifferentMove());
             }
-
-            displayBoard(this.game.getBoard());
-
         } while (!this.game.isOver());
 
         printEndOfGame();

@@ -31,7 +31,7 @@ public class UserInput {
     /**
      * Language attribute setter.
      * 
-     * @return 
+     * @return the language attribute
      */
     public Language getLang() {
         return lang;

@@ -61,7 +61,7 @@ public class JsonLoader {
      * Returns a JSONObject, instantiated from the file at path passed as 
      * constructor parameter.
      * 
-     * @return 
+     * @return  the JSONObject created
      */
     public JSONObject getJsonObj() {
         return jsonObj;

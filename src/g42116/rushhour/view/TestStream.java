@@ -36,19 +36,19 @@ public class TestStream {
         }
         inputFile.close();
         
-        String [] teamclub = new String[count];
+        String [] fileLines = new String[count];
         
         inputFile = new Scanner(temp);
         while(inputFile.hasNext())
         {
-            teamclub[i] = inputFile.nextLine();
-            System.out.println(teamclub[i]);
+            fileLines[i] = inputFile.nextLine();
+            System.out.println(fileLines[i]);
             i++;
         }
         inputFile.close();
         
         
-        for (String elem : teamclub) {
+        for (String elem : fileLines) {
             System.out.println("elem = " + elem);
         }
         

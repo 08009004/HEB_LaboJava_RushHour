@@ -15,7 +15,7 @@
     "errCharsOnlyBlank": "Vous n'avez entré que des caractères vides",
     "errCharsSeveral": "Vous avez entré plusieurs caractères",
     "errInvalidEntry": "Ce n'est pas un choix proposé :",
-    "isNotDir": ", ce n'est pas une direction valide.",
+    "errIsNotDir": "Cela ne correspond pas à une direction.",
     "errNoSuchCar": "Cette voiture n'est pas présente sur le plateau.",
     "errNotAnId": ", ce n'est pas un ID de voiture.",
     "errInvalidDir": ", ce n'est pas une direction valide.",

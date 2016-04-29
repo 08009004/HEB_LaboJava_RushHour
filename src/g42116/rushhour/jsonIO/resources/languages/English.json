@@ -15,7 +15,7 @@
     "errCharsOnlyBlank": "You only keyed in blank characters",
     "errCharsSeveral": "You keyed in several characters",
     "errInvalidEntry": "This is not a valid choice:",
-    "isNotDir": ", this is not a valid direction.",
+    "errIsNotDir": "This is not a valid direction entry.",
     "errNoSuchCar": "There is no car with that ID on the board.",
     "errNotAnId": ", this is not a car ID.",
     "errInvalidDir": "is not a valid direction",

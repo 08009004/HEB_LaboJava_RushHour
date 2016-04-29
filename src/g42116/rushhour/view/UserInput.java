@@ -323,7 +323,7 @@ public class UserInput {
                 case 'L': return LEFT;
                 case 'R': return RIGHT;
                 default:
-                    System.out.print(keyedIn + 
+                    System.out.print("\n" + 
                              ColourString.to(lang.getErrIsNotDir(), null, RED));
                     break;
             }

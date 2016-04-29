@@ -24,9 +24,7 @@ public class RushHour {
      */
     public static void main(String[] args) {
 
-        // Query and set language from file (folder path must be relative, from 
-        // JsonLoader.class location for default, and from project root for
-        // askLanguage() method):
+        // Query and set language from files list:
         String defaultLangPath = "resources/languages/English.json";
 
         UserInput keyboard = null;
@@ -42,10 +40,7 @@ public class RushHour {
             System.out.println(ColourString.to(error, RED, WHITE));
         }
 
-        // Query board from file, then initialise RushHourGame object (folder
-        // path must be relative, from project root):
-        String boardsFolder = "g42116/rushhour/JsonIO/resources/games";
-
+        // Query board from files list, then initialise RushHourGame object:
         RushHourGame game = null;
         try {
             game = new GameInitialiser(keyboard.askBoard()).initialise();

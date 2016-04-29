@@ -32,6 +32,7 @@ public class Language {
     // Error messages:
     private final String errCharsOnlyBlank;
     private final String errCharsSeveral;
+    private final String errInvalidEntry;
     private final String errIsNotDir;
     private final String errNotAnId;
     private final String errNoSuchCar;
@@ -67,6 +68,7 @@ public class Language {
         // Error messages:
         this.errCharsOnlyBlank = (String) lang.get("errCharsOnlyBlank");
         this.errCharsSeveral = (String) lang.get("errCharsSeveral");
+        this.errInvalidEntry = (String) lang.get("errInvalidEntry");
         this.errIsNotDir = (String) lang.get("errIsNotDir");
         this.errNoSuchCar = (String) lang.get("errNoSuchCar");
         this.errNotAnId = (String) lang.get("errNotAnId");
@@ -132,6 +134,10 @@ public class Language {
 
     public String getErrCharsSeveral() {
         return errCharsSeveral;
+    }
+
+    public String getErrInvalidEntry() {
+        return errInvalidEntry;
     }
 
     public String getErrIsNotDir() {

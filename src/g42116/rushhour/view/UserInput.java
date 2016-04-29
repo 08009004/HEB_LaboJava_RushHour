@@ -134,6 +134,10 @@ public class UserInput {
 
             selected = Character.getNumericValue(askChar(msg1, msg2));
             selected--;
+            
+            if (selected > folderContent.size() - 1) {
+                System.out.println("\n" + lang.getErrInvalidEntry());
+            }
      
         } while (selected < 0 || selected > folderContent.size() - 1);
 

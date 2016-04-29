@@ -166,12 +166,10 @@ public class UserInput {
          * because the end of the stream has been reached, the value -1 is 
          * returned.
          */
-        
-        
         byte buffer[] = new byte[1024];
         int len;
 
-        /* Comme discuté au cours, la ligne suivante ne marche pas quand on
+        /* Comme vu ensemble au cours, la ligne suivante ne marche pas quand on
           * exécute le programme depuis le jar -> getResourceAsStream (ligne 147)
           * renvoie :
           * - java.io.FilterInputStream.read() si le programme est exécuté sous

@@ -28,7 +28,7 @@ public class RushHour {
         // JsonLoader.class location for default, and from project root for
         // askLanguage() method):
         String defaultLangPath = "resources/languages/English.json";
-        String langFolderPath = "g42116/rushhour/JsonIO/resources/languages";
+        String langFolderPath = "build/classes/g42116/rushhour/jsonIO/resources/languages/";
 
         UserInput keyboard = null;
         Language lang;

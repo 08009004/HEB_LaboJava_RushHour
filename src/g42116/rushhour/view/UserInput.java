@@ -100,8 +100,14 @@ public class UserInput {
      * @return 
      */
     private String askFile(String fldrPath, String msg1, String msg2) {
+        System.out.println("IN ASK_FILE: fldrPath = " + fldrPath);
+        File folder = new File(fldrPath);
+        System.out.println("IN ASK_FILE: folder = " + folder);
+        System.out.println("folder.getAbsolutePath() = " + folder.getAbsolutePath());
+        String[] arr0 = folder.list();
+        File[] arr = folder.listFiles();
         List<File> folderContent = Arrays.asList(
-                                              new File(fldrPath).listFiles());
+                                              folder.listFiles());
 
         String printListItem;
         int index;

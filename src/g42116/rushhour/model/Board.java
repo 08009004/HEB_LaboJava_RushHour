@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Board {
 
     //Class attributes:
-    private Car[][] grid;
+    private BoardItem[][] grid;
     private final Position exit;
 
     /**
@@ -46,7 +46,7 @@ public class Board {
         because that method calls height() and width() which both refer to 
         this.grid                                                             */
 
-        this.grid = new Car[height][width];
+        this.grid = new BoardItem[height][width];
 
         if (!isOnBoardSide(exit)) {
             throw new IllegalArgumentException("Exit position was: " + exit
@@ -116,13 +116,16 @@ public class Board {
      */
     @Override
     public String toString() {
+        Car temp;
         String textualGrid = "\n GAME BOARD\n";
-        for (Car[] row : grid) {
-            for (Car column : row) {
+        for (BoardItem[] row : grid) {
+            for (BoardItem column : row) {
+                
                 if (column == null) {
                     textualGrid = textualGrid.concat("—\u0009");
                 } else {
-                    textualGrid = textualGrid.concat(column.getId() + "\u0009");
+                    temp = (Car) column;
+                    textualGrid = textualGrid.concat(temp.getId() + "\u0009");
                 }
             }
             textualGrid = textualGrid.concat("\n");
@@ -167,12 +170,12 @@ public class Board {
      * Returns the car occupying the position passed as a parameter.
      *
      * @param   position    the position to check
-     * @return              the car occupying the position, or null if the
-     *                      position is empty
+     * @return              the car occupying the position, or the obstacle, 
+     *                      or null if the position is empty
      * @throws              IllegalArgumentException if position is outside the
      *                      board
      */
-    public Car getCarAt(Position position) {
+    public BoardItem getItemAt(Position position) {
         if (!isOntheBoard(position)) {
             throw new IllegalArgumentException("Position " + position
                     + " is outside the board. Passed position must be on the "
@@ -190,11 +193,31 @@ public class Board {
      *              otherwise false
      * @throws      NullPointerException if 'car' is null.
      */
-    public boolean canPut(Car car) {
+    public boolean canPutCar(Car car) {
         List<Position> carPositions = car.getPositions();
 
         for (Position element : carPositions) {
-            if ( !isOntheBoard(element) || (getCarAt(element) != null) )
+            if ( !isOntheBoard(element) || (getItemAt(element) != null) )
+                return false;
+        }
+
+        return true;
+    }
+    
+    /**
+     * Checks that all of the positions of a given car are not off the board, 
+     * nor occupied by another car.
+     *
+     * @param   item the car to check
+     * @return      true if all of the positions required for the car are free,
+     *              otherwise false
+     * @throws      NullPointerException if 'car' is null.
+     */
+    public boolean canPutItem(BoardItem item) {
+        List<Position> itemPositions = item.getPositions();
+
+        for (Position element : itemPositions) {
+            if ( !isOntheBoard(element) || (getItemAt(element) != null) )
                 return false;
         }
 
@@ -245,18 +268,18 @@ public class Board {
      * @return          true if another car occupies the board square
      */
     private boolean containsOther(Position position, Car car) {
-        return (getCarAt(position) != null && getCarAt(position) != car);
+        return (getItemAt(position) != null && getItemAt(position) != car);
     }
 
     /**
      * Adds a car on the board.
      * 
-     * @param   car the car to add
+     * @param   item the car to add
      */
-    public void put(Car car) {
-        List<Position> occupy = car.getPositions();
+    public void put(BoardItem item) {
+        List<Position> occupy = item.getPositions();
         for (Position element : occupy) {
-            this.grid[element.getRow()][element.getColumn()] = car;
+            this.grid[element.getRow()][element.getColumn()] = item;
         }
     }
 
@@ -281,10 +304,10 @@ public class Board {
      */
     public Car getCar(char id) {
 
-        for (Car[] row : grid) {
-            for (Car car : row) {
+        for (BoardItem[] row : grid) {
+            for (BoardItem car : row) {
                 if(car != null && car.getId()==id)
-                    return car;
+                    return (Car) car;
             }
         }
 

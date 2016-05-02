@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author g42116
  */
-public class Car {
+public class Car implements BoardItem {
 
     // Class attributes:
     private final char id;

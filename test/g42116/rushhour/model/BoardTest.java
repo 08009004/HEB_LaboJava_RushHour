@@ -149,7 +149,7 @@ public class BoardTest {
     @Test
     public void testCanPutCar1() {
     Board tested = new Board();
-    assertTrue(tested.canPut(new Car('a', 2, HORIZONTAL, new Position(2,0))));
+    assertTrue(tested.canPutCar(new Car('a', 2, HORIZONTAL, new Position(2,0))));
     }
 
     /**
@@ -158,7 +158,7 @@ public class BoardTest {
     @Test
     public void testCanPutCar2() {
     Board tested = new Board();
-    assertFalse(tested.canPut(new Car('a', 3, VERTICAL, new Position(4,4))));
+    assertFalse(tested.canPutCar(new Car('a', 3, VERTICAL, new Position(4,4))));
     }
 
     /**
@@ -166,7 +166,7 @@ public class BoardTest {
      */
     @Test (expected=NullPointerException.class)
     public void testCanPutCar3() {
-        assertTrue(new Board().canPut(null));
+        assertTrue(new Board().canPutCar(null));
     }
 
     /**
@@ -176,11 +176,11 @@ public class BoardTest {
     public void testCanPutCar4() {
         Board tested = new Board();
         //testing that a car can initially be added on the board:
-        assertTrue(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
+        assertTrue(tested.canPutCar(new Car('b', 3, VERTICAL, new Position(1,3))));
         //adding an overlaping car:
         tested.put(new Car('a', 4, HORIZONTAL, new Position(2,1)));
         //testing that the initial car can't be added anymore:
-        assertFalse(tested.canPut(new Car('b', 3, VERTICAL, new Position(1,3))));
+        assertFalse(tested.canPutCar(new Car('b', 3, VERTICAL, new Position(1,3))));
     }
 
     /**
@@ -193,7 +193,7 @@ public class BoardTest {
         Car expected = testCar;
         
         tested.put(testCar);
-        Car result = tested.getCarAt(new Position(1,2));
+        Car result = tested.getItemAt(new Position(1,2));
         
         assertEquals(expected, result);
     }
@@ -208,7 +208,7 @@ public class BoardTest {
         Car expected = testCar;
         
         tested.put(testCar);
-        Car result = tested.getCarAt(new Position(0,0));
+        Car result = tested.getItemAt(new Position(0,0));
         
         assertNull(result);
     }
@@ -219,7 +219,7 @@ public class BoardTest {
     @Test (expected=IllegalArgumentException.class)
     public void testGetCarAt3() {
         Board tested = new Board();
-        tested.getCarAt(new Position(6,4));
+        tested.getItemAt(new Position(6,4));
     }
 
     /**

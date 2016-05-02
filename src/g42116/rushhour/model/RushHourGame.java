@@ -23,6 +23,7 @@ public class RushHourGame {
      * @param   exit        the exit position on the game board
      * @param   otherCars   a list of the cars to install on the board before 
      *                      letting the game start
+     * @param   obstacles   the obstacles
      * @param   redCar      the red car that the player tries to drive out of
      *                      the board
      * @throws              RushHourException if the red car is not in alignment
@@ -30,15 +31,16 @@ public class RushHourGame {
      * @throws              IllegalArgumentException if the red car is not 
      *                      completely on the game board
      */
-    public  RushHourGame(int boardHeight, int boardWidth, Position exit,
-                    Car redCar, List<Car> otherCars) throws RushHourException {
+    public  RushHourGame(int boardHeight, int boardWidth, 
+                 Position exit, Car redCar, List<BoardItem> obstacles, 
+                           List<BoardItem> otherCars) throws RushHourException {
 
         if ( !matchingExit(redCar, exit) ) throw new RushHourException(
                         "The red car must be aligned with the exit position.");
 
         this.board = new Board(boardHeight, boardWidth, exit);
 
-        if (this.board.canPut(redCar)) {
+        if (this.board.canPutCar(redCar)) {
             this.board.put(redCar);
             this.redCar = redCar;
         } else {
@@ -46,6 +48,7 @@ public class RushHourGame {
                 + " partly outside of the board.");
         }
 
+        put(obstacles);
         put(otherCars);
     }
 
@@ -67,13 +70,13 @@ public class RushHourGame {
     /**
      * Adds a list of car objects on the game board.
      * 
-     * @param   cars    the list of cars to add
+     * @param   items    the list of cars to add
      * @throws          IllegalArgumentException if one of the cars from list
      *                  cannot be added to the board
      */
-    private void put(List<Car> cars) {
-        for (Car element : cars) {
-            if (this.board.canPut(element)) {
+    private void put(List<BoardItem> items) {
+        for (BoardItem element : items) {
+            if (this.board.canPutItem(element)) {
                 this.board.put(element);
             } else {
                 throw new IllegalArgumentException("" + element + " could not "
@@ -130,7 +133,7 @@ public class RushHourGame {
      * @return  true if the game is over, otherwise false
      */
     public boolean isOver() {
-        return ( this.board.getCarAt(this.board.getExit()) == redCar );
+        return ( this.board.getItemAt(this.board.getExit()) == redCar );
     }
 
     /**

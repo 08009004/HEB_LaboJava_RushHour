@@ -1,6 +1,7 @@
 package g42116.rushhour.view;
 
 import g42116.rushhour.model.Board;
+import g42116.rushhour.model.BoardItem;
 import g42116.rushhour.model.Car;
 import g42116.rushhour.model.Position;
 import static g42116.rushhour.model.Orientation.*;
@@ -25,8 +26,8 @@ public class Display {
         Car car2 = new Car('6', 3, VERTICAL, new Position(2,4));
         
         board.put(redCar);
-        if (board.canPut(car1)) board.put(car1);
-        if (board.canPut(car2)) board.put(car2);
+        if (board.canPutCar(car1)) board.put(car1);
+        if (board.canPutCar(car2)) board.put(car2);
 
         displayBoard(board);
     }
@@ -85,7 +86,7 @@ public class Display {
         String boardRow = "";
         int exitColumn = board.getExit().getColumn();
         int exitRow = board.getExit().getRow();
-        Car carOnBox;
+        BoardItem itemOnBox;
         boolean isExit;
         
         for (int boxLine = 0; boxLine < 3; boxLine++) {
@@ -96,18 +97,18 @@ public class Display {
 
             for (int box = 0; box < board.width(); box++) {
                 
-                carOnBox = board.getCarAt(new Position(currentRow, box));
+                itemOnBox = board.getItemAt(new Position(currentRow, box));
 
                 for (int boxColumn = 0; boxColumn < 3; boxColumn++) { 
 
-                    if((carOnBox != null) && (boxLine==1) && (boxColumn==1)) {
-                            boardRow += ColourString.to("" + carOnBox.getId(), 
-                                                    setCarColour(carOnBox), 
-                                                         setIdColour(carOnBox)); 
+                    if((itemOnBox != null) && (boxLine==1) && (boxColumn==1)) {
+                            boardRow += ColourString.to("" + itemOnBox.getId(), 
+                                                    setCarColour(itemOnBox), 
+                                                         setIdColour(itemOnBox)); 
                     } else {
                             boardRow += ColourString.to("\u0020", 
-                                                    setCarColour(carOnBox), 
-                                                         setIdColour(carOnBox));
+                                                    setCarColour(itemOnBox), 
+                                                         setIdColour(itemOnBox));
                     }
                 }
             }
@@ -152,7 +153,7 @@ public class Display {
      * @return      a colour based on the 'id' UTF code number (red only if car 
      *              id is 'R', and white only if car equals null)
      */
-    private static Colour setCarColour(Car car) {
+    private static Colour setCarColour(BoardItem car) {
         int colourIndex;
         
         if (car == null) {
@@ -173,7 +174,7 @@ public class Display {
      * @return          BLACK if the background should be of a light colour,
      *                  otherwise WHITE
      */
-    private static Colour setIdColour(Car car) {
+    private static Colour setIdColour(BoardItem car) {
         switch (setCarColour(car)) {
             case BLACK:
             case RED:

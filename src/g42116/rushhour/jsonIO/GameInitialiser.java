@@ -1,6 +1,8 @@
 package g42116.rushhour.jsonIO;
 
+import g42116.rushhour.model.BoardItem;
 import g42116.rushhour.model.Car;
+import g42116.rushhour.model.Obstacle;
 import g42116.rushhour.model.Orientation;
 import g42116.rushhour.model.Position;
 import g42116.rushhour.model.RushHourException;
@@ -22,7 +24,8 @@ public class GameInitialiser {
     private final int width;
     private final Position exit;
     private final Car redCar;
-    private final List<Car> otherCars;
+    private final List<BoardItem> obstacles;
+    private final List<BoardItem> otherCars;
     
     
     /**
@@ -51,7 +54,36 @@ public class GameInitialiser {
                 new Position(toIntExact((long)redCarData.get(3)), 
                                           toIntExact((long)redCarData.get(4))));
         
+        this.obstacles = theObstacles((JSONArray) initialBoard.get("obstacles"));
+        
         this.otherCars = theOtherCars((JSONArray) initialBoard.get("otherCars"));
+    }
+
+    /**
+     * Creates a list of Obstacle objects based on data from a JSONArray.
+     * 
+     * @param   obstaclesData   the JSONArray containing the Car objects 
+     *                          attributes
+     * @return                  an ArrayList of the Obstacle objects
+     */
+    private List<BoardItem> theObstacles(JSONArray obstaclesData) {
+        char id;
+        int row;
+        int column;
+        JSONArray singleObstacle;
+        List<BoardItem> theObstacles = new ArrayList<>();
+        
+        for (Object element : obstaclesData) {
+            singleObstacle = (JSONArray) element;
+
+            id = ((String) singleObstacle.get(0)).charAt(0);
+            row = toIntExact((long) singleObstacle.get(1));
+            column = toIntExact((long) singleObstacle.get(2));
+
+            theObstacles.add(new Obstacle(id, new Position(row, column)));
+        }
+
+        return theObstacles;
     }
 
     /**
@@ -60,14 +92,14 @@ public class GameInitialiser {
      * @param   carsData   the JSONArray containing the Car objects attributes
      * @return             an ArrayList of the Car objects
      */
-    private List<Car> theOtherCars(JSONArray carsData) {
+    private List<BoardItem> theOtherCars(JSONArray carsData) {
         char id;
         int size;
         Orientation orientation;
         int row;
         int column;
         JSONArray singleCarData;
-        List<Car> theCars = new ArrayList<>();
+        List<BoardItem> theCars = new ArrayList<>();
         
         for (Object element : carsData) {
             singleCarData = (JSONArray) element;
@@ -93,7 +125,8 @@ public class GameInitialiser {
      *          argument for RushHourGame instatiation
      */
     public RushHourGame initialise() throws RushHourException {
-        return new RushHourGame(height, width, exit, redCar, otherCars);
+        return new RushHourGame(height, width, exit, redCar, 
+                                                          obstacles, otherCars);
     }
 
 }

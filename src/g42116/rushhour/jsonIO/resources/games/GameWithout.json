@@ -1,0 +1,15 @@
+{
+    "boardHeight": 6,
+    "boardWidth": 6,
+    "exit": [ 2, 5 ],
+
+    "redCar": [ "R", 2, "HORIZONTAL", 2, 1 ],
+
+    "obstacles": [],
+
+    "otherCars": [
+        ["1", 2, "HORIZONTAL", 0, 0], 
+        ["2", 3, "VERTICAL", 1, 0], 
+        ["3", 3, "VERTICAL", 0, 5]
+    ]
+}
